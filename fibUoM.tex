@@ -174,7 +174,7 @@
 \newcommand{\semr}[1]{\ensuremath{\llbracket #1 \rrbracket _r} \;}
 
 %%%Units of Measure%%%%
-\newcommand{\num}{\msf{quantity}}
+\newcommand{\qnt}{\msf{quantity}}
 \newcommand{\sreal}{\msf{real}}
 \newcommand{\bool}{\msf{bool}}
 \newcommand{\length}{\mathit{Length}}
@@ -231,15 +231,15 @@ they can be multiplied.
 Here is a simple polymorphic program that is defined for all dimensions;
 it takes a quantity $x$ of a given dimension $X$, and returns its double.
 \begin{equation}
-f\coloneqq (\Lambda X.\,\lambda x:\num(X).\,x+x)
-:\ \forall X.\,\num(X)\to \num(X)
+f\coloneqq (\Lambda X.\,\lambda x:\qnt(X).\,x+x)
+:\ \forall X.\,\qnt(X)\to \qnt(X)
 \label{eqn:double}
 \end{equation}
 To illustrate, we can use the polymorphic
 function $f$ to double a length of $5$ metres:
 \begin{equation}
 f_\length\,(5\mathrm{m})=
-10\mathrm{m}:\num(\length)
+10\mathrm{m}:\qnt(\length)
 \label{eqn:doubleapp}
 \end{equation}
 Several authors have developed programming languages with type systems
@@ -256,40 +256,40 @@ Some things are worth bringing out of the examples (\eqref{eqn:double},\eqref{eq
 $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type.
 We use different abstraction symbols ($\lambda$ and $\Lambda$)
 for the two kinds of variable.
-\item The type $\num(\Dvar)$ depends on a dimension $\Dvar$; it
+\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$; it
   is inhabited by quantities of that dimension.
 \item The standard unit of measurement for length, the metre, is
-  quantity of that dimension, i.e. a constant $\mathrm m:\num(\length)$.
+  quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\length)$.
 \end{itemize}
 
 The main contributions of this paper are as follows.
 \begin{enumerate}
 \item We provide a general notion of model for a programming language
-  of this kind by introducing the notion of \emph{model of dimension types}
+  of this kind by introducing the notion of \emph{$\lambda D$-model}
   (Section~\ref{sec:sem}).
   The basic idea is that, for each context of dimension variables,
   there is a model of the simply typed $\lambda$-calculus extended with
   types of quantities of the dimensions definable in
-  the context ($\num(D)$ etc.).
+  the context ($\qnt(D)$ etc.).
   Moreover these models of the simply typed $\lambda$-calculus
   are related by substituting for dimension variables,
   and this also defines a universal property for polymorphic quantification
   over dimension variables.
-\item An important example of a model of dimension types is
+\item An important example of a $\lambda D$-model is
   a semantics based
   on actions of scaling groups (Section~\ref{sec:AbSet}).
   This is as close as we can get to
   a set-theoretic semantics for programs with parametric dimension polymorphism.
-  A difficulty here is, how does one understand $\num(\Dvar)$ as a set,
+  A difficulty here is, how does one understand $\qnt(\Dvar)$ as a set,
   if the dimension $\Dvar$ is not specified and we have
   no fixed units of measure for $\Dvar$?
   We resolve this by interpreting
-  $\num(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers,
+  $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers,
   thought of as quantities of some unspecified unit of measure,
-  but then by equipping $\num(\Dvar)$ with an action of the scaling group,
+  but then by equipping $\qnt(\Dvar)$ with an action of the scaling group,
   to explain how to change the units of measure.
   We can then ask that
-  any function $\num(\Dvar)\to\num(\Dvar)$
+  any function $\qnt(\Dvar)\to\qnt(\Dvar)$
   is invariant under changing that unspecified unit of measure,
   more precisely, invariant under scaling.
 \item We give new ways of building models, by extending
@@ -298,11 +298,9 @@ The main contributions of this paper are as follows.
   dimensions (Section~\ref{sec:param}).
 \end{enumerate}
 
-\note{We could say something here about Kennedy's relative full abstraction conjecture.
-However I think that in a language with products it is trivially false. Still it is interesting
-to ask whether we can phrase/prove a theorem that says that the group action model of
-dimensions is as good
-as the set theoretic model of simple types.}
+\note{Rewrite to be a bit clearer.}
+
+
 
 \section{Types with physical dimensions}
 \label{sec:Not}
@@ -323,13 +321,17 @@ then $\Dj \Delta{\Dvar_1^{k_1}\dots \Dvar_n^{k_n}}$.
 We can make the set $\{\Dim~|~\Dj \Delta \Dim\}$ an Abelian group under addition of
 exponents, and indeed this is the free Abelian group on $\Delta$.
 
+\note{Something needs to be said here about substitution and normalising dimensions.}
+
 %The Lawvere theory of Abelian groups $\LAb$ is the opposite of the Kleisli category of $\Ab$, with natural numbers as objects. We write $\msf{Ab}(\C)$ for the internal Abelian groups of a category $\C$, which are just the finite product-preserving functors from $\LAb$ to $\C$.\\
+
+\note{Fred - Add something about signatures}
 
 Well formed types are given by judgements of the form $\Tj\Delta  T$ where
 $\Delta$ is a dimension context and these judgements are generated by the following rules.
 \[\begin{array}{ccc}
 \AxiomC{$\Dj\Delta \Dim$}
-		\UnaryInfC{$\Tj\Delta {\num(\Dim)}$}
+		\UnaryInfC{$\Tj\Delta {\qnt(\Dim)}$}
 		\DisplayProof
 
 &\hspace{5mm}
@@ -351,7 +353,7 @@ $\Delta$ is a dimension context and these judgements are generated by the follow
 \\ \\
 \end{array}\]
 Notice that we do not have System-F-style polymorphism, but instead dimension polymorphism. Types can be parameterized by dimensions, but they cannot be parameterized by types. From the Curry-Howard perspective this is a first-order-logic where the domain of discourse is the theory of Abelian groups
-and where there is a single atomic predicate, $\num$.
+and where there is a single atomic predicate, $\qnt$.
 
 Well formed typing contexts are given by judgements
 $\cj\Delta\Gamma $ where $\Delta$ is a dimension context, $\Gamma$ is
@@ -446,28 +448,29 @@ In addition, we have the introduction and elimination rules for quantification o
 We remark that one
 one can easily extend the language by adding
 dimension constants (such as $\length$),
-standard units of measure (such as metres, $\mathrm{m}:\num(\length)$)
+standard units of measure (such as metres, $\mathrm{m}:\qnt(\length)$)
 and
 arithmetic term constants
 such as addition
-$+:\forall \Dvar. \num(\Dvar)\times  \num(\Dvar) \rightarrow \num(\Dvar)$,
-multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \num(\Dvar_1)\times \num(\Dvar_2) \rightarrow \num(\Dvar_1 \cdot \Dvar_2)$,
-unit $1:\num(1)$,
-and inverse $\mathsf{inv}:\forall \Dvar.\num(\Dvar)\to \num (\Dvar^{-1})$.
+$+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar)$,
+multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2)$,
+unit $1:\qnt(1)$,
+and inverse $\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1})$.
 
 
 One could also add sum types with no trouble, and these could be used to
 define a boolean type,
 $\bool\coloneqq 1+1$,
 and the language could then be extended with term constants for comparison, e.g.
-${<}:\forall \Dvar.\num(\Dvar)\times \num(\Dvar)\to \bool$.
+${<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$.
 One could also define a type of signed/zero quantities
-$\sreal(\Dvar)\coloneqq \num(\Dvar)+1+\num(\Dvar)$,
+$\sreal(\Dvar)\coloneqq \qnt(\Dvar)+1+\qnt(\Dvar)$,
 and then extend the language with further arithmetic term constants such as signed addition
 $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$.
 
 In this paper we do not treat recursion, but a future extension of our work may look in the direction of Pitts' PolyPCF \cite{pitts2000parametric}.
 
+\note{Provide a more appropriate reference and a better description.}
 
 
 
@@ -478,47 +481,42 @@ In this paper we do not treat recursion, but a future extension of our work may 
 
 \begin{definition}
 A \emph{$\lambda\forall$-fibration}
-is a cartesian closed fibration
+is a Cartesian closed fibration
 with simple products.
 \end{definition}
-\note{I prefer this, instead of asking for a distinguished object $G$
-  and simple $G$-products, since it is a plain universal property, and
-  also it makes it clear we are just dealing with models of FOL.  But
-  is it too much to ask for the relation constructions in the last
-  section?}
+
 This notion is well-known as a categorical model of first-order logic. It is central to our
 development, so we discuss the terminology informally now, referring
 the reader to \cite{jacobs1999categorical} for the full details.
 
 A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions.
 The idea is that dimension contexts will be interpreted as objects
-$\B$. For each $b\in\B$ we consider the full subcategory $\E_b$ of $\E$
-spanned by objects $e\in\E$ for which $p(e)=b$:
-the objects of $\E_b$ will be used to interpret types in dimension context $b$,
+$\B$. For each $B\in\B$ we consider the full subcategory $\E_B$ of $\E$, with objects $E\in\E$ for which $p(E)=B$:
+the objects of $\E_B$ will be used to interpret types in dimension context $B$,
 and the morphisms in $\E_b$ will be used to interpret terms.
 We can substitute dimension expressions for dimension variables, and this substitution
 will be interpreted using morphisms in $\B$.
-Since $p$ is a fibration, for each reindexing morphism $f:b\to b'$ in $\B$ there is a
-canonical associated reindexing functor $f^*:\E_{b'}\to \E_b$, which we will use
+Since $p$ is a fibration, for each reindexing morphism $f:B\to B'$ in $\B$ there is a
+canonical associated reindexing functor $f^*:\E_{B'}\to \E_B$, which we will use
 to describe substitution for dimension variables in types and terms.
 
-A fibration is said to be cartesian closed if $\E_b$ is a cartesian closed category for all $b$,
-and each reindexing functor $f^*:\E_{b'}\to\E_b$ preserves products and exponentials.
-This cartesian closed structure is what is needed to interpret the product and function types.
+A fibration is said to be Cartesian closed if $\E_B$ is a Cartesian closed category for all $B$,
+and each reindexing functor $f^*:\E_{B'}\to\E_B$ preserves products and exponentials.
+This Cartesian closed structure is what is needed to interpret the product and function types.
 
 Concatenation of dimension contexts will be interpreted using
 products in the category $\B$.
-The reindexing functors for the product projections $f^*:\E_{b}\to \E_{b\times b'}$
+The reindexing functors for the product projections $f^*:\E_{B}\to \E_{B\times B'}$
 correspond to context-weakening.
 A fibration $p:\E\to \B$ is said to have simple products if $\B$ has products and
 the reindexing functors for the product projections have right adjoints
-$\forall:E_{b\times b'}\to E_b$
+$\forall:E_{B\times B'}\to E_B$
 that are compatible with reindexing (`Beck-Chevalley').
 These right adjoints
-are what are needed to interpret universal quantification of dimension variables in types.
+are needed to interpret universal quantification of dimension variables in types.
 
 \begin{definition}
-A model of dimension types $(p,Q,G)$ is a $\lambda\times\forall$-fibration $p:\E\to \B$
+A $\lambda D$-model $(p,Q,G)$ is a $\lambda \forall$-fibration $p:\E\to \B$
 together with an object $Q$ of $\E$ and
 structure making $p(Q)$ an Abelian group object $G$ in $\B$.
 \end{definition}
@@ -526,11 +524,11 @@ Recall that an Abelian group object in a category $\B$ with products
 is given by an object
 $G$ together with maps $e:1\to G$, $m:G\times G\to G$ and
 $i:G\to G$ satisfying the laws of Abelian groups.
-This group structure is what is needed to interpret dimension expressions:
+This group structure is needed to interpret dimension expressions:
 for each vector of $n$ integers we have
 a morphism $G^n\to G$.
 
-Indeed an equivalent way to define Abelian group object
+Indeed an equivalent way to define Abelian group objects
 if $\B$ has chosen products is as follows.
 Recall that the Lawvere theory for Abelian groups is the category $\LAb$ whose
 objects are natural numbers, and where a morphism $m\to n$ is an $m\times n$ matrix of integers.
@@ -544,13 +542,8 @@ together with a strictly-product-preserving functor $F:\LAb\to\B$ such that $F(1
 
 
 
-We remark that the Abelian group $G$ in a model of dimension types
-is analogous to the generic object in a model of System F.  The pair
-$(Q,G)$ is like a universe whose codes are equipped with the structure
-of an Abelian group.  Just as universes introduce type dependency into types, so $(Q,G)$
-introduces unit-dependency into types.
-\note{I have reworded this but I still don't understand the second sentence, since $G$ is not a
-first class type.}
+We remark that the Abelian group $G$ in a $\lambda D$-model
+is analogous to the generic object in a model of System F.
 
 In order to ascertain the value of Definition~\ref{def:uomfib}, we
 need to do three things: i) show that a UoM-fibration does in fact provide categorical models of \UoM, ii) give some examples of
@@ -568,14 +561,14 @@ the syntax as follows.
 \item Unit contexts $\Delta = u_1, \ldots, u_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$
 \item Unit expressions $\Delta\vdash u$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{u_1, u_2 \vdash u_1 \cdot u_2^{-1}}(g_1,g_2) = g_1 \cdot g_2^{-1}$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\msf{1}$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a unit variable $\sem{\Delta \vdash \forall u. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Gamma, u} \rightarrow \sem{\Gamma}$. Quantities $\Delta \vdash \num(u)$ are interpreted by reindexing the object $\num$ along $\sem{u}$, i.e. $\sem{\num(u)} = \sem{u}^\ast (Q)$, which we will often write as $Q(u)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\msf{1}$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a unit variable $\sem{\Delta \vdash \forall u. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Gamma, u} \rightarrow \sem{\Gamma}$. Quantities $\Delta \vdash \qnt(u)$ are interpreted by reindexing the object $Q$ along $\sem{u}$, i.e. $\sem{\qnt(u)} = \sem{u}^\ast (Q)$, which we will often write as $Q(u)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as objects $\sem{\Gamma}$ in the fibre above $\sem{\Delta}$ using products in the fibres, i.e., \\$\sem{\Delta \vdash x_1 : T_1 ,..., x_n:T_n} = \sem{\Delta \vdash T_1} \times ... \times \sem{\Delta \vdash T_n}$.
 
 \item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$.
 \end{itemize}
 
-It is now possible to add in some constants to represent various structure associated with \UoM. For example, polymorphic zero $\mathtt{0} : \forall u . num(u)$, addition $\mathtt{+}: \forall u. num(u) \rightarrow num(u) \rightarrow num(u)$ or multiplication $\mathtt{*} : \forall u_1 . \forall u_2 . num(u_1) \rightarrow num(u_2) \rightarrow \num(u_1 \cdot u_2)$. However, since we are mostly interested in the fibrational structure, we leave the addition of such constants to the reader.\\
+It is now possible to add in some constants to represent various structure associated with \UoM. For example, polymorphic zero $\mathtt{0} : \forall u . \qnt(u)$, addition $\mathtt{+}: \forall u. \qnt(u) \rightarrow \qnt(u) \rightarrow \qnt(u)$ or multiplication $\mathtt{*} : \forall u_1 . \forall u_2 . \qnt(u_1) \rightarrow \qnt(u_2) \rightarrow \qnt(u_1 \cdot u_2)$. However, since we are mostly interested in the fibrational structure, we leave the addition of such constants to the reader.\\
 
 \noindent {\bf II. Examples of models of dimension types:}
 We now give some examples of models of dimension types. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of
@@ -583,25 +576,25 @@ dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure s
 
 \begin{example}(Unit Erasure Models)
 \label{ex:UnitErasure}
-Let $\C$ be a cartesian closed category. Then the functor $\C \ra
+Let $\C$ be a Cartesian closed category. Then the functor $\C \ra
 \terminal$ is a $\lambda\forall$-fibration.
 The unique object of $\terminal$
 is a trivial Abelian group object in
 $\terminal$. By taking $\C$ to be the category of complete partial
 orders and continuous functions, and by choosing the flat pointed cpo
-$\bbQ_{\bot}$ to interpret $\num$ we obtain a model
+$\bbQ_{\bot}$ to interpret $\qnt$ we obtain a model
 corresponding to Kennedy's unit-erasure model.
 \end{example}
 
 
 \begin{example}(Syntax of dimension types)
-We can construct a model of dimension types from the syntax.
+We can construct a $\lambda D$-model from the syntax.
 The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$.
 The
 fibres are the types and terms definable over a collection of unit
 variables. This is a term model and hence provides a completeness
 result for UoM-fibrations.
-\note{Todo: explain the equational theory of terms.}\end{example}
+\note{Fred to explain the equational theory of terms.}\end{example}
 
 
 \begin{example}(Model of dimension types without parametricity)
@@ -613,11 +606,11 @@ and for all $i\in I$, $\phi_i$ is a function $\phi_i:X_i\to Y_{f(i)}$.
 It is well known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family
 $(I,\{X_i\}_{i\in I})$ to its index set $I$, is a $\lambda\forall$-fibration.
 
-The set of all physical dimensions (e.g. length, time, speed etc.)
+Any given set of physical dimensions (e.g. length, time, speed etc.)
 forms an Abelian group $G$; for example, it can be formed as the free Abelian group on a set
 of fundamental dimensions.
 Suppose we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$.
-This forms a model of dimension types.
+This forms a $\lambda D$-model.
 
 In this model, a dimension expression
 $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is interpreted
@@ -634,15 +627,17 @@ For instance, the model supports sum types,
 and it also supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$
 which tests whether two dimensions are the same.
 
-One generalization of this example is the fibration $\Fam{\C}\to\Set$
-which is a $\lambda\forall$-fibration if $\C$ is cartesian closed.
+\note{Explain why this is true ``inspecting types''. Explain what we mean here by parametric polymorphism and add something to the introduction about how we are looking for particular models.}
+
+Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$,
+which is a $\lambda\forall$-fibration if $\C$ is Cartesian closed.
 \end{example}
-\note{I cut the subobject/relations fibrations since they seem irrelevant.}
+
 
 
 \begin{example}(A parametric model built from monoid actions)
 \note{I think we should use the fibration of monoid actions rather than Abelian group actions to emphasise that the requirement of being an Abelian group is specific to dimension types and is not needed to get simple products. Also this helps to clarify things by avoiding the subtle fact that an Abelian group object in $\Ab$ is the same thing as an Abelian group.}
-\begin{definition}
+
 Let $M$ be a monoid. Recall that a $M$-set consists of a
 set $A$ together with a function $\cdot:M\times A\to A$ such that
 $i\cdot a=a$ and $(mn)\cdot a=m\cdot (n\cdot a)$.
@@ -652,22 +647,23 @@ as a category with one object.)
 The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is a
 monoid and $A$ is a $M$-set. A morphism $(M,A) \rightarrow
 (N,B)$ in $\MonSet$ is given by a monoid homomorphism $f:M\rightarrow N$
-and a function $\phi:S \rightarrow T$ such that for any
+and a function $\phi:A \rightarrow B$ such that for any
  $m\in M$ and $a\in A$ we have
 $\phi (m\cdot a) = (f m)\cdot (\phi a)$.
-\end{definition}
 
 Let $\Mon$ be the category of monoids and homomorphisms.
-\begin{proposition}
+
+
 The forgetful functor $\MonSet\to \Mon$ is a $\lambda\forall$-fibration.
-\end{proposition}
+
+
 We defer proving that the $\MonSet$ fibration is a $\lambda\forall$-fibration
 until Section~\ref{sec:AbSet}.
 
 Recall that a monoid can be given the structure of an
 Abelian group object in $\Mon$ if and only if it is an Abelian group,
 and then it forms an Abelian group object in a unique way.
-Thus a model of dimension types
+Thus a $\lambda D$-model
 for the fibration $\MonSet\to\Mon$ is given by
 an Abelian group $G$ and a $G$-set $Q$.
 The group $G$ can be thought of as a group of scaling factors,
@@ -684,24 +680,25 @@ function that is invariant under $G$.
 
 We explore this model in more detail in Section~\ref{sec:AbSet}.
 \end{example}
+
 \begin{example}(A parametric model built from presheaves)
-\begin{definition}
+
 Let $C$ be a category. Recall that a \emph{presheaf} is a
 functor $C\to\Set$.
 
 The category $\CatSet$ has as objects pairs $(C,A)$ where $C$ is a
 category and $A:C\to\Set$ is a functor. A morphism $(C,A) \rightarrow
-(D,B)$ in $\CatSet$ is given by a functor homomorphism $f:C\rightarrow D$
+(D,B)$ in $\CatSet$ is given by a functor $f:C\rightarrow D$
 and a natural transformation $\phi:A \Rightarrow B\cdot f$ between functors
 $C\to\Set$.
-\end{definition}
+
 
 Let $\Cat$ be the category of small categories and functors.
-\begin{proposition}
-The forgetful functor $\CatSet\to \Cat$ is a $\lambda\forall$-fibration.
-\end{proposition}
 
-\note{The group action model cannot accommodate dimension constants (e.g. Length). I think the presheaf model is the right one for combining parametric dimension polymorphism with
+The forgetful functor $\CatSet\to \Cat$ is a $\lambda\forall$-fibration.
+
+
+\note{Sam to think more... The group action model cannot accommodate dimension constants (e.g. Length). I think the presheaf model is the right one for combining parametric dimension polymorphism with
 some dimension constants and constant units of measure (e.g. metres).
 Perhaps this should be investigated.}
 
@@ -713,12 +710,12 @@ according to Theorem~\ref{thm:BC}. }
 %Let $G$ be an Abelian group and $\phi$ a $G$-set. Define a fibration $\msf{U_G}:\E \ra \LAb$ to have as fibres $\fibreE{n}$ the functor category $Set^{G^n}$. Then the triple $(U_G, \terminal, \phi)$ is a UoM-fibration. We again defer the proof to Section~\ref{sec:AbSet}.
 %\end{example}
 
-% Note that in the $G$-set examples, there is a canonical choice for the $G$-set used to interpret $num$, namely the $G$-set $G \times G \ra G$ (or $\terminal \times \terminal \rightarrow \terminal$ above) given by multiplication in the group. When we consider $G$-sets as functors $G \ra \Set$, this $G$-set is simply the hom-functor which, via Yoneda, makes it a particularly interesting $G$-set to choose. We will expand on this in section~\ref{sec:AbSet}.
+% Note that in the $G$-set examples, there is a canonical choice for the $G$-set used to interpret $\qnt$, namely the $G$-set $G \times G \ra G$ (or $\terminal \times \terminal \rightarrow \terminal$ above) given by multiplication in the group. When we consider $G$-sets as functors $G \ra \Set$, this $G$-set is simply the hom-functor which, via Yoneda, makes it a particularly interesting $G$-set to choose. We will expand on this in section~\ref{sec:AbSet}.
 % \note{expand on this comment or remove.}
 
 
 \begin{remark}
-In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection, which is given by the left Kan extension. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
+In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
 \end{remark}
 
 % The key lemma is.....
@@ -754,11 +751,11 @@ In this paper we have only considered universal quantification of units but exis
 \noindent {\bf III Change of base:}
 Models of dimension types are closed under change of base.
 \begin{theorem}
-  Let $(p: \E \ra \B, G, Q)$ be a model of dimension types, $F:\A \ra
+  Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra
   \B$ be a finite product-preserving functor and $G'$ be an Abelian
   group object of $\A$ such that $FG' = G$.  Denote the pullback of
   $p$ along $F$ by $F^\ast p : \E\times_\B\A \rightarrow \A$. Then
-  $\bbracket{F^{\ast}p, G', (G',Q)}$ is a model of dimension types.
+  $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
 \end{theorem}
 
 \begin{proof}\note{To be revised.}
@@ -777,26 +774,26 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
   object.
 \end{itemize}
 
-Choosing an internal Abelian group in a category $\C$ is equivalent to giving a finite product-preserving functor from the
-Lawvere theory of Abelian groups $\LAb$ into the category $\C$.
-Thus, as another instance of the change-of-base theorem:
-
-%Given that we have essentially the
-% Kleisli category of $\msf{Ab}$ and its Eilenberg-Moore category
-% arising as bases of UoM-fibrations, it is tempting to wonder if any
-% resolution of the monad $T_{\msf{Ab}}$ can act as the base of a
-% UoM-fibration? However we - for once - resist temptation.
-
-\begin{corollary}
-  Any model of dimension types
-  can be converted into a model with base category $\LAb$, by pulling back.
-\end{corollary}
-\note{I've kept this corollary, but I am not sure why it is interesting.}
+% Choosing an internal Abelian group in a category $\C$ is equivalent to giving a finite product-preserving functor from the
+% Lawvere theory of Abelian groups $\LAb$ into the category $\C$.
+% Thus, as another instance of the change-of-base theorem:
+%
+% %Given that we have essentially the
+% % Kleisli category of $\msf{Ab}$ and its Eilenberg-Moore category
+% % arising as bases of UoM-fibrations, it is tempting to wonder if any
+% % resolution of the monad $T_{\msf{Ab}}$ can act as the base of a
+% % UoM-fibration? However we - for once - resist temptation.
+%
+% \begin{corollary}
+%   Any $\lambda D$-model
+%   can be converted into a model with base category $\LAb$, by pulling back.
+% \end{corollary}
+% \note{I've kept this corollary, but I am not sure why it is interesting.}
 %Hidden proof since it is trivial.
 %\begin{proof}
-%Let $(p:\E \ra \B, G,\num)$ be a UoM-fibration. The fact that $G$ is an internal Abelian group object %means that there is a finite
+%Let $(p:\E \ra \B, G,Q)$ be a UoM-fibration. The fact that $G$ is an internal Abelian group object %means that there is a finite
 %roduct-preserving functor $F:\LAb \ra \B$ mapping $\terminal$ to $G$. By change of base, the functor $%F^*p : F^\ast \E \ra \LAb$ is a fibration. As above, $\terminal$ is exponentiable and is by constructi%on an internal Abelian group object. Finally, since $F$ maps $\terminal$ to $G$, the object
-%$(\terminal,\num)$ lives above $\terminal$ in $F^\ast p$ and hence $F^\ast p$ has the structure of a UoM-fibration with base $\LAb$.
+%$(\terminal,Q)$ lives above $\terminal$ in $F^\ast p$ and hence $F^\ast p$ has the structure of a UoM-fibration with base $\LAb$.
 %\end{proof}
 
 %This is similar to Bob's Theorem - in the statement below I've changed Bob's pullback
@@ -827,12 +824,14 @@ Thus, as another instance of the change-of-base theorem:
 
 
 
-\section{Group Actions and \UoM}
+\section{Group Actions and \UoM}\label{sec:AbSet}
 \note{I wonder if we should put the proof
 that $\AbSet$ is a model into an appendix, especially since it
 is folklore (it was mentioned on categories in response to Tim's question, and I can find it on mathoverflow and nlab too).
 }
-\label{sec:AbSet}
+
+\note{Add something here about signatures}
+
 In this section we will look in greater detail at the model of \UoM given by the $\AbSet$ UoM-fibration, but first we must prove that it is indeed a \UoMFibration. Let us first prove a couple of useful results.
 
 
@@ -883,11 +882,11 @@ We can now prove that the $\AbSet$ fibration is indeed a UoM-fibration.
 
 \begin{theorem}
 \label{thm:gsets}
-  Let $G$ be an Abelian group, and $\num$ in the fibre above $G$, i.e., a $G$-set. Then $(p:\AbSet \rightarrow Ab, G, \num)$ is a UoM-fibration.
+  Let $G$ be an Abelian group, and $Q$ in the fibre above $G$, i.e., a $G$-set. Then $(p:\AbSet \rightarrow Ab, G, Q)$ is a UoM-fibration.
 \end{theorem}
 
 \begin{proof}
-For any Abelian group $A$ the functor category ${Set}^A$, which is the fibre above $A$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Ab \rightarrow \Cat$ which maps Abelian groups to categories with one object, and group homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that for any Abelian group $A$, the projection morphism $\pi : A \times G \rightarrow A$ has a right adjoint  that satisfies the Beck-Chevalley condition. Therefore, $G$ is exponentiable and $(p:\AbSet \rightarrow \Ab, G, \num)$ is a UoM-fibration.
+For any Abelian group $A$ the functor category ${Set}^A$, which is the fibre above $A$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Ab \rightarrow \Cat$ which maps Abelian groups to categories with one object, and group homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that for any Abelian group $A$, the projection morphism $\pi : A \times G \rightarrow A$ has a right adjoint  that satisfies the Beck-Chevalley condition. Therefore, $G$ is exponentiable and $(p:\AbSet \rightarrow \Ab, G, Q)$ is a UoM-fibration.
 \end{proof}
 
 We can also prove that the fibration $U_G:\E \rightarrow \LAb$ as described in Example~\ref{ex:uomLaw}, where the fibre above an object $n$ is given by $G^n$-sets, is a UoM-fibration.
@@ -937,7 +936,7 @@ Or in other words, substitution of the $n^{th}$ unit variable is given by precom
 
 For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\AbSet$ interpretation.
 
-
+\note{Can the following be proven for presheaves?}
 \begin{lemma}
 \label{lemma:allarrows}
  Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
@@ -954,7 +953,7 @@ This Lemma says that in the $\AbSet$ model a universally quantified variable ove
 \label{cor:subs}
 Suppose that $\Delta, u \vdash T \; \msf{ Type}$, then
  \[
-  |\sem{\forall u . num(u) \rightarrow T}| \cong |\sem{T[1/u]}|
+  |\sem{\forall u . \qnt(u) \rightarrow T}| \cong |\sem{T[1/u]}|
 \]
 \end{corollary}
 \begin{proof}
@@ -967,7 +966,7 @@ We now prove some theorems about the $\AbSet$ \UoMFibration that are akin to the
 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
-Let $t$ be a closed term of type $\forall u. num(u) \rightarrow num(u^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\num(u)}|$,
+Let $t$ be a closed term of type $\forall u. \qnt(u) \rightarrow \qnt(u^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(u)}|$,
 \[
 \sem{t} (g \cdot x) = g^n \cdot \sem{t} x
 \]
@@ -975,37 +974,37 @@ Let $t$ be a closed term of type $\forall u. num(u) \rightarrow num(u^n)$, where
 \begin{proof}
 We know from Lemma~\ref{lemma:allarrows} that
 \[
-\sem{t} \in \GSet(|\sem{\num(u)}|,|\sem{\num(u^n)}|)
+\sem{t} \in \GSet(|\sem{\qnt(u)}|,|\sem{\qnt(u^n)}|)
 \]
 % This means that $\sem{t}$ must satisfy the diagram
 % \begin{diagram}
-% |\num(u)|       &\rTo^{\sem{t}}        &|\num(u^n)| \\
-% \dTo<{\num(u)g}     &                      &\dTo>{\num(u^n)m } \\
-% |\num(u)|        &\rTo_{\sem{t}}        &|\num(u^n)| \\
+% |\qnt(u)|       &\rTo^{\sem{t}}        &|\qnt(u^n)| \\
+% \dTo<{\qnt(u)g}     &                      &\dTo>{\qnt(u^n)m } \\
+% |\qnt(u)|        &\rTo_{\sem{t}}        &|\qnt(u^n)| \\
 % \end{diagram}
-Or in other words $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$, for all $x \in |\num(u)|$ as required.
+Or in other words $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$, for all $x \in |\sem{\qnt(u)}|$ as required.
 \end{proof}
 This theorem tells us that polymorphic functions are \emph{invariant under scaling}. Intuitively we see that scaling factors must be changed in an appropriately polymorphic way.
 
-If we apply Corollary~\ref{cor:subs} to the type $\forall u. num(u)\rightarrow num(u^n)$ we see that
+If we apply Corollary~\ref{cor:subs} to the type $\forall u. \qnt(u)\rightarrow \qnt(u^n)$ we see that
 \[
- |\sem{\forall u. num(u)\rightarrow num(u^n)}| \cong |\sem{num(1^n)}| \cong |\sem{num(1)}| \cong G
+ |\sem{\forall u. \qnt(u)\rightarrow \qnt(u^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong G
 \]
-This implies that terms of type $\forall u. num(u)\rightarrow num(u^n)$ vary only by scalar multiplication.
+This implies that terms of type $\forall u. \qnt(u)\rightarrow \qnt(u^n)$ vary only by scalar multiplication.
 
 
-Next, we wish to prove that the type  $\forall u . num(u^2) \rightarrow num(u)$ is uninhabited. We say that a term is \emph{trivial} if it is constantly zero.
+Next, we wish to prove that the type  $\forall u . \qnt(u^2) \rightarrow \qnt(u)$ is uninhabited.
 
 \begin{theorem}
 \label{thm:UninhabType}
- There is no non-trivial term of type $\forall u . num(u^2) \rightarrow num(u)$., i.e., we cannot write a polymorphic square root function.
+ There is no term of type $\forall u . \qnt(u^2) \rightarrow \qnt(u)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the UoM-fibration $(p:\AbSet \rightarrow \Ab, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\AbSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $\num$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall u . num(u^2) \rightarrow num(u)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the UoM-fibration $(p:\AbSet \rightarrow \Ab, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\AbSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall u . \qnt(u^2) \rightarrow \qnt(u)$ is given by
 \begin{align*}
-  |\sem{\forall u . num(u^2) \rightarrow num(u)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{num (u^2)}|, |\sem{num(u)}|)
+  |\sem{\forall u . \qnt(u^2) \rightarrow \qnt(u)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{\qnt (u^2)}|, |\sem{\qnt(u)}|)
 \end{align*}
-Or in other words, any element $f$ of $ |\sem{\forall u . num(u^2) \rightarrow num(u)}|$, satisfies for all $g, x \in \bbZ_2$
+Or in other words, any element $f$ of $ |\sem{\forall u . \qnt(u^2) \rightarrow \qnt(u)}|$, satisfies for all $g, x \in \bbZ_2$
 \[
 f (g^2 \cdot x) = g \cdot (fx) \; \; \; \; (\ast)
 \]
@@ -1016,32 +1015,30 @@ If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contrad
 But the left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no non-trivial $f$, as required.
 \end{proof}
 
-Notice that if $0$ were an element of the Abelian group object $G$ then the function $f(x) = 0$ would satisfy $\ast$. This is why we specified that there exists no \emph{non-trivial} term of type $\forall u . num(u^2) \rightarrow num(u)$.
-
 Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis, which first appeared here \cite{buckingham1914physically} but a more modern introduction can be found here \cite{sonin2001physical}.
 
 \begin{theorem}
  \label{lem:AppSubs}
 Consider the $\AbSet$ semantics for \UoM. Then
 \[
- |\sem{\forall u . num(u) \rightarrow num(u) \rightarrow num(1)}| \cong |\sem{num(1)\rightarrow num(1)}|
+ |\sem{\forall u . \qnt(u) \rightarrow \qnt(u) \rightarrow \qnt(1)}| \cong |\sem{\qnt(1)\rightarrow \qnt(1)}|
 \]
 \end{theorem}
 \begin{proof}
 We obtain this result as a direct consequence of Corollary~\ref{cor:subs}.
 \end{proof}
 
-Finally, we prove a result about the higher order type $\forall u_1. \forall u_2. (num(u_1) \rightarrow num(u_2)) \rightarrow num(u_1 \cdot u_2)$.
+Finally, we prove a result about the higher order type $\forall u_1. \forall u_2. (\qnt(u_1) \rightarrow \qnt(u_2)) \rightarrow \qnt(u_1 \cdot u_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There exists no non-trivial term of type $\forall u_1. \forall u_2. (num(u_1) \rightarrow num(u_2)) \rightarrow num(u_1 \cdot u_2)$.
+There exists no non-trivial term of type $\forall u_1. \forall u_2. (\qnt(u_1) \rightarrow \qnt(u_2)) \rightarrow \qnt(u_1 \cdot u_2)$.
 \end{theorem}
 \begin{proof}
-Set $G$ to be $\bbZ_2$ and similarly $\num$ to be $\bbZ_2$ as well. Then interpreting this type we have that
+Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have that
  \[
-\sem{\forall u_1. \forall u_2. (num(u_1) \rightarrow num(u_2)) \rightarrow num(u_1 \cdot u_2)} = \{ t \in (\num \rightarrow \num) \rightarrow \num \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
+\sem{\forall u_1. \forall u_2. (\qnt(u_1) \rightarrow \qnt(u_2)) \rightarrow \qnt(u_1 \cdot u_2)} = \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
  \]
-Hence for any $t \in  \sem{\forall u_1. \forall u_2. (num(u_1) \rightarrow num(u_2)) \rightarrow num(u_1 \cdot u_2)}$ and $f \in \num \rightarrow \num$, we have that
+Hence for any $t \in  \sem{\forall u_1. \forall u_2. (\qnt(u_1) \rightarrow \qnt(u_2)) \rightarrow \qnt(u_1 \cdot u_2)}$ and $f \in Q \rightarrow Q$, we have that
 \[
 (g_1 g_2) \cdot tf = tf
 \]
@@ -1049,7 +1046,7 @@ which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$
 \end{proof}
 
 
-% \note{****Add to other document that it is easy to generate ``free theorems'' in AbSet fibration and there are many examples especially when playing around with num(u) and arrows}
+% \note{****Add to other document that it is easy to generate ``free theorems'' in AbSet fibration and there are many examples especially when playing around with \qnt(u) and arrows}
 
 
 
@@ -1096,12 +1093,12 @@ Let $p:\E \rightarrow \B$ be a \LamOneFib, with right adjoints to all reindexing
  \dTo<{\Rel(p)}		&			&			 &				&\dTo>{p} \\
  \LAb\times \B		&\rTo_{\; \; R \times \Delta \; \;}	&\B \times \B \times \B	 &\rTo_{\; \; \blank \times \blank \times \blank \; \;}	&\B\\
  \end{diagram}
-Then compose $\Rel(p)$ with the first projection $\pi_{_{1}} : \LAb \times \B \rightarrow \LAb$ to obtain the functor $q = \pi_{_{1}} \circ \Rel(p) : \Rel(\E) \rightarrow \LAb$. Note that the fibre above on object $n$ of $\LAb$ is given by a triple $(n, B, E)$, where $n \in \LAb$, $B \in \B$ and $E$ is an object of $\E$ above $R(n) \times B \times B$, exactly generalising Kennedy's model to a fibrational setting. Let $\num_0$ be a fixed object of $\B$, and let $\num_r$ be a fixed object of $\E$ above $R(\terminal)\times \num_0 \times \num_0$, this will act as the relational $\num$ object.
+Then compose $\Rel(p)$ with the first projection $\pi_{_{1}} : \LAb \times \B \rightarrow \LAb$ to obtain the functor $q = \pi_{_{1}} \circ \Rel(p) : \Rel(\E) \rightarrow \LAb$. Note that the fibre above on object $n$ of $\LAb$ is given by a triple $(n, B, E)$, where $n \in \LAb$, $B \in \B$ and $E$ is an object of $\E$ above $R(n) \times B \times B$, exactly generalising Kennedy's model to a fibrational setting. Let $Q_0$ be a fixed object of $\B$, and let $Q_r$ be a fixed object of $\E$ above $R(\terminal)\times Q_0 \times Q_0$, this will act as the relational $Q$ object.
 We call $q$ the \emph{parametric UoM-fibration induced by $u$}, or simply a \emph{parametric UoM-fibration}. We justify this terminology in the following theorem and example. \\
 
 \begin{theorem}
 \label{thm:logUoM}
-$(q:\Rel(\E) \rightarrow \LAb, \terminal, \num)$ is a \UoMFibration, where $\num = (\terminal, \num_0, \num_r) \in \Rel(\E)_\terminal$.
+$(q:\Rel(\E) \rightarrow \LAb, \terminal, Q)$ is a \UoMFibration, where $Q = (\terminal, Q_0, Q_r) \in \Rel(\E)_\terminal$.
 \end{theorem}
 \begin{proof}
 $\Rel(p):\Rel(E) \rightarrow \LAb \times \B$ is a \LamOneFib since \LamOneFibs are preserved by pullbacks. Since $\B$ is a Cartesian closed, $q:\Rel(\E) \rightarrow \LAb$ is also a \LamOneFib.
@@ -1177,7 +1174,7 @@ For a more concrete view of the Abstraction Theorem for a unit-erasure semantics
 %  R(B^{n+1})		&\rTo_{R(\pi_n)}		&R(B^n)\\
 % \end{diagram}
 % Where $\pi_m:B^{m+1} \rightarrow B^{m}$ and $\pi_n:B^{n+1} \rightarrow B^{n}$ are projection maps. This functor is used to interpret unit expressions as objects that can be quantified over in the internal logic of $q$. The pullback condition ensures that the Beck-Chevalley condition holds.
-% \item Let $N$ be a fixed object of $\C$ and $P_N$ a chosen object of $\mathcal{P}_{R(B) \times N \times N}$. This is used as the $\num$ object.
+% \item Let $N$ be a fixed object of $\C$ and $P_N$ a chosen object of $\mathcal{P}_{R(B) \times N \times N}$. This is used as the $Q$ object.
 % \end{itemize}
 %
 % Now, consider the following pullback square
@@ -1193,7 +1190,7 @@ For a more concrete view of the Abstraction Theorem for a unit-erasure semantics
 
 \begin{example}[Kennedy's Relational \UoM]
 \label{ex:KennedyParam}
-Let $p: \Sub{\Set} \rightarrow \Set$ be the subset fibration. Further, set $\num_0 = \bbQ$, let $R: \LAb \rightarrow \Set$ be the product-preserving functor defined by $R(\terminal) = \bbQ^+$ and $\num_r = \{ (g,a,b) \; | \; ga=b \}$ in the fibre above $\bbQ^+ \times \bbQ \times \bbQ$. The object $\num$ is given by $(\terminal, \num_0, \num_r)$.
+Let $p: \Sub{\Set} \rightarrow \Set$ be the subset fibration. Further, set $Q_0 = \bbQ$, let $R: \LAb \rightarrow \Set$ be the product-preserving functor defined by $R(\terminal) = \bbQ^+$ and $Q_r = \{ (g,a,b) \; | \; ga=b \}$ in the fibre above $\bbQ^+ \times \bbQ \times \bbQ$. The object $Q$ is given by $(\terminal, Q_0, Q_r)$.
 
 Then, since the subset fibration is a \LamOneFib, we have a parametric UoM-fibration $q: \Rel(\E) \rightarrow \LAb$. Morphisms in the total category of the subobject fibration are simply morphisms in the base category that restrict to subsets, so for any closed term (i.e. $\Gamma = \emptyset$) we have that the existence of $\semr{t}$ shows that $(\semo{t}, \semo{t}) \in \semr{T}$, i.e., every term is related to itself by the relational interpretation of its type.
 \end{example}
@@ -1324,14 +1321,14 @@ The reason that we have stated this theorem is purely for the following corollar
 
 \begin{corollary}
 \label{cor:UoMAndLamOne}
-Suppose that $(u:\B \rightarrow \mathcal{L}, G, \num_0)$ is a UoM-fibration and $p: \E \rightarrow \B$ is a \LamOneFib satisfying the condition on $p$ in Theorem~\ref{thm:CompOfProd}. Choose $\num \in \E_{\num_0}$ and define $q = p \circ u$, then the triple $(q : \E \rightarrow \mathcal{L}, G, \num)$ is a UoM-fibration.
+Suppose that $(u:\B \rightarrow \mathcal{L}, G, Q_0)$ is a UoM-fibration and $p: \E \rightarrow \B$ is a \LamOneFib satisfying the condition on $p$ in Theorem~\ref{thm:CompOfProd}. Choose $Q \in \E_{Q_0}$ and define $q = p \circ u$, then the triple $(q : \E \rightarrow \mathcal{L}, G, Q)$ is a UoM-fibration.
 \end{corollary}
 
 \begin{proof}
-It is a simple exercise to show that the composition of two \LamOneFibs is a \LamOneFib, and Theorem~\ref{thm:CompOfProd} says that $G$ is an exponentiable object for the composite $q$, and $G$ is Abelian by definition. Hence $(q : \E \rightarrow \mathcal{L}, G, \num)$ is a UoM-fibration.
+It is a simple exercise to show that the composition of two \LamOneFibs is a \LamOneFib, and Theorem~\ref{thm:CompOfProd} says that $G$ is an exponentiable object for the composite $q$, and $G$ is Abelian by definition. Hence $(q : \E \rightarrow \mathcal{L}, G, Q)$ is a UoM-fibration.
 \end{proof}
 
-With this in mind we can construct a parametric model for \UoM, where both the standard and relational semantics are indexed by units. To this end, let $(u:\B \rightarrow \mathcal{L}, G, \num_0)$ be a UoM-fibration and $p: \E \rightarrow \mathcal{L}$ be a \LamOneFib satisfying the condition on $p$ in Theorem~\ref{thm:CompOfProd}. Then to construct a \emph{parametric UoM-fibration}, we pullback along the composition of the diagonal functor $\Delta : \B \rightarrow \B \times \B$ with the product functor $\blank \times \blank : \B \times \B \rightarrow \B$, and then compose the resulting functor with $u$. Or diagrammatically,
+With this in mind we can construct a parametric model for \UoM, where both the standard and relational semantics are indexed by units. To this end, let $(u:\B \rightarrow \mathcal{L}, G, Q_0)$ be a UoM-fibration and $p: \E \rightarrow \mathcal{L}$ be a \LamOneFib satisfying the condition on $p$ in Theorem~\ref{thm:CompOfProd}. Then to construct a \emph{parametric UoM-fibration}, we pullback along the composition of the diagonal functor $\Delta : \B \rightarrow \B \times \B$ with the product functor $\blank \times \blank : \B \times \B \rightarrow \B$, and then compose the resulting functor with $u$. Or diagrammatically,
 \begin{diagram}
 \Rel(\E) \SEpbk		&\rTo 									&\E\\
 \dTo<{\Rel(p)}		&									&\dTo>{p} \\
@@ -1339,12 +1336,12 @@ With this in mind we can construct a parametric model for \UoM, where both the s
 \dTo<{u}        	& 									&\dTo>{u}\\
 \mathcal{L}             		& 									&\mathcal{L}
  \end{diagram}
-Let  $\num_r$ be an object of $\E$ in the fibre above $\num_0 \times \num_0$. An object of $\Rel(\E)$ above $A \in \L$ is given by a pair $(B,E)$, where $B$ is an object of $\B$ and $E$ is an object of $\E$ in the fibre above $B \times B$. As expected, the functor $q = u \circ \Rel(p)$ is a UoM-fibration.
+Let  $Q_r$ be an object of $\E$ in the fibre above $Q_0 \times Q_0$. An object of $\Rel(\E)$ above $A \in \L$ is given by a pair $(B,E)$, where $B$ is an object of $\B$ and $E$ is an object of $\E$ in the fibre above $B \times B$. As expected, the functor $q = u \circ \Rel(p)$ is a UoM-fibration.
 
 
 \begin{theorem}
 \label{thm:ParamUoM}
-The triple $(q: \Rel(\E) \rightarrow \mathcal{L}, G, \num)$, where $\num = (\num_0, \num_r)$ is a UoM-fibration.
+The triple $(q: \Rel(\E) \rightarrow \mathcal{L}, G, Q)$, where $Q = (Q_0, Q_r)$ is a UoM-fibration.
 \end{theorem}
 
 
@@ -1383,33 +1380,33 @@ where $(X,A,\phi)$ is an $A$-set and $(S,H,\psi)\subseteq (X,A,\phi) \times (X,A
 
 \subsection{Using Parametric UoM-Fibrations}
 \label{sec:UsingParamUoM}
-% We now have two accounts of parametricity for \UoM, one for a unit-erasure semantics and one for a non-unit-erasure semantics. In this section we will put the parametric UoM-fibrations to work to prove a couple of theorems, both of which will apply to the two parametric settings. Firstly, we will we will prove the scaling factor Theorem~\ref{thm:ScalFact} in these settings and then we will show that the type $\forall u_1. \forall u_2. (num(u_1) \rightarrow num(u_2)) \rightarrow num(u_1 \cdot u_2)$ is uninhabited. Since both theorems can be proven, in similar ways, using parametricity for a unit-erasure semantics and using parametricity for a non-unit-erasure semantics, we will prove the first theorem assuming a unit-erasure semantics and the second assuming a non-unit-erasure semantics.
+% We now have two accounts of parametricity for \UoM, one for a unit-erasure semantics and one for a non-unit-erasure semantics. In this section we will put the parametric UoM-fibrations to work to prove a couple of theorems, both of which will apply to the two parametric settings. Firstly, we will we will prove the scaling factor Theorem~\ref{thm:ScalFact} in these settings and then we will show that the type $\forall u_1. \forall u_2. (\qnt(u_1) \rightarrow \qnt(u_2)) \rightarrow \qnt(u_1 \cdot u_2)$ is uninhabited. Since both theorems can be proven, in similar ways, using parametricity for a unit-erasure semantics and using parametricity for a non-unit-erasure semantics, we will prove the first theorem assuming a unit-erasure semantics and the second assuming a non-unit-erasure semantics.
 %
 %
 %
 % \begin{theorem}(Scaling Factors Revisited)
 % \label{thm:ScalFact2}
-% Let $g\in G$ be a  scaling factor. Then for a closed term $\vdash t:\forall u. num(u) \rightarrow num(u^n)$, where $n\in \mathbb{N}$, the following property holds
+% Let $g\in G$ be a  scaling factor. Then for a closed term $\vdash t:\forall u. \qnt(u) \rightarrow \qnt(u^n)$, where $n\in \mathbb{N}$, the following property holds
 % \[
 % \semo{t} (g \cdot x) = g^n \cdot \semo{t} x
 % \]
 % \end{theorem}
 % \begin{proof}
-% Consider the parametric UoM-fibration as described in Example~\ref{ex:KennedyParam}. Recall that the interpretation of a type $\Delta \vdash num(e) \; \msf{ Type}$ for some unit expression $e$, is given by reindexing $\num$ by the homorphism  $\sem{e}:(\mathbb{Q}^+)^n \rightarrow \mathbb{Q}^+$. Explicitly, this gives
+% Consider the parametric UoM-fibration as described in Example~\ref{ex:KennedyParam}. Recall that the interpretation of a type $\Delta \vdash \qnt(e) \; \msf{ Type}$ for some unit expression $e$, is given by reindexing $Q$ by the homorphism  $\sem{e}:(\mathbb{Q}^+)^n \rightarrow \mathbb{Q}^+$. Explicitly, this gives
 % \[
-%  \sem{num(e)} = \sem{e}^{\ast}\num = (n,\mathbb{Q}, \sem{e}^\ast P_N)
+%  \sem{\qnt(e)} = \sem{e}^{\ast}Q = (n,\mathbb{Q}, \sem{e}^\ast P_N)
 % \]
 % where $\sem{e}^\ast P_N =  \{(g,a,b) \; | \; (\semo{e}g)a = b\}$. To prove the theorem, we notice that since $t$ is a closed term
 % \[
-% \semo{t:\forall u. num(u) \rightarrow num(u^n)} \times \semo{t:\forall u. num(u) \rightarrow num(u^n)} \in \semr{\forall u. num(u) \rightarrow num(u^n)}
+% \semo{t:\forall u. \qnt(u) \rightarrow \qnt(u^n)} \times \semo{t:\forall u. \qnt(u) \rightarrow \qnt(u^n)} \in \semr{\forall u. \qnt(u) \rightarrow \qnt(u^n)}
 %  \]
-% Expanding this, we have that for all $(g,a,b) \in \semr{num(u)}$
+% Expanding this, we have that for all $(g,a,b) \in \semr{\qnt(u)}$
 % \[
-% (g, \semo{t:\forall u. num(u) \rightarrow num(u^n)}a, \semo{t:\forall u. num(u) \rightarrow num(u^n)}b) \in \semr{num(u^n)}
+% (g, \semo{t:\forall u. \qnt(u) \rightarrow \qnt(u^n)}a, \semo{t:\forall u. \qnt(u) \rightarrow \qnt(u^n)}b) \in \semr{\qnt(u^n)}
 % \]
 % Or in other words
 % \[
-%  \semo{t: \forall u. num(u) \rightarrow num(u^n)} (g \cdot x) = g^n \cdot \semo{t: \forall u. num(u) \rightarrow num(u^n)} x
+%  \semo{t: \forall u. \qnt(u) \rightarrow \qnt(u^n)} (g \cdot x) = g^n \cdot \semo{t: \forall u. \qnt(u) \rightarrow \qnt(u^n)} x
 % \]
 % as required.
 %
@@ -1417,15 +1414,15 @@ where $(X,A,\phi)$ is an $A$-set and $(S,H,\psi)\subseteq (X,A,\phi) \times (X,A
 %
 %
 % % \[
-% %   \sem{\vdash \forall u. num(u) \rightarrow num(u^n)} = \{ f \in \prod_{g \in G} \sem{\vdash num(u)}g \rightarrow \sem{num(u^n)}g \}
+% %   \sem{\vdash \forall u. \qnt(u) \rightarrow \qnt(u^n)} = \{ f \in \prod_{g \in G} \sem{\vdash \qnt(u)}g \rightarrow \sem{\qnt(u^n)}g \}
 % % \]
 % %
 % %  \[
-% %   \sem{t} \in \sem{\forall u. num(u) \rightarrow num(u^n)}
+% %   \sem{t} \in \sem{\forall u. \qnt(u) \rightarrow \qnt(u^n)}
 % %  \]
 % % since $\Gamma$ is empty. Expanding this, we have that
 % % % \[
-% % %  (\semo{t}, \semo{t}) \in \sem{\forall u. num(u) \rightarrow num(u^n)}
+% % %  (\semo{t}, \semo{t}) \in \sem{\forall u. \qnt(u) \rightarrow \qnt(u^n)}
 % % % \]
 % % % which means that
 %
@@ -1524,7 +1521,7 @@ where $(X,A,\phi)$ is an $A$-set and $(S,H,\psi)\subseteq (X,A,\phi) \times (X,A
 % \subsection{Kennedy's Model, Fibrationally}
 % Andrew assumes a $\msf{Nat}$-indexed collection $\Psi \; n \subseteq
 % \msf{Ab} n \ra \msf{\Rel}(Q, Q)$ of functions which he uses as
-% environments to interpret types of the form $\msf{num}(u)$ as
+% environments to interpret types of the form $\qnt(u)$ as
 % relations over $Q$. This family $\Psi$ is expected to satisfy a
 % closure condition: if $S:m \ra \msf{Ab}\;n$ and $\phi \in \Psi\;n$,
 % then $\phi \cdot S^* \in \Psi \; m$
@@ -1591,7 +1588,7 @@ where $(X,A,\phi)$ is an $A$-set and $(S,H,\psi)\subseteq (X,A,\phi) \times (X,A
 % "functional" model - i.e. one where the types are interpreted as
 % functions - by mapping each $G$-set to the interpretation of the type
 % in the model defined by that $G$-set. This amounts to not hard-wiring
-% in the interpretation of $\msf{num}$ as an Abelian universe but allowing it to
+% in the interpretation of $\qnt$ as an Abelian universe but allowing it to
 % be a parameter over which the model varies. This in turns amounts to
 % thinking of $\msf{num}$ not so much as a base type such as
 % $\msf{Bool}$ but rather as a type variable, albeit indexed over an
@@ -1611,7 +1608,7 @@ where $(X,A,\phi)$ is an $A$-set and $(S,H,\psi)\subseteq (X,A,\phi) \times (X,A
 % {\bf Question: What is identity extension here? Would it arise from
 %   taking the $G$-set $\pi_2:G \times X \ra X$ as the Abelian
 %   universe. If so, we again need a functional interpretation of types
-%   which once more suggests not hard-wiring in the interpretation of $\msf{num}$
+%   which once more suggests not hard-wiring in the interpretation of $\qnt$
 % }
 %
 %
