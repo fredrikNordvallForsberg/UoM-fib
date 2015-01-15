@@ -198,7 +198,7 @@
 \newcommand{\id}{\mathrm{id}}
 
 % Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Models of programming languages with physical dimensions}
+\title{Categorical Models of Dimension Types}
 \author[1]{Robert Atkey}
 \author[2]{Neil Ghani}
 \author[2]{Fredrik Nordvall Forsberg}
@@ -207,6 +207,7 @@
 \affil[1]{University of Edinburgh}
 \affil[2]{University of Strathclyde}
 \affil[3]{University of Cambridge}
+\authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -221,7 +222,7 @@
 \end{abstract}
 
 \section{Introduction}
-This paper is about semantic models of programs 
+This paper is about semantic models of programs
 that manipulate physical quantities, such
 as length or time. The fundamental principle is that it is not
 meaningful to add or compare quantities of different dimension, but
@@ -234,7 +235,7 @@ f\coloneqq (\Lambda X.\,\lambda x:\num(X).\,x+x)
 :\ \forall X.\,\num(X)\to \num(X)
 \label{eqn:double}
 \end{equation}
-To illustrate, we can use the polymorphic 
+To illustrate, we can use the polymorphic
 function $f$ to double a length of $5$ metres:
 \begin{equation}
 f_\length\,(5\mathrm{m})=
@@ -243,7 +244,7 @@ f_\length\,(5\mathrm{m})=
 \end{equation}
 Several authors have developed programming languages with type systems
 that support physical quantities. Our starting point is the work of
-Kennedy~\cite{} who developed techniques for reasoning about these 
+Kennedy~\cite{} who developed techniques for reasoning about these
 kinds of program. In this paper we look at this from a different
 angle by
 developing a general categorical notion of model for a programming
@@ -251,11 +252,11 @@ language of this form, and by developing ways of building models.
 
 Some things are worth bringing out of the examples (\eqref{eqn:double},\eqref{eqn:doubleapp}).
 \begin{itemize}
-\item There are two kinds of variable, $\Dvar$ and $x$; 
+\item There are two kinds of variable, $\Dvar$ and $x$;
 $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type.
 We use different abstraction symbols ($\lambda$ and $\Lambda$)
 for the two kinds of variable.
-\item The type $\num(\Dvar)$ depends on a dimension $\Dvar$; it 
+\item The type $\num(\Dvar)$ depends on a dimension $\Dvar$; it
   is inhabited by quantities of that dimension.
 \item The standard unit of measurement for length, the metre, is
   quantity of that dimension, i.e. a constant $\mathrm m:\num(\length)$.
@@ -263,63 +264,63 @@ for the two kinds of variable.
 
 The main contributions of this paper are as follows.
 \begin{enumerate}
-\item We provide a general notion of model for a programming language 
+\item We provide a general notion of model for a programming language
   of this kind by introducing the notion of \emph{model of dimension types}
   (Section~\ref{sec:sem}).
   The basic idea is that, for each context of dimension variables,
-  there is a model of the simply typed $\lambda$-calculus extended with 
-  types of quantities of the dimensions definable in 
-  the context ($\num(D)$ etc.). 
-  Moreover these models of the simply typed $\lambda$-calculus 
+  there is a model of the simply typed $\lambda$-calculus extended with
+  types of quantities of the dimensions definable in
+  the context ($\num(D)$ etc.).
+  Moreover these models of the simply typed $\lambda$-calculus
   are related by substituting for dimension variables,
   and this also defines a universal property for polymorphic quantification
   over dimension variables.
 \item An important example of a model of dimension types is
-  a semantics based 
-  on actions of scaling groups (Section~\ref{sec:AbSet}). 
-  This is as close as we can get to 
+  a semantics based
+  on actions of scaling groups (Section~\ref{sec:AbSet}).
+  This is as close as we can get to
   a set-theoretic semantics for programs with parametric dimension polymorphism.
   A difficulty here is, how does one understand $\num(\Dvar)$ as a set,
-  if the dimension $\Dvar$ is not specified and we have 
-  no fixed units of measure for $\Dvar$? 
+  if the dimension $\Dvar$ is not specified and we have
+  no fixed units of measure for $\Dvar$?
   We resolve this by interpreting
-  $\num(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, 
+  $\num(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers,
   thought of as quantities of some unspecified unit of measure,
   but then by equipping $\num(\Dvar)$ with an action of the scaling group,
   to explain how to change the units of measure.
-  We can then ask that 
-  any function $\num(\Dvar)\to\num(\Dvar)$ 
+  We can then ask that
+  any function $\num(\Dvar)\to\num(\Dvar)$
   is invariant under changing that unspecified unit of measure,
   more precisely, invariant under scaling.
 \item We give new ways of building models, by extending
-  relational parametricity 
-  techniques for typed lambda calculus to the setting with 
+  relational parametricity
+  techniques for typed lambda calculus to the setting with
   dimensions (Section~\ref{sec:param}).
 \end{enumerate}
 
-\note{We could say something here about Kennedy's relative full abstraction conjecture. 
-However I think that in a language with products it is trivially false. Still it is interesting 
-to ask whether we can phrase/prove a theorem that says that the group action model of 
-dimensions is as good 
+\note{We could say something here about Kennedy's relative full abstraction conjecture.
+However I think that in a language with products it is trivially false. Still it is interesting
+to ask whether we can phrase/prove a theorem that says that the group action model of
+dimensions is as good
 as the set theoretic model of simple types.}
 
-\section{Types with physical dimensions} 
+\section{Types with physical dimensions}
 \label{sec:Not}
 We begin by recalling a simple type theory indexed by dimensions, based
 on Kennedy's work~\cite{}.
-Within this type theory we can express programs such as~(\ref{eqn:double}) and 
+Within this type theory we can express programs such as~(\ref{eqn:double}) and
 (\ref{eqn:doubleapp}).
 Since there are two kinds of variable, we have two kinds of context.
 
-\noindent {\bf Dimensions and dimension contexts:} 
-A dimension context $\Delta$ is a finite list of distinct 
+\noindent {\bf Dimensions and dimension contexts:}
+A dimension context $\Delta$ is a finite list of distinct
 dimension variables.
-A dimension-expression-in-context $\Dj\Delta \Dim$ is a monomial 
+A dimension-expression-in-context $\Dj\Delta \Dim$ is a monomial
 $\Dim$ in the variables $\Delta$.
-More precisely, 
-if $\Delta=(\Dvar_1\dots \Dvar_n)$ and $k_1\dots k_n\in\mathbb Z$ 
+More precisely,
+if $\Delta=(\Dvar_1\dots \Dvar_n)$ and $k_1\dots k_n\in\mathbb Z$
 then $\Dj \Delta{\Dvar_1^{k_1}\dots \Dvar_n^{k_n}}$.
-We can make the set $\{\Dim~|~\Dj \Delta \Dim\}$ an Abelian group under addition of 
+We can make the set $\{\Dim~|~\Dj \Delta \Dim\}$ an Abelian group under addition of
 exponents, and indeed this is the free Abelian group on $\Delta$.
 
 %The Lawvere theory of Abelian groups $\LAb$ is the opposite of the Kleisli category of $\Ab$, with natural numbers as objects. We write $\msf{Ab}(\C)$ for the internal Abelian groups of a category $\C$, which are just the finite product-preserving functors from $\LAb$ to $\C$.\\
@@ -352,7 +353,7 @@ $\Delta$ is a dimension context and these judgements are generated by the follow
 Notice that we do not have System-F-style polymorphism, but instead dimension polymorphism. Types can be parameterized by dimensions, but they cannot be parameterized by types. From the Curry-Howard perspective this is a first-order-logic where the domain of discourse is the theory of Abelian groups
 and where there is a single atomic predicate, $\num$.
 
-Well formed typing contexts are given by judgements 
+Well formed typing contexts are given by judgements
 $\cj\Delta\Gamma $ where $\Delta$ is a dimension context, $\Gamma$ is
 of the form ${x_1 : T_1, \ldots, x_n:T_n}$ and there is a well formed
 typing judgement $\Tj\Delta{ T_i}$ for every $i$. Well formed terms
@@ -360,7 +361,7 @@ are given by judgements $\tj \Delta \Gamma t T$ where there is a
 well formed typing context $\cj \Delta \Gamma$ and
 a well formed type $\Tj \Delta T $. The rules for
 the type formers $\msf{1}, \blank\times\blank$ and $\blank \! \ra \! \blank$ are the usual ones from
-simply typed $\lambda$-calculus. 
+simply typed $\lambda$-calculus.
 \[\begin{array}{c}
 \AxiomC{
 $\cj \Delta\Gamma\quad
@@ -399,7 +400,7 @@ $
 \qquad
 \AxiomC{
 $
-\tj\Delta {\Gamma} {t}{T\to U}\quad 
+\tj\Delta {\Gamma} {t}{T\to U}\quad
 \tj\Delta {\Gamma} {u}{T}
 $
 }
@@ -432,7 +433,7 @@ In addition, we have the introduction and elimination rules for quantification o
 %\AxiomC{$\Delta\vdash \Dim \quad \tj {\Delta} \Gamma  t {T[\Dim/\Dvar]}$}
 %	\UnaryInfC{$\tj \Delta  \Gamma {\pack e t}{\exists \Dvar.T}$}
 %	\DisplayProof
-%	
+%
 %&\hspace{5mm}
 %\AxiomC{$\tj {\Delta} \Gamma  t {\exists \Dvar.T}
 %  \quad
@@ -442,21 +443,21 @@ In addition, we have the introduction and elimination rules for quantification o
 %	\DisplayProof
 %	\\ \\
 \end{array}\]
-We remark that one 
-one can easily extend the language by adding 
+We remark that one
+one can easily extend the language by adding
 dimension constants (such as $\length$),
 standard units of measure (such as metres, $\mathrm{m}:\num(\length)$)
-and 
-arithmetic term constants 
-such as addition 
-$+:\forall \Dvar. \num(\Dvar)\times  \num(\Dvar) \rightarrow \num(\Dvar)$, 
+and
+arithmetic term constants
+such as addition
+$+:\forall \Dvar. \num(\Dvar)\times  \num(\Dvar) \rightarrow \num(\Dvar)$,
 multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \num(\Dvar_1)\times \num(\Dvar_2) \rightarrow \num(\Dvar_1 \cdot \Dvar_2)$,
-unit $1:\num(1)$, 
+unit $1:\num(1)$,
 and inverse $\mathsf{inv}:\forall \Dvar.\num(\Dvar)\to \num (\Dvar^{-1})$.
 
 
-One could also add sum types with no trouble, and these could be used to 
-define a boolean type, 
+One could also add sum types with no trouble, and these could be used to
+define a boolean type,
 $\bool\coloneqq 1+1$,
 and the language could then be extended with term constants for comparison, e.g.
 ${<}:\forall \Dvar.\num(\Dvar)\times \num(\Dvar)\to \bool$.
@@ -476,40 +477,40 @@ In this paper we do not treat recursion, but a future extension of our work may 
 
 
 \begin{definition}
-A \emph{$\lambda\forall$-fibration} 
-is a cartesian closed fibration 
+A \emph{$\lambda\forall$-fibration}
+is a cartesian closed fibration
 with simple products.
 \end{definition}
 \note{I prefer this, instead of asking for a distinguished object $G$
   and simple $G$-products, since it is a plain universal property, and
   also it makes it clear we are just dealing with models of FOL.  But
   is it too much to ask for the relation constructions in the last
-  section?}  
+  section?}
 This notion is well-known as a categorical model of first-order logic. It is central to our
 development, so we discuss the terminology informally now, referring
 the reader to \cite{jacobs1999categorical} for the full details.
 
 A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions.
-The idea is that dimension contexts will be interpreted as objects 
-$\B$. For each $b\in\B$ we consider the full subcategory $\E_b$ of $\E$ 
+The idea is that dimension contexts will be interpreted as objects
+$\B$. For each $b\in\B$ we consider the full subcategory $\E_b$ of $\E$
 spanned by objects $e\in\E$ for which $p(e)=b$:
 the objects of $\E_b$ will be used to interpret types in dimension context $b$,
 and the morphisms in $\E_b$ will be used to interpret terms.
 We can substitute dimension expressions for dimension variables, and this substitution
 will be interpreted using morphisms in $\B$.
 Since $p$ is a fibration, for each reindexing morphism $f:b\to b'$ in $\B$ there is a
-canonical associated reindexing functor $f^*:\E_{b'}\to \E_b$, which we will use 
+canonical associated reindexing functor $f^*:\E_{b'}\to \E_b$, which we will use
 to describe substitution for dimension variables in types and terms.
 
 A fibration is said to be cartesian closed if $\E_b$ is a cartesian closed category for all $b$,
 and each reindexing functor $f^*:\E_{b'}\to\E_b$ preserves products and exponentials.
 This cartesian closed structure is what is needed to interpret the product and function types.
 
-Concatenation of dimension contexts will be interpreted using 
+Concatenation of dimension contexts will be interpreted using
 products in the category $\B$.
-The reindexing functors for the product projections $f^*:\E_{b}\to \E_{b\times b'}$ 
+The reindexing functors for the product projections $f^*:\E_{b}\to \E_{b\times b'}$
 correspond to context-weakening.
-A fibration $p:\E\to \B$ is said to have simple products if $\B$ has products and 
+A fibration $p:\E\to \B$ is said to have simple products if $\B$ has products and
 the reindexing functors for the product projections have right adjoints
 $\forall:E_{b\times b'}\to E_b$
 that are compatible with reindexing (`Beck-Chevalley').
@@ -518,27 +519,27 @@ are what are needed to interpret universal quantification of dimension variables
 
 \begin{definition}
 A model of dimension types $(p,Q,G)$ is a $\lambda\times\forall$-fibration $p:\E\to \B$
-together with an object $Q$ of $\E$ and 
-structure making $p(Q)$ an Abelian group object $G$ in $\B$. 
+together with an object $Q$ of $\E$ and
+structure making $p(Q)$ an Abelian group object $G$ in $\B$.
 \end{definition}
-Recall that an Abelian group object in a category $\B$ with products 
+Recall that an Abelian group object in a category $\B$ with products
 is given by an object
-$G$ together with maps $e:1\to G$, $m:G\times G\to G$ and 
+$G$ together with maps $e:1\to G$, $m:G\times G\to G$ and
 $i:G\to G$ satisfying the laws of Abelian groups.
 This group structure is what is needed to interpret dimension expressions:
 for each vector of $n$ integers we have
-a morphism $G^n\to G$. 
+a morphism $G^n\to G$.
 
-Indeed an equivalent way to define Abelian group object 
-if $\B$ has chosen products is as follows. 
-Recall that the Lawvere theory for Abelian groups is the category $\LAb$ whose 
+Indeed an equivalent way to define Abelian group object
+if $\B$ has chosen products is as follows.
+Recall that the Lawvere theory for Abelian groups is the category $\LAb$ whose
 objects are natural numbers, and where a morphism $m\to n$ is an $m\times n$ matrix of integers.
-Composition of morphisms is matrix multiplication, and categorical 
-products are given by arithmetic addition 
+Composition of morphisms is matrix multiplication, and categorical
+products are given by arithmetic addition
 of natural numbers.
 An Abelian group object
-in $\B$ 
-is an object $G$ of $\B$ 
+in $\B$
+is an object $G$ of $\B$
 together with a strictly-product-preserving functor $F:\LAb\to\B$ such that $F(1)=G$.
 
 
@@ -546,9 +547,9 @@ together with a strictly-product-preserving functor $F:\LAb\to\B$ such that $F(1
 We remark that the Abelian group $G$ in a model of dimension types
 is analogous to the generic object in a model of System F.  The pair
 $(Q,G)$ is like a universe whose codes are equipped with the structure
-of an Abelian group.  Just as universes introduce type dependency into types, so $(Q,G)$ 
+of an Abelian group.  Just as universes introduce type dependency into types, so $(Q,G)$
 introduces unit-dependency into types.
-\note{I have reworded this but I still don't understand the second sentence, since $G$ is not a 
+\note{I have reworded this but I still don't understand the second sentence, since $G$ is not a
 first class type.}
 
 In order to ascertain the value of Definition~\ref{def:uomfib}, we
@@ -583,19 +584,19 @@ dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure s
 \begin{example}(Unit Erasure Models)
 \label{ex:UnitErasure}
 Let $\C$ be a cartesian closed category. Then the functor $\C \ra
-\terminal$ is a $\lambda\forall$-fibration. 
+\terminal$ is a $\lambda\forall$-fibration.
 The unique object of $\terminal$
 is a trivial Abelian group object in
 $\terminal$. By taking $\C$ to be the category of complete partial
 orders and continuous functions, and by choosing the flat pointed cpo
 $\bbQ_{\bot}$ to interpret $\num$ we obtain a model
-corresponding to Kennedy's unit-erasure model. 
+corresponding to Kennedy's unit-erasure model.
 \end{example}
 
 
 \begin{example}(Syntax of dimension types)
-We can construct a model of dimension types from the syntax. 
-The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$. 
+We can construct a model of dimension types from the syntax.
+The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$.
 The
 fibres are the types and terms definable over a collection of unit
 variables. This is a term model and hence provides a completeness
@@ -604,12 +605,12 @@ result for UoM-fibrations.
 
 
 \begin{example}(Model of dimension types without parametricity)
-Let $\Fam\Set$ be the category whose objects 
+Let $\Fam\Set$ be the category whose objects
 are pairs of a set $I$ and an $I$-indexed family of $I$ sets.
-A morphism $(I,\{X_i\}_{i\in I})\to (J,\{Y_j\}_{j\in J})$ 
-is a pair $(f,\{\phi\}_{i\in I})$ where $f$ is a function $f:I\to J$ 
+A morphism $(I,\{X_i\}_{i\in I})\to (J,\{Y_j\}_{j\in J})$
+is a pair $(f,\{\phi\}_{i\in I})$ where $f$ is a function $f:I\to J$
 and for all $i\in I$, $\phi_i$ is a function $\phi_i:X_i\to Y_{f(i)}$.
-It is well known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family 
+It is well known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family
 $(I,\{X_i\}_{i\in I})$ to its index set $I$, is a $\lambda\forall$-fibration.
 
 The set of all physical dimensions (e.g. length, time, speed etc.)
@@ -618,19 +619,19 @@ of fundamental dimensions.
 Suppose we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$.
 This forms a model of dimension types.
 
-In this model, a dimension expression 
+In this model, a dimension expression
 $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is interpreted
-as a function $G^n\to G$: for each valuation 
+as a function $G^n\to G$: for each valuation
 of the dimension variables as physical dimensions,
 we have an interpretation of the expression as a physical dimension.
 A type with a free dimension variable, $\Tj \Dvar T$,
 is interpreted as a family of sets, one for each dimension in $G$.
 Similarly a term in a free dimension variable is interpreted as a family of functions,
-one for each dimension in $G$. 
+one for each dimension in $G$.
 
 This model does not support parametric dimension polymorphism.
-For instance, the model supports sum types, 
-and it also supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ 
+For instance, the model supports sum types,
+and it also supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$
 which tests whether two dimensions are the same.
 
 One generalization of this example is the fibration $\Fam{\C}\to\Set$
@@ -642,32 +643,32 @@ which is a $\lambda\forall$-fibration if $\C$ is cartesian closed.
 \begin{example}(A parametric model built from monoid actions)
 \note{I think we should use the fibration of monoid actions rather than Abelian group actions to emphasise that the requirement of being an Abelian group is specific to dimension types and is not needed to get simple products. Also this helps to clarify things by avoiding the subtle fact that an Abelian group object in $\Ab$ is the same thing as an Abelian group.}
 \begin{definition}
-Let $M$ be a monoid. Recall that a $M$-set consists of a 
-set $A$ together with a function $\cdot:M\times A\to A$ such that 
+Let $M$ be a monoid. Recall that a $M$-set consists of a
+set $A$ together with a function $\cdot:M\times A\to A$ such that
 $i\cdot a=a$ and $(mn)\cdot a=m\cdot (n\cdot a)$.
-(Equivalently, a $M$-set is a functor $M\to\Set$, when $M$ is considered 
+(Equivalently, a $M$-set is a functor $M\to\Set$, when $M$ is considered
 as a category with one object.)
 
 The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is an
 group and $A$ is a $M$-set. A morphism $(M,A) \rightarrow
 (N,B)$ in $\MonSet$ is given by a monoid homomorphism $f:M\rightarrow N$
 and a function $\phi:S \rightarrow T$ such that for any
- $m\in M$ and $a\in A$ we have 
+ $m\in M$ and $a\in A$ we have
 $\phi (m\cdot a) = (f m)\cdot (\phi a)$.
 \end{definition}
 
-Let $\Mon$ be the category of monoids and homomorphisms.  
+Let $\Mon$ be the category of monoids and homomorphisms.
 \begin{proposition}
 The forgetful functor $\MonSet\to \Mon$ is a $\lambda\forall$-fibration.
 \end{proposition}
-We defer proving that the $\MonSet$ fibration is a $\lambda\forall$-fibration 
-until Section~\ref{sec:AbSet}.  
+We defer proving that the $\MonSet$ fibration is a $\lambda\forall$-fibration
+until Section~\ref{sec:AbSet}.
 
 Recall that monoid can be given the structure of an
 Abelian group object in $\Mon$ if and only if it is an Abelian group,
-and then it forms an Abelian group object in a unique way. 
-Thus a model of dimension types 
-for the fibration $\MonSet\to\Mon$ is given by 
+and then it forms an Abelian group object in a unique way.
+Thus a model of dimension types
+for the fibration $\MonSet\to\Mon$ is given by
 an Abelian group $G$ and a $G$-set $Q$.
 The group $G$ can be thought of as a group of scaling factors,
 and the $G$-set $Q$ as a set of scalable quantities.
@@ -678,24 +679,24 @@ $Q$ be the positive real numbers under multiplication.
 
 In this model, a type with a free dimension variable,
 $\Tj\Dvar T$, is interpreted as a $G$-set.
-A term with a free dimension variable is interpreted as a 
+A term with a free dimension variable is interpreted as a
 function that is invariant under $G$.
 
 We explore this model in more detail in Section~\ref{sec:AbSet}.
 \end{example}
 \begin{example}(A parametric model built from presheaves)
 \begin{definition}
-Let $C$ be a category. Recall that a \emph{presheaf} is a 
+Let $C$ be a category. Recall that a \emph{presheaf} is a
 functor $C\to\Set$.
 
 The category $\CatSet$ has as objects pairs $(C,A)$ where $C$ is a
 category and $A:C\to\Set$ is a functor. A morphism $(C,A) \rightarrow
 (D,B)$ in $\CatSet$ is given by a functor homomorphism $f:C\rightarrow D$
-and a natural transformation $\phi:A \Rightarrow B\cdot f$ between functors 
+and a natural transformation $\phi:A \Rightarrow B\cdot f$ between functors
 $C\to\Set$.
 \end{definition}
 
-Let $\Cat$ be the category of small categories and functors.  
+Let $\Cat$ be the category of small categories and functors.
 \begin{proposition}
 The forgetful functor $\CatSet\to \Cat$ is a $\lambda\forall$-fibration.
 \end{proposition}
@@ -777,7 +778,7 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
 \end{itemize}
 
 Choosing an internal Abelian group in a category $\C$ is equivalent to giving a finite product-preserving functor from the
-Lawvere theory of Abelian groups $\LAb$ into the category $\C$.  
+Lawvere theory of Abelian groups $\LAb$ into the category $\C$.
 Thus, as another instance of the change-of-base theorem:
 
 %Given that we have essentially the
@@ -787,7 +788,7 @@ Thus, as another instance of the change-of-base theorem:
 % UoM-fibration? However we - for once - resist temptation.
 
 \begin{corollary}
-  Any model of dimension types 
+  Any model of dimension types
   can be converted into a model with base category $\LAb$, by pulling back.
 \end{corollary}
 \note{I've kept this corollary, but I am not sure why it is interesting.}
@@ -827,8 +828,8 @@ Thus, as another instance of the change-of-base theorem:
 
 
 \section{Group Actions and \UoM}
-\note{I wonder if we should put the proof 
-that $\AbSet$ is a model into an appendix, especially since it 
+\note{I wonder if we should put the proof
+that $\AbSet$ is a model into an appendix, especially since it
 is folklore (it was mentioned on categories in response to Tim's question, and I can find it on mathoverflow and nlab too).
 }
 \label{sec:AbSet}
