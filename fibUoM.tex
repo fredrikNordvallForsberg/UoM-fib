@@ -579,34 +579,75 @@ In this model, a dimension expression $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is inte
 This model does not support parametric dimension polymorphism. For instance, the model supports sum types, and it also supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ which tests whether two dimensions are the same.
 
 \note{Explain why this is true ``inspecting types''. Explain what we mean here by parametric polymorphism and add something to the introduction about how we are looking for particular models.}
-
-Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is Cartesian closed.
 \end{example}
 
+Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is Cartesian closed.
 
+We next look at a class of $\lambda D$ models that all share one thing in common - the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct}, Example~\ref{ex:presheaves}, and Example~\ref{ex:fibrations}). But first we prove a lemma needed for the proof of the general theorem.  
+
+
+\begin{lemma}
+\label{lemma:RanAlongPrj}
+ Suppose that $\A$, $\B$ and $\D$ are categories, $\pi: \A \times \B \rightarrow \A$ is a projection and that $\phi:\A \times \B \rightarrow \mathcal{D}$ is a functor. Suppose further that for all objects $x,y \in \A$ and $(a,b)\in \A \times \B$, the cotensor $\A(x, y) \pitchfork \phi (a,b)$ exists in $\mathcal{D}$. Then
+ \[
+  (Ran_{\pi}\phi)a \cong \lim_{b\in \B} \phi (a,b)
+ \]
+\end{lemma}
+
+\begin{proof}
+Compute the right Kan extension of $\phi$ along $\pi$ by using the end formula as in \cite{mac1998categories}, then use Fubini's theorem and the fact that $(Ran_{id} F)a \cong Fa$, for any functor $F: \A\rightarrow \mathcal{D}$. Since $\phi$ is contravariant, we can reduce the resulting end to the required limit.
+\end{proof}
+The proof of this lemma can be done without the use of ends, instead just using limits. This means that we only have to assume that the category $\mathcal{D}$ is complete as opposed to having cotensors. The downside to this approach is that the proof is a little more lengthy and so we do not show it here.
+
+\begin{theorem}
+\label{thm:BC}
+Let $\E$ and $\B$ be categories with finite products, and $\mathcal{D}$ a small category. Suppose that $\SqFun : \B \rightarrow \Cat$ is a product-preserving functor, and $p:\E\rightarrow \B$ a fibration with each fibre $\fibreE{X}$ given by the functor category $\mathcal{D}^{\SqFun[X]}$, and reindexing is given by precomposition, i.e., for any $f:X\rightarrow Y \in \B$, $f^\ast (\phi : \SqFun[Y] \rightarrow \D) = \phi \circ \SqFun[f]$.
+Then, the reindexing of any projection map $\pi_{_{X}} :X\times Y \rightarrow X $ has a right adjoint $\pi_{_{X}}^\ast \dashv \forall_X$, given by the right Kan extension along $\SqFun[\pi_{_{X}}]$, which satisfies the Beck-Chevalley condition.
+\end{theorem}
+
+
+\begin{proof}
+The right adjoint is given by the right Kan extension along $\pi_{_{X}}$, $Ran_{\pi_{_{X}}} $, by definition. To see that the Beck-Chevalley condition holds we must show that for any functor $\psi: \SqFun[X'] \times \SqFun[Y] \rightarrow \D$ and any morphism $\; f:X\rightarrow X'$ in $\B$ that,
+\[
+(\forall_X(f\times id)^\ast \psi)x \cong (f^\ast \forall_{X'} \psi) x
+\]
+By expanding each side of the isomorphism and then using lemma~\ref{lemma:RanAlongPrj} we see the result. Firstly, the left hand side
+\[
+(\forall_X (f \times id)^\ast \psi)x  \; \cong \; \lim_{y \in Y} (f \times id)^{\ast} \phi (x,y) \; \cong \; \lim_{y\in Y} \phi(fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
+\]
+and then the right hand side
+\[
+(f^\ast \forall_{X'} \psi) x  \; \cong \;  (Ran_{\pi_{_{X}}} \phi ) fx \; \cong \;       \lim_{y\in Y} \phi (fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
+\]
+
+and hence the result.
+\end{proof}
+
+As promised, we now apply Theorem~\ref{thm:BC} to give some more examples of $\lambda D$ models. 
 
 \begin{example}(A Parametric Model Built from Monoid Actions)
-\note{I think we should use the fibration of monoid actions rather than Abelian group actions to emphasise that the requirement of being an Abelian group is specific to dimension types and is not needed to get simple products. Also this helps to clarify things by avoiding the subtle fact that an Abelian group object in $\Ab$ is the same thing as an Abelian group.}
+\label{ex:MonAct}
 
 Let $M$ be a monoid. Recall that a $M$-set consists of a set $A$ together with a function, called a monoid action, $\cdot_A:M\times A\to A$ such that $e\cdot_{A} a=a$ and $(mn)\cdot_A a=m\cdot_A (n\cdot_A a)$. (Equivalently, a $M$-set is a functor $M\to\Set$, when $M$ is considered as a category with one object.)
 
 The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is a monoid and $A$ is a $M$-set. A morphism $(M,A) \rightarrow (N,B)$ in $\MonSet$ is given by a monoid homomorphism $\phi:M\rightarrow N$ and a function $f:A \rightarrow B$ such that for any $m\in M$ and $a\in A$ we have $f (m\cdot_A a) = (\phi m)\cdot_B (f a)$. From now on we will omit subscripts of monoid actions where they can be inferred from context.
 
-Let $\Mon$ be the category of monoids and homomorphisms, then we call the forgetful functor $\MonSet\to \Mon$ the $\MonSet$ fibration. This functor is a $\lambda\forall$-fibration which we prove in Section~\ref{sec:MonSet}.
+Let $\Mon$ be the category of monoids and homomorphisms, then we call the forgetful functor $\MonSet\to \Mon$ the $\MonSet$ fibration. This functor is a $\lambda\forall$-fibration by the following argument.
+
+For any monoid $M$ the functor category ${Set}^M$, which is the fibre above $M$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Mon \rightarrow \Cat$ which maps monoids to categories with one object, and monoid homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that for any projection morphism $\pi : M \times G \rightarrow M$ has a right adjoint that satisfies the Beck-Chevalley condition. 
 
 To see that the $\MonSet$ fibration is a $\lambda D$-model, recall that a monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence, a $\lambda D$-model for the fibration $\MonSet\to\Mon$ is given by an Abelian group $G$ and a $G$-set $Q$. In this model, a type with a free dimension variable, $\Tj\Dvar T$, is interpreted as a $G$-set and term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
+More generally, instead of having monoids in the base category, we also have a $\lambda D$ model built from presheaves. 
+
 \begin{example}(A parametric model built from presheaves)
+\label{ex:presheaves}
 
 Let $C$ be a category. Recall that a \emph{presheaf} is a
 functor $C\to\Set$.
 
-The category $\CatSet$ has as objects pairs $(C,A)$ where $C$ is a
-category and $A:C\to\Set$ is a functor. A morphism $(C,A) \rightarrow
-(D,B)$ in $\CatSet$ is given by a functor $f:C\rightarrow D$
-and a natural transformation $\phi:A \Rightarrow B\cdot f$ between functors
-$C\to\Set$.
+The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
 
 
 Let $\Cat$ be the category of small categories and functors.
@@ -619,8 +660,12 @@ some dimension constants and constant units of measure (e.g. metres).
 Perhaps this should be investigated.}
 
 \end{example}
-\note{I think the fibration $\Fib\to\Cat$ is also an example,
-according to Theorem~\ref{thm:BC}. }
+
+\begin{example}\label{ex:fibrations}
+$\Fib \rightarrow \Cat$
+\end{example}
+
+
 %\begin{example}
 %\label{ex:uomLaw}
 %Let $G$ be an Abelian group and $\phi$ a $G$-set. Define a fibration $\msf{U_G}:\E \ra \LAb$ to have as fibres $\fibreE{n}$ the functor category $Set^{G^n}$. Then the triple $(U_G, \terminal, \phi)$ is a $\lambda D$-model. We again defer the proof to Section~\ref{sec:MonSet}.
@@ -737,71 +782,10 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
 
 
 \section{Monoid Actions and Dimension Types}\label{sec:MonSet}
-\note{I wonder if we should put the proof
-that $\MonSet$ is a model into an appendix, especially since it
-is folklore (it was mentioned on categories in response to Tim's question, and I can find it on mathoverflow and nlab too).
-}
-
 \note{Add something here about signatures}
+\note{Add that this can all be done for models that fit the Theorem~\ref{thm:BC} model}
 
-In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, but first we must prove that it is indeed a $\lambda D$-model. Let us first prove a couple of useful results.
-
-
-\begin{lemma}
-\label{lemma:RanAlongPrj}
- Suppose that $\A$, $\B$ and $\D$ are categories, $\pi: \A \times \B \rightarrow \A$ is a projection and that $\phi:\A \times \B \rightarrow \mathcal{D}$ is a functor. Suppose further that for all objects $x,y \in \A$ and $(a,b)\in \A \times \B$, the cotensor $\A(x, y) \pitchfork \phi (a,b)$ exists in $\mathcal{D}$. Then
- \[
-  (Ran_{\pi}\phi)a \cong \lim_{b\in \B} \phi (a,b)
- \]
-\end{lemma}
-
-\begin{proof}
-Compute the right Kan extension of $\phi$ along $\pi$ by using the end formula as in \cite{mac1998categories}, then use Fubini's theorem and the fact that $(Ran_{id} F)a \cong Fa$, for any functor $F: \A\rightarrow \mathcal{D}$. Since $\phi$ is contravariant, we can reduce the resulting end to the required limit.
-\end{proof}
-The proof of this lemma can be done without the use of ends, instead just using limits. This means that we only have to assume that the category $\mathcal{D}$ is complete as opposed to having cotensors. The downside to this approach is that the proof is a little more lengthy and so we do not show it here.
-
-
-\note{In the following theorem I think we need an assumption about $\D$.}
-
-\begin{theorem}
-\label{thm:BC}
-Let $\E$ and $\B$ be categories with finite products. Suppose that $\SqFun : \B \rightarrow \Cat$ is a product-preserving functor, and $p:\E\rightarrow \B$ a fibration with each fibre $\fibreE{X}$ given by the functor category $\mathcal{D}^{\SqFun[X]}$, and hence reindexing is given by precomposition, i.e., for any $f:X\rightarrow Y \in \B$, $f^\ast (\phi : \SqFun[Y] \rightarrow \D) = \phi \circ \SqFun[f]$.
-Then, the reindexing of any projection map $\pi_{_{X}} :X\times Y \rightarrow X $ has a right adjoint $\pi_{_{X}}^\ast \dashv \forall_X$, given by the right Kan extension along $\SqFun[\pi_{_{X}}]$, which satisfies the Beck-Chevalley condition.
-\end{theorem}
-
-
-\begin{proof}
-The right adjoint is given by the right Kan extension along $\pi_{_{X}}$, $Ran_{\pi_{_{X}}} $, by definition. To see that the Beck-Chevalley condition holds we must show that for any functor $\psi: \SqFun[X'] \times \SqFun[Y] \rightarrow \D$ and any morphism $\; f:X\rightarrow X'$ in $\B$ that,
-\[
-(\forall_X(f\times id)^\ast \psi)x \cong (f^\ast \forall_{X'} \psi) x
-\]
-By expanding each side of the isomorphism and then using lemma~\ref{lemma:RanAlongPrj} we see the result. Firstly, the left hand side
-\[
-(\forall_X (f \times id)^\ast \psi)x  \; \cong \; \lim_{y \in Y} (f \times id)^{\ast} \phi (x,y) \; \cong \; \lim_{y\in Y} \phi(fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
-\]
-and then the right hand side
-\[
-(f^\ast \forall_{X'} \psi) x  \; \cong \;  (Ran_{\pi_{_{X}}} \phi ) fx \; \cong \;       \lim_{y\in Y} \phi (fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
-\]
-
-and hence the result.
-\end{proof}
-
-
-
-
-We can now prove that the $\MonSet$ fibration is indeed a $\lambda D$-model.
-
-\begin{theorem}
-\label{thm:gsets}
-  Let $G$ be an Abelian group, and $Q$ in the fibre above $G$, i.e., a $G$-set. Then $(p:\MonSet \rightarrow \Mon, G, Q)$ is a $\lambda D$-model.
-\end{theorem}
-
-\begin{proof}
-For any monoid $M$ the functor category ${Set}^M$, which is the fibre above $M$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Mon \rightarrow \Cat$ which maps monoids to categories with one object, and monoid homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that for any monoid $M$, the projection morphism $\pi : M \times G \rightarrow M$ has a right adjoint  that satisfies the Beck-Chevalley condition. Therefore, $G$ is exponentiable and $(p:\MonSet \rightarrow \Mon, G, Q)$ is a $\lambda D$-model.
-\end{proof}
-
-We will now spend the rest of this section looking in detail at some properties that hold in $\MonSet$ fibration, and so we spell out the reindexing and simple product structure.
+In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure.
 
 Suppose that $\phi$ is an $A$-set, then reindexing along $\pi$ yields the $A$-set given by $\phi \circ \pi$. In other words, the $A \times G$-set with carrier $|\phi|$ and action given by $(a,g) \act{A\times G} x = a \act{A} x$. Now suppose that $\psi$ is an $A \times G$-set. Then using Lemma~\ref{lemma:RanAlongPrj} we know that the underlying set of $ (\forall _\pi \psi)$, is given by $\lim_{y\in Y} \psi (\ast, y)$. If we use the universal property of limits to note that
 \[
@@ -818,9 +802,9 @@ A particularly nice property about this model, is that many of the properties of
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
-Suppose that $\Delta, u \vdash T \; \msf{ Type}$ and that $e \in \Mon(\Delta)$, then
+Suppose that $\Delta, u \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denotes a dimension expression, then
 \[
- \sem{T[e/u]} \cong (id_{\sem{\Delta}} , \sem{e})^\ast \sem{T}
+ \sem{T[D/u]} \cong (id_{\sem{\Delta}} , \sem{D})^\ast \sem{T}
 \]
 \end{lemma}
 \begin{proof}
@@ -828,15 +812,14 @@ Suppose that $\Delta, u \vdash T \; \msf{ Type}$ and that $e \in \Mon(\Delta)$, 
 \end{proof}
 
 
-Explicitly, Lemma~\ref{lem:subst} says that the semantics of substituting a unit expression for a unit variable is given by reindexing along the identity paired with the unit expression. Since reindexing is given by precomposition we have that
+Explicitly, Lemma~\ref{lem:subst} says that the semantics of substituting a dimension expression for a dimension variable is given by reindexing along the identity paired with the dimension expression. Since reindexing is given by precomposition we have that
 \[
- (id_{\sem{\Delta}} , \sem{e})^\ast \sem{T} \cong \sem{T}(id_{\sem{\Delta}}, \sem{e})
+ (id_{\sem{\Delta}} , \sem{D})^\ast \sem{T} \cong \sem{T}(id_{\sem{\Delta}}, \sem{D})
 \]
 Or in other words, substitution of the $n^{th}$ unit variable is given by precomposition at the $n^{th}$ component.
 
 For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\MonSet$ interpretation.
 
-\note{Can the following be proven for presheaves?}
 \begin{lemma}
 \label{lemma:allarrows}
  Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
