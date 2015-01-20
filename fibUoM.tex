@@ -710,17 +710,19 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
 \note{Add something here about signatures}
 \note{Add that this can all be done for models that fit the Theorem~\ref{thm:BC} model}
 
-In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure.
+In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure. First recall that an $M$-set, $A$, can be equivalently seen as a functor $\phi : \mathcal{M}\rightarrow \Set$, where $\mathcal{M}$ is category with one object $\ast$ and with morphisms $\mathcal{M}(\ast, \ast) = M$, where composition is given by monoid multiplication. This functor is defined on objects as $\phi(\ast) = A$, and $(\phi m) a = m \cdot a$. In the reverse direction, a category with one object $\mathcal{M}$ and a functor $\phi : \mathcal{M} \rightarrow \Set$ define an $\mathcal{M}(\ast,\ast)$-set with carrier $\phi(\ast)$, which we denote $|\phi|$, and action given by $m \cdot a = \phi(m)a$. We will use these two descriptions interchangeably. 
 
-Suppose that $\phi$ is an $A$-set, then reindexing along $\pi$ yields the $A$-set given by $\phi \circ \pi$. In other words, the $A \times G$-set with carrier $|\phi|$ and action given by $(a,g) \act{A\times G} x = a \act{A} x$. Now suppose that $\psi$ is an $A \times G$-set. Then using Lemma~\ref{lemma:RanAlongPrj} we know that the underlying set of $ (\forall _\pi \psi)$, is given by $\lim_{y\in Y} \psi (\ast, y)$. If we use the universal property of limits to note that
+Suppose that $\phi: \mathcal{M}\rightarrow \Set$ is an $M$-set, then reindexing along $\pi : M \times G \rightarrow M$ yields the $M \times G$-set given by $\phi \circ \pi$. Or in other words the $M \times G$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$. 
+
+Now suppose that $\psi : \mathcal{M} \times \mathcal{G} \rightarrow$ is an $M \times G$-set. By using Lemma~\ref{lemma:RanAlongPrj} we can see that the underlying set of $ (\forall _\pi \psi)$, is given by $\lim_{y\in \mathcal{G}} \psi (\ast, y)$. If we use the universal property of limits to note that
 \[
- \lim_{y\in Y} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in Y} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
+ \lim_{y\in \mathcal{G}} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{G}} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
 \]
-then we can see that $|\forall_\pi \psi | = \{x \in |\psi| \; \; | \; \; \forall g\in G \; \; \psi(1_A, g) x = x \}$, and the action on morphisms is given by $(\forall_\pi \psi) a \; x = \psi (a, 1_G) x$.
+then we can see that $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall g\in G \; \; \psi(e_A, g) y = y \}$, and the action on morphisms is given by $(\forall_\pi \psi) m \; x = \psi (m, e_G) x$.
 
-Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make a particular choice of morphism in $G$, namely the identity element $1_G$. However, any element of $G$ would have given the same result since
+Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make a particular choice of morphism in $G$, namely the identity element $e_G$. However, any element of $G$ would have given the same result since
 \[
-  \psi (a, g) x = \psi (a, 1_G) \cdot \psi (1_A, g) x = \psi (a, 1_G) x
+  \psi (m, g) x = \psi (m, e_G) \cdot \psi (e_M, g) x = \psi (m, e_G) x
 \]
 
 A particularly nice property about this model, is that many of the properties of \UoM that Kennedy proves using parametricity, can be shown to hold in the $\MonSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
