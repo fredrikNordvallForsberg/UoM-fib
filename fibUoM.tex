@@ -219,12 +219,14 @@
   In 1998, Andrew Kennedy wrote a paper entitled Relational Parametricity and \UoM\cite{Kennedy:1997:RPU:263699.263761}. Inspired by the benefits afforded by the correspondence between $\lambda$-calculus and category theory, in this paper we give a categorical semantics to complement Kennedy's \UoM. We do this so as to make Kennedy's work more accessible to those of a semantic disposition and to discover natural extensions and alternative proofs of Kennedy's results suggested by the categorical perspective.
 
   We start by following the standard approach in categorical logic by using fibrations to separate index-information (the units) from indexed-information (the types which may contain units). This leads us to the notion of a UoM-fibration. We prove some basic theorems about UoM-fibrations and give a variety of examples of \UoMFibrations, including a novel model based upon $G$-sets. We then explore parametricity for \UoM.
+
+  \note{rewrite}
 \end{abstract}
 
 \section{Introduction}
-This paper is about semantic models of programs that manipulate physical quantities, such as length or time. To measure a physical quantity we use units, such as metres or inches for length, and seconds or hours for time. The particular units that we choose do not effect how we can describe a physical system, or the programs that we can write about it, and so in this paper our focus is on \emph{dimensions}.
+This paper is about semantic models of programs that manipulate physical quantities, such as length or time. To measure a physical quantity we use units, such as metres, inches, seconds or hours. The particular units that we choose do not effect how we can describe a physical system, or the programs that we can write about it, and so in this paper our focus is on \emph{dimensions}.
 
-A dimension is simply a physical quantity that can be measured and fundamental principle is that it is not meaningful to add or compare quantities of different dimension, but they can be multiplied.
+A dimension is simply a physical quantity that can be measured and an important fundamental principle is that it is not meaningful to add or compare quantities of different dimension, but they can be multiplied.
 
 Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity $x$ of a given dimension $X$, and returns its double.
 \begin{equation}
@@ -232,13 +234,20 @@ f\coloneqq (\Lambda X.\,\lambda x:\qnt(X).\,x+x)
 :\ \forall X.\,\qnt(X)\to \qnt(X)
 \label{eqn:double}
 \end{equation}
-To illustrate, we can use the polymorphic
-function $f$ to double a length of $5$ metres:
+To illustrate, we can use the polymorphic function $f$ to double a length of $5$ metres.
 \begin{equation}
 f_\length\,(5\mathrm{m})=
 10\mathrm{m}:\qnt(\length)
 \label{eqn:doubleapp}
 \end{equation}
+
+\noindent There are a few key points that are worth emphasising about the above examples (\eqref{eqn:double},\eqref{eqn:doubleapp}).
+\begin{itemize}
+\item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. We use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
+\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension.
+\item The standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\length)$.
+\end{itemize}
+
 Several authors have developed programming languages with type systems
 that support physical quantities. Our starting point is the work of
 Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques
@@ -247,16 +256,13 @@ this from a different angle by developing a general categorical notion
 of model for a programming language of this form, and by developing
 ways of building models.
 
-There are a few key points that are worth emphasising about the examples (\eqref{eqn:double},\eqref{eqn:doubleapp}).
-\begin{itemize}
-\item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. We use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
-\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension.
-\item The standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\length)$.
-\end{itemize}
+\note{Add references.}
+
+
 
 The main contributions of this paper are as follows.
 \begin{enumerate}
-\item We provide a general notion of a model for a programming language of this kind by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that, for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
+\item We provide a general notion of a model for a programming language with dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that, for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
 \item An important example of a $\lambda D$-model is the actions of scaling groups (Section~\ref{sec:MonSet}). This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism. A difficulty here is, how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
 
@@ -312,7 +318,7 @@ $\Delta$ is a dimension context and these judgements are generated by the follow
 	\DisplayProof
 \\ \\
 \end{array}\]
-Notice that we do not have System-F-style polymorphism, but instead dimension polymorphism. Types can be parameterized by dimensions, but they cannot be parameterized by types. From the Curry-Howard perspective this is a first-order-logic where the domain of discourse is the theory of Abelian groups and where there is a single atomic predicate, $\qnt$.
+Notice that we do not have System-F-style polymorphism, but instead dimension polymorphism. Types can be parameterized by dimensions, but they cannot be parameterised by types, since we do no have type variables. From the Curry-Howard perspective this is a first-order-logic where the domain of discourse is the theory of Abelian groups and where there is a single atomic predicate, $\qnt$.
 
 \vspace{3mm} \noindent {\bf Terms and Typing Contexts:} Well formed typing contexts are given by judgements
 $\cj\Delta\Gamma $ where $\Delta$ is a dimension context, $\Gamma$ is
@@ -404,28 +410,10 @@ In addition, we have the introduction and elimination rules for quantification o
 %	\DisplayProof
 %	\\ \\
 \end{array}\]
-We remark that one
-one can easily extend the language by adding
-dimension constants (such as $\length$),
-standard units of measure (such as metres, $\mathrm{m}:\qnt(\length)$)
-and
-arithmetic term constants
-such as addition
-$+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar)$,
-multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2)$,
-unit $1:\qnt(1)$,
-and inverse $\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1})$.
+We remark that one can easily extend the language by adding dimension constants (such as $\length$), standard units of measure (such as metres, $\mathrm{m}:\qnt(\length)$) and arithmetic term constants such as addition $+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar)$, multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2)$, unit $1:\qnt(1)$, and inverse $\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1})$.
 
 
-One could also add sum types with no trouble, and these could be used to
-define a boolean type,
-$\bool\coloneqq 1+1$,
-and the language could then be extended with term constants for comparison, e.g.
-${<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$.
-One could also define a type of signed/zero quantities
-$\sreal(\Dvar)\coloneqq \qnt(\Dvar)+1+\qnt(\Dvar)$,
-and then extend the language with further arithmetic term constants such as signed addition
-$+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$.
+One could also add sum types without trouble, and these could be used to define a boolean type, $\bool\coloneqq 1+1$, and the language could then be extended with term constants for comparison, e.g. ${<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$. One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+1+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as signed addition $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$. Though one could make these additions, to keep the presentation simple, we do not.
 
 In this paper we do not treat recursion, but a future extension of our work may look in the direction of Pitts' PolyPCF \cite{pitts2000parametric}.
 
@@ -436,22 +424,22 @@ In this paper we do not treat recursion, but a future extension of our work may 
 
 
 \section{Categorical Semantics of Dimension Types} \label{sec:sem}
-Central to the categorical semantics of the $\lambda D$ type theory are  $\lambda \forall$ fibrations.
+Next up we give a general categorical semantics for the $\lambda D$ type theory. Central to this is the notion of a $\lambda \forall$-fibration.
 
 \begin{definition}
 A \emph{$\lambda\forall$-fibration} is a Cartesian closed fibration with simple products.
 \end{definition}
 
-This notion is a well-known categorical model of first-order logic. We will assume a basic working knowledge of the theory of fibrations, but introduce key ideas informally, and referring the reader to \cite{jacobs1999categorical} for the full details.
+It is well-known that $\lambda \forall$-fibrations give a categorical model of first-order logic. For the rest of this paper, we will assume a basic working knowledge of the theory of fibrations, however we will introduce some key ideas informally, and refer the reader to \cite{jacobs1999categorical} for the full details.
 
-A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. The idea is that dimension contexts will be interpreted as objects $\B$. For each $B\in\B$ we consider the full subcategory $\E_B$ of $\E$, with objects $E\in\E$ for which $p(E)=B$: the objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_b$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$. Since $p$ is a fibration, for each reindexing morphism $f:B\to B'$ in $\B$ there is a canonical associated reindexing functor $f^*:\E_{B'}\to \E_B$, which we will use to describe substitution for dimension variables in types and terms.
+A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. These conditions along with those imposed in Definition~\ref{def:lamDModel}, allow us to model the $\lambda D$ type theory. The basic idea is that dimension contexts will be interpreted as objects $\B$. Then for each $B\in\B$ we consider the full subcategory $\E_B$ of $\E$, with objects $E\in\E$ for which $p(E)=B$: the objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_b$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$. Since $p$ is a fibration, for each reindexing morphism $f:B\to B'$ in $\B$ there is a canonical associated reindexing functor $f^*:\E_{B'}\to \E_B$, which we will use to describe substitution for dimension variables in types and terms.
 
 A fibration is said to be Cartesian closed if $\E_B$ is a Cartesian closed category for all $B$, and each reindexing functor $f^*:\E_{B'}\to\E_B$ preserves products and exponentials. This Cartesian closed structure is what is needed to interpret the product and function types.
 
 Concatenation of dimension contexts will be interpreted using products in the category $\B$. The reindexing functors for the product projections $f^*:\E_{B}\to \E_{B\times B'}$ correspond to context-weakening. A fibration $p:\E\to \B$ is said to have simple products if $\B$ has products and the reindexing functors for the product projections have right adjoints $\forall:E_{B\times B'}\to E_B$ that are compatible with reindexing (`Beck-Chevalley'). These right adjoints are needed to interpret universal quantification of dimension variables in types.
 
 \begin{definition}\label{def:lamDModel}
-A $\lambda D$-model $(p,G, Q)$ is a $\lambda \forall$-fibration $p:\E\to \B$ together with an object $Q$ of $\E$ and structure making $p(Q)$ an Abelian group object $G$ in $\B$.
+A $\lambda D$-model $(p,G, Q)$ is a $\lambda \forall$-fibration $p:\E\to \B$, an Abelian group object $G$ in $\B$, and an object $Q$ in the fibre $\fibreE{G}$.
 \end{definition}
 
 Recall that an Abelian group object in a category $\B$ with products is given by an object $G$ together with maps $e:1\to G$, $m:G\times G\to G$ and $i:G\to G$ satisfying the laws of Abelian groups. This group structure is needed to interpret dimension expressions: for each vector of $n$ integers we have a morphism $G^n\to G$.
@@ -467,7 +455,8 @@ need to do three things: i) show that a $\lambda D$-model does in fact provide c
 
 
 \noindent {\bf I. Modelling Dimension Types:}
-To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$ fibration to separate the indexing information (the units) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects in the fibres above the dimension contexts in which they are defined. Cartesian closure of the fibres will allow us to inductively interpret types built from $\msf(1)$, $\times$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret such expressions. Formally, we interpret the
+To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects in the fibres above the dimension contexts in which they are defined. Cartesian closure of the fibres will allow us to inductively interpret types built from $\msf(1)$, $\times$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret such
+expressions. Formally, we interpret the
 syntax as follows.
 
 
@@ -483,10 +472,13 @@ syntax as follows.
 \item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$.
 \end{itemize}
 
+In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
+
+
 %It is now possible to add in some constants to represent various structure associated with dimensions. For example, polymorphic zero $\mathtt{0} : \forall u . \qnt(u)$, addition $\mathtt{+}: \forall u. \qnt(u) \rightarrow \qnt(u) \rightarrow \qnt(u)$ or multiplication $\mathtt{*} : \forall u_1 . \forall u_2 . \qnt(u_1) \rightarrow \qnt(u_2) \rightarrow \qnt(u_1 \cdot u_2)$. However, since we are mostly interested in the fibrational structure, we leave the addition of such constants to the reader.\\
 
 \noindent {\bf II. Examples of $\lambda D$-models:}
-We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed lambda calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
+We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 \begin{example}(Unit Erasure Models)
 \label{ex:UnitErasure}
@@ -502,7 +494,7 @@ We can construct a $\lambda D$-model from the syntax. The base category $\B$ is 
 \begin{example}(Model of Dimension Types Without Parametricity)
 Let $\Fam\Set$ be the category whose objects are pairs of a set $I$ and an $I$-indexed family of sets. A morphism $(I,\{X_i\}_{i\in I})\to (J,\{Y_j\}_{j\in J})$ is a pair $(f,\{\phi\}_{i\in I})$ where $f$ is a function $f:I\to J$ and for all $i\in I$, $\phi_i$ is a function $\phi_i:X_i\to Y_{f(i)}$. It is well known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family $(I,\{X_i\}_{i\in I})$ to its index set $I$, is a $\lambda\forall$-fibration.
 
-Any given set of physical dimensions (e.g. length, time, speed etc.) forms an Abelian group $G$; for example, it can be formed as the free Abelian group on a set of fundamental dimensions. Suppose we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$. This forms a $\lambda D$-model.
+Any given set of physical dimensions (e.g. length, time, speed etc.) forms an Abelian group $G$, for example by forming the free Abelian group. Suppose that we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$. Then this forms a $\lambda D$-model.
 
 In this model, a dimension expression $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is interpreted as a function $G^n\to G$: for each valuation of the dimension variables as physical dimensions, we have an interpretation of the expression as a physical dimension. A type with a free dimension variable, $\Tj \Dvar T$, is interpreted as a family of sets, one for each dimension in $G$. Similarly a term in a free dimension variable is interpreted as a family of functions, one for each dimension in $G$.
 
@@ -553,9 +545,9 @@ As promised, we now apply Theorem~\ref{thm:BC} to give some more examples of $\l
 \begin{example}(A Parametric Model Built from Monoid Actions)
 \label{ex:MonAct}
 
-Let $M$ be a monoid. Recall that a $M$-set consists of a set $A$ together with a function, called a monoid action, $\cdot_A:M\times A\to A$ such that $e\cdot_{A} a=a$ and $(mn)\cdot_A a=m\cdot_A (n\cdot_A a)$. (Equivalently, a $M$-set is a functor $M\to\Set$, when $M$ is considered as a category with one object.)
+Let $M$ be a monoid. Recall that a $M$-set consists of a set $A$ together with a function, called a monoid action, $\cdot_A:M\times A\to A$ such that $e\cdot_{A} a=a$ and $(mn)\cdot_A a=m\cdot_A (n\cdot_A a)$. Equivalently we can seen a $M$-set as a functor $\phi : \mathcal{M}\rightarrow \Set$, where $\mathcal{M}$ is a category with one object $\ast$ and morphisms are given by $\mathcal{M}(\ast, \ast) = M$, with composition as monoid multiplication. This functor is defined on objects by $\phi(\ast) = A$, and on morphisms by $(\phi m) a = m \cdot a$. In the reverse direction, a category with one object $\mathcal{M}$ and a functor $\phi : \mathcal{M} \rightarrow \Set$ define an $\mathcal{M}(\ast,\ast)$-set with carrier $\phi(\ast)$, which we denote $|\phi|$, and action given by $m \cdot a = \phi(m)a$. We will use these two descriptions interchangeably.
 
-The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is a monoid and $A$ is a $M$-set. A morphism $(M,A) \rightarrow (N,B)$ in $\MonSet$ is given by a monoid homomorphism $\phi:M\rightarrow N$ and a function $f:A \rightarrow B$ such that for any $m\in M$ and $a\in A$ we have $f (m\cdot_A a) = (\phi m)\cdot_B (f a)$. From now on we will omit subscripts of monoid actions where they can be inferred from context.
+The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is a monoid and $A$ is a $M$-set. A morphism $(M,A) \rightarrow (N,B)$ in $\MonSet$ is given by a monoid homomorphism $\phi:M\rightarrow N$ and a function $f:A \rightarrow B$ such that for any $m\in M$ and $a\in A$ we have $f (m\cdot_A a) = (\phi m)\cdot_B (f a)$. (Equivalently $\MonSet$ has objects given by functors $\phi : \mathcal{M} \rightarrow \Set$, and morphisms given by the obvious choice.) From now on we will omit subscripts of monoid actions where they can be inferred from context.
 
 Let $\Mon$ be the category of monoids and homomorphisms, then we call the forgetful functor $\MonSet\to \Mon$ the $\MonSet$ fibration.
 
@@ -566,7 +558,7 @@ Let $p:\MonSet \rightarrow \Mon$ denote the $\MonSet$ fibration, let $G$ be an A
 \begin{proof}
 For any monoid $M$ the functor category ${Set}^M$, which is the fibre above $M$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Mon \rightarrow \Cat$ which maps monoids to categories with one object, and monoid homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that any projection morphism $\pi : M \times G \rightarrow M$ has a right adjoint that satisfies the Beck-Chevalley condition.
 
-Recall that a monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence$(p,G,Q)$ is a $\lambda D$ model.
+A monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence $(p,G,Q)$ is a $\lambda D$ model.
 \end{proof}
 
 In the $\MonSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
@@ -577,8 +569,7 @@ More generally, instead of having sets and group actions, we also have a $\lambd
 \begin{example}(A Parametric Model Built from Presheaves)
 \label{ex:presheaves}
 
-Let $C$ be a category. Recall that a \emph{presheaf} is a
-functor $C\to\Set$. The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
+Let $C$ be a category. Recall that a functor $C\to\Set$ is called a \emph{presheaf}. The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a presheaf. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
 
 Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda D$ model. The proof of this is very similar to Example~\ref{ex:MonAct} and so we leave it as an exercise to the reader.
 \end{example}
@@ -588,7 +579,7 @@ some dimension constants and constant units of measure (e.g. metres).
 Perhaps this should be investigated.}
 
 \begin{example}\label{ex:fibrations}
-A third example in this class is given by the fibration $\Fib \rightarrow \Cat$.
+A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda D$-model.
 \note{todo}
 \end{example}
 
@@ -602,9 +593,7 @@ A third example in this class is given by the fibration $\Fib \rightarrow \Cat$.
 % \note{expand on this comment or remove.}
 
 
-\begin{remark}
-In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
-\end{remark}
+
 
 % The key lemma is.....
 % \begin{lemma}
@@ -639,11 +628,11 @@ In this paper we have only considered universal quantification of units but exis
 \noindent {\bf III Change of Base:}
 A useful theorem for $\lambda D$ models is that they are closed under change of base, and in fact several of the examples that we have met so far arise this way.
 \begin{theorem}
-Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra \B$ be a finite product-preserving functor and $G'$ be an Abelian group object of $\A$ such that $FG' = G$.  Denote the pullback of $p$ along $F$ by $F^\ast p : \E\times_\B\A \rightarrow \A$. Then $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
+Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra \B$ be a finite product-preserving functor and $G'$ be an Abelian group object of $\A$ such that $FG' = G$.  Denote the pullback of $p$ along $F$ by $F^\ast p : F^\ast \E \rightarrow \A$. Then $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
 \end{theorem}
 
 \begin{proof}
-Firstly, $F^*p$ is a \LamOneFib since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence Cartesian closed, and  reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves CCC structure. Secondly, $G'$ is exponentiable since reindexing along a projection $\pi_{_{G'}}$ in $\A$ is by construction reindexing along $F(\pi_{_{G'}})$ which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{G}}$, which has a right adjoint and satisfies the Beck-Chevalley condition. Finally $(G', X)$ is over $G'$ as required and hence $\bbracket{F^{\ast}p, G', (G',X)}$ is a $\lambda D$-model.
+Firstly, $F^*p$ is a Cartesian closed fibration since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence Cartesian closed, and  reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves CCC structure. Secondly, for any $A \in \A$ reindexing along a projection $\pi_{_{A}}: A \times A' \rightarrow A$ in $\A$ is by construction reindexing along $F(\pi_{_{A}})$ which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{FA}} : FA \times FA' \rightarrow FA$, which has a right adjoint and satisfies the Beck-Chevalley condition, since $p$ has simple products. Finally $(G', Q)$ is over $G'$ as required and hence $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
 \end{proof}
 
 \noindent The examples that are related by change-of-base are:
@@ -712,7 +701,7 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
 \note{Add something here about signatures}
 \note{Add that this can all be done for models that fit the Theorem~\ref{thm:BC} model}
 
-In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure. First recall that an $M$-set, $A$, can be equivalently seen as a functor $\phi : \mathcal{M}\rightarrow \Set$, where $\mathcal{M}$ is category with one object $\ast$ and with morphisms $\mathcal{M}(\ast, \ast) = M$, where composition is given by monoid multiplication. This functor is defined on objects as $\phi(\ast) = A$, and $(\phi m) a = m \cdot a$. In the reverse direction, a category with one object $\mathcal{M}$ and a functor $\phi : \mathcal{M} \rightarrow \Set$ define an $\mathcal{M}(\ast,\ast)$-set with carrier $\phi(\ast)$, which we denote $|\phi|$, and action given by $m \cdot a = \phi(m)a$. We will use these two descriptions interchangeably.
+In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure.
 
 Suppose that $\phi: \mathcal{M}\rightarrow \Set$ is an $M$-set, then reindexing along $\pi : M \times G \rightarrow M$ yields the $M \times G$-set given by $\phi \circ \pi$. Or in other words the $M \times G$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$.
 
