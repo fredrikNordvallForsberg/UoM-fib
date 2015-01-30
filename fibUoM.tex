@@ -180,11 +180,17 @@
 \newcommand{\qnt}{\msf{quantity}}
 \newcommand{\sreal}{\msf{real}}
 \newcommand{\bool}{\msf{bool}}
-\newcommand{\length}{\mathit{Length}}
+\newcommand{\lengthDim}{\mathit{Length}}
+\newcommand{\timeDim}{\mathit{Time}}
 \newcommand{\UoMterm}{ \Delta ; \Gamma \vdash t :T }
 \newcommand{\UoMtype}{\Delta \vdash T \; \msf{ Type}}
 \newcommand{\UoMFibration}{UoM-fibration\xspace}
 \newcommand{\UoMFibrations}{UoM-fibrations\xspace}
+
+\newcommand{\Deltadim}{\ensuremath{\Delta_{dim}}}
+\newcommand{\Gammaops}{\ensuremath{\Gamma_{ops}}}
+\newcommand{\etaops}{\ensuremath{\eta_{ops}}}
+
 
 %%%Judgements%%%
 \newcommand{\cj}[2]{#1 \vdash #2 \; \msf{ Ctx}}
@@ -242,8 +248,8 @@ f\coloneqq (\Lambda X.\,\lambda x:\qnt(X).\,x+x)
 \end{equation}
 To illustrate, we can use the polymorphic function $f$ to double a length of $5$ metres.
 \begin{equation}
-f_\length\,(5\mathrm{m})=
-10\mathrm{m}:\qnt(\length)
+f_\lengthDim\,(5\mathrm{m})=
+10\mathrm{m}:\qnt(\lengthDim)
 \label{eqn:doubleapp}
 \end{equation}
 
@@ -251,7 +257,7 @@ f_\length\,(5\mathrm{m})=
 \begin{itemize}
 \item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. We use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
 \item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension.
-\item The standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\length)$.
+\item The standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
 
 Several authors have developed programming languages with type systems
@@ -443,13 +449,15 @@ In addition, we have the introduction and elimination rules for quantification o
 %	\\ \\
 \end{array}\]
 %
-We use $\bool$ as an abbreviation for $\unitTy + \unitTy$.
-
-\note{Fred - Add something about signatures}
-
-We remark that one can easily extend the language by adding dimension constants (such as $\length$), standard units of measure (such as metres $\mathrm{m}:\qnt(\length)$) and arithmetic term constants such as addition $+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar)$, multiplication $\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2)$, unit $1:\qnt(1)$, inverse $\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1})$ and comparison ${<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$.
+We use $\bool$ as an abbreviation for $\unitTy + \unitTy$. For any
+particular theory, we assume that there is a dimension context
+$\Deltadim$ listing the dimension constants, and a closed typing
+context $\Gammaops$ describing the primitive units of measure and the
+types of the primitive operations. For instance, we could have $\Deltadim = \lengthDim, \timeDim$ and $\Gammaops = \mathrm{m}:\qnt(\lengthDim), +:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar), \times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2), 1:\qnt(1), \mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}), {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$.
 %
-One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+\unitTy+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as signed addition $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$. Though one could make these additions, to keep the presentation simple, we do not.
+One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+\unitTy+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as signed addition $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$. 
+
+\note{Clean up typesetting above}
 
 In this paper we do not treat recursion, but a future extension of our work may look in the direction of Pitts' PolyPCF \cite{pitts2000parametric}.
 
@@ -500,14 +508,14 @@ syntax as follows.
 
 
 \begin{itemize}
-\item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$
-\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X_1, X_2 \vdash X_1 \cdot X_2^{-1}}(g_1,g_2) = g_1 \cdot g_2^{-1}$.
+\item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
+\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X_1, X_2 \vdash X_1 \cdot X_2^{-1}}(g_1,g_2) = g_1 \cdot g_2^{-1}$. We assume that there is an interpretation $d_i : 1 \to G$ for every primitive dimension constant $d_i \in \Deltadim$.
 
 \item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\Delta \vdash \qnt(D)$ are interpreted by reindexing the object $Q$ along $\sem{\Dj \Delta D}$, i.e. $\sem{\Delta \vdash \qnt(D)} = \sem{\Dj \Delta D}^\ast (Q)$.
 
-\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as objects $\sem{\Gamma}$ in the fibre above $\sem{\Delta}$ using products in the fibres, i.e., \\$\sem{\Delta \vdash x_1 : T_1 ,..., x_n:T_n} = \sem{\Delta \vdash T_1} \times ... \times \sem{\Delta \vdash T_n}$.
+\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,..., x_n:T_n} = \sem{\Delta \vdash T_1} \times ... \times \sem{\Delta \vdash T_n}$.
 
-\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$.
+\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\etaops : 1 \to \sem{\Gammaops}$ of all the primitive operations.
 \end{itemize}
 
 In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
@@ -536,14 +544,14 @@ Any given set of physical dimensions (e.g. length, time, speed etc.) forms an Ab
 
 In this model, a dimension expression $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is interpreted as a function $G^n\to G$: for each valuation of the dimension variables as physical dimensions, we have an interpretation of the expression as a physical dimension. A type with a free dimension variable, $\Tj \Dvar T$, is interpreted as a family of sets, one for each dimension in $G$. Similarly a term in a free dimension variable is interpreted as a family of functions, one for each dimension in $G$.
 
-This model does not support parametric dimension polymorphism. For instance, the model supports sum types, and it also supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ which tests whether two dimensions are the same.
+This model does not support parametric dimension polymorphism. For instance, the model supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ which tests whether two dimensions are the same.
 
 \note{Explain why this is true ``inspecting types''. Explain what we mean here by parametric polymorphism and add something to the introduction about how we are looking for particular models.}
 \end{example}
 
 Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is Cartesian closed.
 
-We next look at a class of $\lambda D$ models that all share one thing in common - the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct}, Example~\ref{ex:presheaves}, and Example~\ref{ex:fibrations}). But first we prove a lemma needed for the proof of the general theorem.
+We next look at a class of $\lambda D$ models that all share one thing in common --- the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct}, Example~\ref{ex:presheaves}, and Example~\ref{ex:fibrations}). But first we prove a lemma needed for the proof of the general theorem.
 
 
 \begin{lemma}
