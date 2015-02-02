@@ -1,0 +1,161 @@
+\documentclass{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage[all]{xy}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+
+\newcommand{\semRel}[1]{\llbracket #1 \rrbracket_{\mathsf{R}}}
+\newcommand{\semGrp}[1]{\llbracket #1 \rrbracket_{\mathsf{G}}}
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+
+\newcommand{\Dom}{\mathsf{dom}}
+
+\begin{document}
+
+\paragraph{$G$-Set Model} Let $G$ be an abelian group. Using the
+fibration $p : \mathrm{Mon}//\mathrm{Set} \to \mathrm{Mon}$, where the
+objects of $\mathrm{Mon}//\mathrm{Set}$ are pairs $(M, (A, \psi))$ of
+a monoid $M$ and a $M$-Set $(A, \psi)$. Use the notation
+$|(M,(A,\psi))|$ to mean $A$, the underlying set of the semantic type
+$(M,(A,\psi))$.
+
+Interpretation of types, given some abelian group $G$:
+\begin{displaymath}
+  \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+    \semGrp{\Delta \vdash \mathsf{quantity}(D)} &=&
+    (G^{|\Delta|}, G, \psi(g,g_1) = (\sem{D}g)g_1) \\
+    \semGrp{\Delta \vdash T \times U} &=&
+    (G^{|\Delta|}, |\semGrp{T}| \times |\semGrp{U}|, \psi(g,(t,u)) = (\psi_T(g,t), \psi_U(g,u))) \\
+    \semGrp{\Delta \vdash T \to U} &=&
+    (G^{|\Delta|}, |\semGrp{T}| \to |\semGrp{U}|, \psi(g,f) = \lambda x.~\psi_U(g, f~(\psi_T(g^{-1}, x)))) \\
+    \semGrp{\Delta \vdash \forall X.T} &=&
+    (G^{|\Delta|}, \{ x \in |\semGrp{T}| \mathrel| \forall g \in G.~\phi_T((e,g),x) = x \}, \psi(g,x) = \psi_T((g,e_G),x))
+  \end{array}
+\end{displaymath}
+Note that the monoid component on the RHS of each clause here is an
+abelian group, so we are justified in using the inverse in the clause
+for function types.
+
+\paragraph{Relational Model} Each type is interpreted as a triple $(n, A, P)$,
+where $n$ is a natural number, $A$ is a set, and $P \subseteq G^n
+\times A \times A$. Use the notation $|(n,A,P)|$ to denote $A$, the
+underlying set of this semantic type.
+
+Relational semantics of types:
+\begin{displaymath}
+  \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+    \semRel{\Delta \vdash \mathsf{quantity}(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
+    \semRel{\Delta \vdash T \times U} & = &
+    (|\Delta|,
+    \begin{array}[t]{@{}l}
+      |\semRel{T}| \times |\semRel{U}|, \\
+      \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semRel{T}, (g,u_1,u_2) \in \semRel{U} \}
+    \end{array}
+    \\
+    \semRel{\Delta \vdash T \to U} & = &
+    (|\Delta|,
+    \begin{array}[t]{@{}l}
+      |\semRel{T}| \to |\semRel{U}|, \\
+      \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semRel{T} \implies (g,f_1t_1, f_2t_2) \in \semRel{U} \}
+    \end{array}
+    \\
+    \semRel{\Delta \vdash \forall X.~T} & = & (|\Delta|,
+    \begin{array}[t]{@{}l}
+      \{ t \in |\semRel{T}| \mathrel| \forall g \in G.~((e_{G^{|\Delta|}},g), t, t) \in \semRel{T} \},\\
+      \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semRel{T} \} \}
+    \end{array}
+  \end{array}
+\end{displaymath}
+
+Note that this interpretation satisfies an analogue of identity
+extension: for all $(n,A,P)$ that are the interpretation of types,
+$(e,x_1,x_2) \in P$ iff $x_1=x_2$.
+
+I think that this \textbf{isn't} the instantiation of the model in
+Section 5.1 of the paper, with $Q_0 = G$ and $Q_r = \{ (g \in G, g_1,
+g_2) \mathrel| g \cdot g_1 = g_2 \}$. So we might need to give a more
+constrained model that the one constructed there.
+
+\begin{theorem}
+  For all types $\Delta \vdash T~\mathsf{Type}$, we have:
+  \begin{enumerate}
+  \item $|\semRel{T}| = |\semGrp{T}|$; and
+  \item for all $g \in G^{|\Delta|}$ and $x_1, x_2 \in |\semRel{T}| =
+    |\semGrp{T}|$, we have $(g, x_1, x_2) \in \semRel{T}$ iff
+    $\psi_T(g,x_1) = x_2$.
+  \end{enumerate}
+  Note that, for all types $\Delta \vdash T$, the monoid component of
+  the $G$-set interpretation is always $G^{|\Delta|}$, so the second
+  statement is well-defined.
+\end{theorem}
+
+\noindent\emph{Proof.~} By induction on the derivation of $\Delta
+\vdash T~\mathsf{Type}$:
+
+\begin{itemize}
+\item Case $T = \mathsf{quantity}(D)$. The underlying sets are both
+  $G$, and we have $(g, g_1, g_2) \in \semRel{\mathsf{quantity}(D)}
+  \Leftrightarrow (\sem{D}g)g_1 = g_2 \Leftrightarrow
+  \psi_{\mathsf{quantity}(D)}(g,g_1) = g_2$, as required.
+\item Case $T = U \times V$. By the induction hypothesis, we know that
+  $|\semRel{U}| = |\semGrp{U}|$, and likewise for $V$, so the
+  underlying sets of the two interpretations are equal. And we have,
+  again using the induction hypothesis, $(g, (u_1,v_1), (u_2,v_2)) \in
+  \semRel{U \times V} \Leftrightarrow (g, u_1, u_2) \in \semRel{U}
+  \land (g,v_1,v_2) \in \semRel{V} \Leftrightarrow \psi_U(g,u_1) = u_2
+  \land \psi_V(g,v_1) = v_2 \Leftrightarrow \psi_{U \times
+    V}(g,(u_1,v_1)) = (u_2,v_2)$, as required.
+\item Case $T = U \to V$. By the induction hypothesis, we know that
+  $|\semRel{U}| = |\semGrp{U}|$ and likewise for $V$, so the
+  underlying sets of the two intepretations are equal. And we have,
+  again using the induction hypotheses, $(g, f_1, f_2) \in \semRel{U
+    \to V} \Leftrightarrow (\forall u_1, u_2.~(g,u_1,u_2) \in
+  \semRel{U} \implies (g,f_1u_1,f_2u_2) \in \semRel{V})
+  \Leftrightarrow (\forall u_1, u_2.~\psi_U(g,u_1) = u_2 \implies
+  \psi_V(g,f_1u_1) = f_2u_2) \Leftrightarrow (\forall u_1,
+  u_2.~\psi_U(g^{-1},u_2) = u_1 \implies \psi_V(g,f_1u_1) = f_2u_2)
+  \Leftrightarrow (\forall u_2.~\psi_V(g,f_1(\psi_U(g^{-1},u_2))) =
+  f_2u_2) \Leftrightarrow \psi_{U \to V}(g,f_1) = f_2$, as required.
+\item Case $T = \forall X.~U$. The two underlying sets are equal,
+  using both points of the induction hypothesis for $U$:
+  \begin{displaymath}
+    \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+      |\semRel{\forall X.U}|
+      &=& \{ x \in |\semRel{U}| \mathrel| \forall g.~((e,g),x,x) \in \semRel{U} \} \\
+      &=& \{ x \in |\semGrp{U}| \mathrel| \forall g.~((e,g),x,x) \in \semRel{U} \} \\
+      &=& \{ x \in |\semGrp{U}| \mathrel| \forall g.~\psi_U((e,g),x) = x \} \\
+      &=& |\semGrp{\forall X.U}|
+    \end{array}
+  \end{displaymath}
+  The agreement of the relational intepretaton and the group action:
+  \begin{displaymath}
+    \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+      (g,x_1,x_2) \in \semRel{T}
+      &=& \forall g'.~((g,g'),x_1,x_2) \in \semRel{U} \\
+      &=& \forall g'.~\psi_U((g,g'),x_1) = x_2 \\
+      &=& \forall g'.~\psi_U((g,e),\psi_U((e,g'),x_1)) = x_2 \\
+      &=& \psi_U((g,e),x_1) = x_2 \\
+      &=& \psi_{\forall X.U}(g,x_1) = x_2
+    \end{array}
+  \end{displaymath}
+  where we have used the ``stability'' property of inhabitants of
+  $\forall$-types in the $G$-sets model.
+\end{itemize}
+
+\begin{corollary}
+  The theorem has the following two consequences, which allow the
+  transport of results between the two models:
+  \begin{enumerate}
+  \item For any pair of types $\Delta \vdash T$, $\Delta \vdash U$,
+    they are isomorphic in the $G$-set model iff they are isomorphic
+    in the relational model.
+  \item For any type $\Delta \vdash T$, it is inhabited in the $G$-set
+    model iff it is inhabited in the relational model.
+  \end{enumerate}
+\end{corollary}
+
+\end{document}
