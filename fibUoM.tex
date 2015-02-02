@@ -220,6 +220,10 @@
 \affil[2]{University of Strathclyde}
 \affil[3]{University of Cambridge}
 \authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
+\Copyright{Robert Atkey and Neil Ghani and Fredrik Nordvall Forsberg and Timothy Revell and Sam Staton}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\subjclass{F.3.2 Semantics of Programming Languages.}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Category Theory, Units of Measure, Dimension Types, Type Theory.}% mandatory: Please provide 1-5 keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -499,7 +503,7 @@ need to do three things: i) show that a $\lambda D$-model does in fact provide c
 
 
 
-\noindent {\bf I. Modelling Dimension Types:}
+\subsection{Modelling Dimension Types}
 To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects in the fibres above the dimension contexts in which they are defined. Cartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret such
 expressions. Formally, we interpret the
 syntax as follows.
@@ -522,7 +526,7 @@ In this paper we have only considered universal quantification of units but exis
 
 %It is now possible to add in some constants to represent various structure associated with dimensions. For example, polymorphic zero $\mathtt{0} : \forall u . \qnt(u)$, addition $\mathtt{+}: \forall u. \qnt(u) \rightarrow \qnt(u) \rightarrow \qnt(u)$ or multiplication $\mathtt{*} : \forall u_1 . \forall u_2 . \qnt(u_1) \rightarrow \qnt(u_2) \rightarrow \qnt(u_1 \cdot u_2)$. However, since we are mostly interested in the fibrational structure, we leave the addition of such constants to the reader.\\
 
-\noindent {\bf II. Examples of $\lambda D$-models:}
+\subsection{Examples of $\lambda D$-models}
 We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 \begin{example}(Unit Erasure Models)
@@ -670,7 +674,7 @@ A third example in this class is given by the codomain fibration $cod: \Fib \rig
 % Which implies the result.
 % \end{proof}
 
-\noindent {\bf III Change of Base:}
+\subsection{Change of Base}
 A useful theorem for $\lambda D$ models is that they are closed under change of base, and in fact several of the examples that we have met so far arise this way.
 \begin{theorem}
 Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra \B$ be a finite product-preserving functor and $G'$ be an Abelian group object of $\A$ such that $FG' = G$.  Denote the pullback of $p$ along $F$ by $F^\ast p : F^\ast \E \rightarrow \A$. Then $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
