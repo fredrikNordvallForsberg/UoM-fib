@@ -227,12 +227,11 @@
 \maketitle
 
 \begin{abstract}
+We provide a categorical framework for models of a type theory that has special types for physical quantities. The types are indexed by the physical dimensions that they involve. We use fibrations to organize this index structure in the models of the type theory. We develop some informative models of this type theory: firstly, a model based on group actions, which captures invariance under scaling, and secondly, a way of constructing new models using relational parametricity.
 
-  In 1998, Andrew Kennedy wrote a paper entitled Relational Parametricity and \UoM\cite{Kennedy:1997:RPU:263699.263761}. Inspired by the benefits afforded by the correspondence between $\lambda$-calculus and category theory, in this paper we give a categorical semantics to complement Kennedy's \UoM. We do this so as to make Kennedy's work more accessible to those of a semantic disposition and to discover natural extensions and alternative proofs of Kennedy's results suggested by the categorical perspective.
-
-  We start by following the standard approach in categorical logic by using fibrations to separate index-information (the units) from indexed-information (the types which may contain units). This leads us to the notion of a UoM-fibration. We prove some basic theorems about UoM-fibrations and give a variety of examples of \UoMFibrations, including a novel model based upon $G$-sets. We then explore parametricity for \UoM.
-
-  \note{rewrite}
+%  In 1998, Andrew Kennedy wrote a paper entitled Relational Parametricity and \UoM\cite{Kennedy:1997:RPU:263699.263761}. Inspired by the benefits afforded by the correspondence between $\lambda$-calculus and category theory, in this paper we give a categorical semantics to complement Kennedy's \UoM. We do this so as to make Kennedy's work more accessible to those of a semantic disposition and to discover natural extensions and alternative proofs of Kennedy's results suggested by the categorical perspective.
+%
+%  We start by following the standard approach in categorical logic by using fibrations to separate index-information (the units) from indexed-information (the types which may contain units). This leads us to the notion of a UoM-fibration. We prove some basic theorems about UoM-fibrations and give a variety of examples of \UoMFibrations, including a novel model based upon $G$-sets. We then explore parametricity for \UoM.
 \end{abstract}
 
 \section{Introduction}
@@ -253,9 +252,9 @@ f_\lengthDim\,(5\mathrm{m})=
 \label{eqn:doubleapp}
 \end{equation}
 
-\noindent There are a few key points that are worth emphasising about the above examples (\eqref{eqn:double},\eqref{eqn:doubleapp}).
+\noindent There are a few key points that are worth emphasising about examples \eqref{eqn:double} and \eqref{eqn:doubleapp} above:
 \begin{itemize}
-\item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. We use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
+\item There are two kinds of variables, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. We use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
 \item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension.
 \item The standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
