@@ -541,6 +541,7 @@ We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category 
 
 
 \begin{example}(Model of Dimension Types Without Parametricity)
+\label{example:famset}
 Let $\Fam\Set$ be the category whose objects are pairs of a set $I$ and an $I$-indexed family of sets. A morphism $(I,\{X_i\}_{i\in I})\to (J,\{Y_j\}_{j\in J})$ is a pair $(f,\{\phi\}_{i\in I})$ where $f$ is a function $f:I\to J$ and for all $i\in I$, $\phi_i$ is a function $\phi_i:X_i\to Y_{f(i)}$. It is well known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family $(I,\{X_i\}_{i\in I})$ to its index set $I$, is a $\lambda\forall$-fibration.
 
 Any given set of physical dimensions (e.g. length, time, speed etc.) forms an Abelian group $G$, for example by forming the free Abelian group. Suppose that we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$. Then this forms a $\lambda D$-model.
@@ -607,7 +608,7 @@ Let $p:\MonSet \rightarrow \Mon$ denote the $\MonSet$ fibration, let $G$ be an A
 \begin{proof}
 For any monoid $M$ the functor category ${Set}^M$, which is the fibre above $M$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Mon \rightarrow \Cat$ which maps monoids to categories with one object, and monoid homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that any projection morphism $\pi : M \times G \rightarrow M$ has a right adjoint that satisfies the Beck-Chevalley condition.
 
-A monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence $(p,G,Q)$ is a $\lambda D$ model.
+A monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
 In the $\MonSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
@@ -620,16 +621,35 @@ More generally, instead of having sets and group actions, we also have a $\lambd
 
 Let $C$ be a category. Recall that a functor $C\to\Set$ is called a \emph{presheaf}. The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a presheaf. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
 
-Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda D$ model. The proof of this is very similar to Example~\ref{ex:MonAct} and so we leave it as an exercise to the reader.
+Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda \forall$-model. The proof of this is very similar to Example~\ref{ex:MonAct}.
+
+Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a category
+whose objects are elements of $H$ and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides 
+composition of morphisms. 
+This category can be given the structure of an Abelian group object in 
+$\Cat$, and, moreover, every Abelian group in $\Cat$ arises in this way.
+
+The $\CatSet$ fibration subsumes 
+the monoid actions and families fibrations.
+For Example~\ref{ex:MonAct} (monoid actions), 
+let $G$ be an Abelian group of scale factors.
+The unique homomorphism $G\to 1$ induces a one-object category, 
+and hence we build 
+the $\lambda D$-models of monoid actions (Example~\ref{ex:MonAct}).
+To recover Example~\ref{example:famset}, 
+fix a set of dimension constants and let $H$ be the 
+free Abelian group on that set. The unique homomorphism $1\to H$ induces the 
+discrete category whose objects are $H$, and hence we build the $\lambda D$-%
+models of families of sets (Example~\ref{example:famset}).
+We can also combine the two approaches
+by considering the zero homomorphism $G\to H$. 
+In Section~\ref{sec:change-of-base} we discuss the relationships between these
+models by using change-of-base.
 \end{example}
 
-\note{Sam to think more... The group action model cannot accommodate dimension constants (e.g. Length). I think the presheaf model is the right one for combining parametric dimension polymorphism with
-some dimension constants and constant units of measure (e.g. metres).
-Perhaps this should be investigated.}
-
 \begin{example}\label{ex:fibrations}
-A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda D$-model.
-\note{todo}
+A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda \forall$-model.
+\note{Is it interesting, though? Should it be included?}
 \end{example}
 
 
@@ -675,6 +695,7 @@ A third example in this class is given by the codomain fibration $cod: \Fib \rig
 % \end{proof}
 
 \subsection{Change of Base}
+\label{sec:change-of-base}
 A useful theorem for $\lambda D$ models is that they are closed under change of base, and in fact several of the examples that we have met so far arise this way.
 \begin{theorem}
 Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra \B$ be a finite product-preserving functor and $G'$ be an Abelian group object of $\A$ such that $FG' = G$.  Denote the pullback of $p$ along $F$ by $F^\ast p : F^\ast \E \rightarrow \A$. Then $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
