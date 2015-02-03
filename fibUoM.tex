@@ -455,15 +455,21 @@ In addition, we have the introduction and elimination rules for quantification o
 %	\\ \\
 \end{array}\]
 %
-We use $\bool$ as an abbreviation for $\unitTy + \unitTy$. For any
-particular theory, we assume that there is a dimension context
-$\Deltadim$ listing the dimension constants, and a closed typing
-context $\Gammaops$ describing the primitive units of measure and the
-types of the primitive operations. For instance, we could have $\Deltadim = \lengthDim, \timeDim$ and $\Gammaops = \mathrm{m}:\qnt(\lengthDim), +:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar), \times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2), 1:\qnt(1), \mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}), {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool$.
+We use $\bool$ as an abbreviation for $\unitTy + \unitTy$. 
+We may work with some dimension constants and term constants
+by judging terms in a context $(\Deltadim;\Gammaops)$.
+For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and 
+\[\begin{array}{r@{}l}\Gammaops = (
+&\mathrm{m}:\qnt(\lengthDim), 
+\ \mathrm{s}:\qnt(\timeDim),
+\\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar), 
+\\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2), 
+\ 1:\qnt(1), 
+\\&\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}), 
+\ {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool)\text.
+\end{array}\]
 %
-One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+\unitTy+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as signed addition $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$. 
-
-\note{Clean up typesetting above}
+One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+\unitTy+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as subtraction $-:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$. 
 
 In this paper we do not treat recursion, but a future extension of our work may look in the direction of Pitts' PolyPCF \cite{pitts2000parametric}.
 
