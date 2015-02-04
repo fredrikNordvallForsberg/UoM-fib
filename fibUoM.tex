@@ -623,20 +623,21 @@ A monoid can be given the structure of an Abelian group object in $\Mon$ if and 
 In the $\MonSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
-More generally, instead of having sets and group actions, we also have a $\lambda D$ model built from presheaves.
+More generally, instead of having sets and group actions, we also have $\lambda D$ models built from actions of categories: presheaves.
 
 \begin{example}(A Parametric Model Built from Presheaves)
 \label{ex:presheaves}
 
 Let $C$ be a category. Recall that a functor $C\to\Set$ is called a \emph{presheaf}. The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a presheaf. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
 
-Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda \forall$-model. The proof of this is very similar to Example~\ref{ex:MonAct}.
+Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda \forall$-model. This is quite well-known (e.g.~\cite[end of \S 3]{lawvere-adjointness},\cite{mellies-zeilberger}). 
+The proof of this is very similar to Example~\ref{ex:MonAct}.
 
 Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a category
 whose objects are elements of $H$ and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides 
 composition of morphisms. 
 This category can be given the structure of an Abelian group object in 
-$\Cat$, and, moreover, every Abelian group in $\Cat$ arises in this way.
+$\Cat$, and, moreover, every Abelian group in $\Cat$ arises in this way~\cite{brown-spencer}.
 
 The $\CatSet$ fibration subsumes 
 the monoid actions and families fibrations.
