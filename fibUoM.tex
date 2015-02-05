@@ -142,14 +142,13 @@
 %GSets
 \newcommand{\act}[1]{\cdot_{_{#1}}}
 \newcommand{\SetAct}[1]{(#1, \; \cdot_{_{#1}})}
-\newcommand{\GroupSet}[1]{#1/\!/\Set}
-\newcommand{\GrpSet}{\GroupSet{\Grp}}
-\newcommand{\CatSet}{\GroupSet{\Cat}}
-\newcommand{\GpdSet}{\GroupSet{\Gpd}}
-\newcommand{\sslice}{/\!/}
-\newcommand{\AbSet}{\GroupSet{\Ab}}
+\newcommand{\GroupSet}[1]{[#1,\Set]}
+\newcommand{\Lslice}[1]{#1/\!/\Set}
+\newcommand{\GrpSet}{\Lslice{\Grp}}
+\newcommand{\CatSet}{\Lslice{\Cat}}
+\newcommand{\GpdSet}{\Lslice{\Gpd}}
+\newcommand{\lslice}{/\!/}
 \newcommand{\GSet}{\GroupSet{G}}
-\newcommand{\PermASet}{\GroupSet{\PermA}}
 
 %BB Sets
 \newcommand{\bbA}{\mathbb{A}}
@@ -602,12 +601,12 @@ We next look at a class of $\lambda D$ models that all share one thing in common
 
 We first introduce some notation.
 Let $\mathcal S$ be a category (e.g.~$\mathcal S=\Set$), and
-consider the category $\Cat\sslice\mathcal S$:
+consider the category $\Cat\lslice\mathcal S$:
 The objects are pairs $(C,P:C\to \mathcal S)$ of a small category $C$ and a functor $P$.
 The morphisms are also pairs $(F,\phi):(C,P)\to (D,Q)$,
 of a functor $F:C\to D$ and a natural transformation
 $P\to QF$.
-The obvious projection functor $\Cat\sslice \mathcal S\to \Cat$,
+The obvious projection functor $\Cat\lslice \mathcal S\to \Cat$,
 with $(C,P)\mapsto C$,
 is a fibration. The fibre over a small category $C$ is the category
 of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
@@ -616,7 +615,7 @@ of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
 \begin{theorem}
 \label{thm:BC}
 If $\mathcal S$ has all small limits
-then the fibration $\Cat\sslice \mathcal S\to \Cat$ has simple products.
+then the fibration $\Cat\lslice \mathcal S\to \Cat$ has simple products.
 \end{theorem}
 \begin{proof}[Proof notes]
 This result appears to be fairly well known in the folklore,
@@ -698,7 +697,17 @@ Here is a simple illustration of the change of base result:
 The unit-erasure fibration $(\C\to 1)$ arises from pulling back the families fibration
 $\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
 
-
+\begin{example}(Models over the Lawvere theory)
+\label{ex:Lawvere}
+Let $(p:\E\to\B,G,Q)$ be a $\lambda D$-model.
+The Abelian group object $G$ in $\B$ 
+corresponds to a product-preserving functor
+$F:\LAb\to \B$ from the Lawvere theory for Abelian groups:
+the object $1$ in $\LAb$ is a generic Abelian group, 
+and $F(1)=G$.  
+By Theorem~\ref{thm:change-of-base},
+we have a $\lambda D$-model $(F\ast p,1,(1,Q))$. 
+\end{example}
 \begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
 Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a function, called a group action, $\cdot_A:G\times A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A (h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$ where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A) \rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism $\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f a)$.
@@ -1155,18 +1164,23 @@ Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in 
 
 \begin{example}\label{ex:relMon}
   We can also apply Theorem \ref{thm:rel-model-generator} to obtain a
-  natural relational model for the $\GrpSet$ $\lambda D$-model. As
+  natural relational model for the $\GrpSet$ $\lambda D$-model 
+  (Example~\ref{ex:MonAct}). As
   before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere
-  theory of Abelian groups $\LAb$. Let $\A$ be the category
-  $\bigcup_{n\in \LAb} (\GroupSet{G^{n}})$, $u: \A \rightarrow \LAb$
-  be the fibration with each fibre above $n$ given by the category
-  $\GroupSet{G^{n}}$ and $p:\Sub{\Set} \rightarrow \Set$ be the subset
-  fibration. Define $F:\bigcup_{n\in \LAb} (\GroupSet{G^{n}})
-  \rightarrow \Set$ to be the product preserving functor defined on
-  objects $(X,\phi) \in \GroupSet{G^{n}}$ by $F(X, \phi) = G^{n}
-  \times X \times X$ and on morphisms $(f, \alpha) : (X,\phi)
-  \rightarrow (Y, \psi)$, where $(X,\phi) \in \GroupSet{G^{n}}$,
-  $(Y,\psi) \in \GroupSet{G^{m}}$, $f: X \rightarrow Y$ and $\alpha :
+  theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ 
+  be the pullback of fibration $\GrpSet\to\Grp$ along the 
+  unique product-preserving 
+  functor 
+  $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere},
+  so that the objects of $\A$ are triples 
+  $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set.
+  Let 
+  $p:\Sub{\Set} \rightarrow \Set$ be the subset
+  fibration. Define $F:\A\rightarrow \Set$ 
+  to be the product preserving functor defined on
+  objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n}
+  \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi)
+  \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha :
   G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by
   $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$,
   where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2)
