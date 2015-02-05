@@ -229,7 +229,7 @@
 \authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
 \Copyright{Robert Atkey and Neil Ghani and Fredrik Nordvall Forsberg and Timothy Revell and Sam Staton}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-\subjclass{F.3.2 Semantics of Programming Languages.}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\subjclass{F.3.2 Semantics of Programming Languages.}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation".
 \keywords{Category Theory, Units of Measure, Dimension Types, Type Theory.}% mandatory: Please provide 1-5 keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -287,7 +287,7 @@ The main contributions of this paper are as follows.
 \end{enumerate}
 
 
-\section{Types with physical dimensions}
+\section{Types with Physical Dimensions}
 \label{sec:Not}
 We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions, based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variable, we have two kinds of context.
 
@@ -510,7 +510,7 @@ In order to ascertain the value of Definition~\ref{def:lamDModel}, we need to do
 
 
 
-\subsection{Modelling Dimension Types:}
+\subsection{Modelling Dimension Types}
 To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects in the fibres above the dimension contexts in which they are defined. Cartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret
 such expressions. Formally, we interpret the syntax as follows.
 
@@ -528,7 +528,7 @@ such expressions. Formally, we interpret the syntax as follows.
 In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
 
 
-\subsection{First examples of $\lambda D$-models}
+\subsection{First Examples of $\lambda D$-Models}
 We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 
@@ -611,7 +611,7 @@ with $(C,P)\mapsto C$,
 is a fibration. The fibre over a small category $C$ is the category
 of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
 
-\paragraph*{A source of fibrations with simple products.}
+\paragraph*{A Source of Fibrations with Simple Products}
 \begin{theorem}
 \label{thm:BC}
 If $\mathcal S$ has all small limits
@@ -661,7 +661,7 @@ $P:C\times D\to \mathcal S$, $c\in \mathcal C$:
 \end{multline*}
 \end{proof}
 
-\paragraph*{Change of base.}
+\paragraph*{Change of Base}
 \label{sec:change-of-base}
 In general, a useful way of building fibrations is by changing the base.
 If $p:\E\ra \B$ be a fibration,
