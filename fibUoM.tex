@@ -187,6 +187,7 @@
 \newcommand{\bool}{\msf{bool}}
 \newcommand{\lengthDim}{\mathit{Length}}
 \newcommand{\timeDim}{\mathit{Time}}
+\newcommand{\massDim}{\mathit{Mass}}
 \newcommand{\UoMterm}{ \Delta ; \Gamma \vdash t :T }
 \newcommand{\UoMtype}{\Delta \vdash T \; \msf{ Type}}
 \newcommand{\UoMFibration}{UoM-fibration\xspace}
@@ -565,12 +566,12 @@ Y_{f(i)}$ for all $i\in I$. It is well known that the forgetful
 functor $(I,\{X_i\}_{i\in I}) \mapsto I : \Fam\Set\to \Set$, taking a
 family to its index set, is a $\lambda\forall$-fibration (see e.g.\
 Jacobs~\cite[Lemma 1.9.5]{jacobs1999categorical}).  For any given set
-$B$ of physical dimensions (e.g.\ length, time, mass etc.), let $G$ be
+$B$ of fundamental dimensions (e.g.\ $\lengthDim$, $\timeDim$, $\massDim$ etc.), let $G$ be
 the free Abelian group on $B$. Suppose that we also have a set $Q_d$
 of quantities for each dimension $d \in G$ (for instance, we can
 choose $Q_d = \bbQ \times \{ \overline{d} \}$ where $\overline{d}$ is
 a unit of measure for the dimension $d$, e.g.\
-$\overline{\text{length}} = m$, $\overline{\text{time}} = s$,
+$\overline{\lengthDim} = \mathrm m$, $\overline{\timeDim} = \mathrm s$,
 $\overline{d\cdot d'} = \overline{d}\cdot\overline{d'}$ etc). We then
 have a $\lambda D$-model with $\qnt$ interpreted as $(G,\{Q_d\}_{d\in
   G})$.
