@@ -734,8 +734,9 @@ Each fibre is bicartesian closed.
 The products, coproducts and function spaces are inherited from $\Set$.
 For the function space, let $A$ and $B$ be $G$-sets;
 then the set of functions $(A\to B)$ is also a $G$-set,
-with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(g^{-1}\cdot_A x)$.
+with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
 It follows that reindexing preserves the bicartesian closed structure.
+(This is not the case more generally for $\CatSet\to\Cat$.)
 
 A group can be given the structure of an Abelian group object in $\Grp$ if it is an Abelian group. (Indeed, an Abelian group object in $\Grp$ is the same thing as an Abelian group). Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
