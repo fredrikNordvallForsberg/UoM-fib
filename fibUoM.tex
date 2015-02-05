@@ -1051,7 +1051,7 @@ which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$
 \label{sec:param}
 In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy proves in \cite{Kennedy:1997:RPU:263699.263761} using parametricity. It's curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One can't help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at your finger tips?
 
-To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}). These two examples are intrinsically linked, which we make precise in Theorem~\ref{}.
+To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}). These two examples are intrinsically linked, which we make precise in Theorem~\ref{thm:closed-prog-equiv}.
 
 To begin this section, we must first recall a theorem about the composition of fibred structure.
 
@@ -1091,7 +1091,7 @@ Let $(G,\, Q_0,\, u:\A \rightarrow \mathcal{L})$ be a $\lambda D$-model, $F:\A \
  \end{minipage}
 
 
-\begin{theorem}
+\begin{theorem}\label{thm:rel-model-generator}
 $(G,(Q_0,Q_R), F^\ast p \circ u :F^{\ast} \E \rightarrow \mathcal{L})$ as constructed above, is a $\lambda D$-model.
 \end{theorem}
 
@@ -1099,65 +1099,164 @@ $(G,(Q_0,Q_R), F^\ast p \circ u :F^{\ast} \E \rightarrow \mathcal{L})$ as constr
 Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{F^\ast \E}{G}$. To check that $F^\ast p \circ u$ is a Cartesian closed fibration is a simple exercise that we leave to the reader. And to see that $F^\ast p \circ u$ has simple products we first note that since $p$ has all products, so does $F^\ast p$. Hence, $F^\ast p \circ u$ has simple products by Theorem~\ref{thm:CompOfProd}.
 \end{proof}
 
-
-\noindent We can use this framework to reconstruct the same relational semantics as given by Kennedy in \cite{Kennedy:1997:RPU:263699.263761}.
-
 \begin{example}\label{ex:relKen}
-Let $A$ be an Abelian group. Then using the notation from above, let $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the fibration given by the first projection, and $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Further we define $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X) = A^{n} \times X \times X$, and on morphisms $(f, g) : (n,X) \rightarrow (m, Y)$ by $F(f,g) = (A^f, g, g)$. Finally we let $Q_0 = A$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq A \times A \times A$.
+  This example uses Theorem \ref{thm:rel-model-generator} to generate
+  Kennedy's original relationally parametric model of dimension types
+  \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension
+  erasure model back in Example \ref{ex:UnitErasure}. Let $G$ be an
+  Abelian group. Then using the notation from above, let $\mathcal{L}$
+  be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category
+  $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the
+  fibration given by the first projection, and
+  $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define
+  $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving
+  functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X)
+  = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X)
+  \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally we let $Q_0 =
+  G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G
+  \times G \times G$.
 
-Then each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, where $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. Spelling this out explicitly, we have the following.
-\begin{displaymath}
-  \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
-    \semr{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
-    \semr{\Delta \vdash T \times U} & = &
-    (|\Delta|,
-    \begin{array}[t]{@{}l}
-      \semo{T} \times \semo{U}, \\
-      \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semr{T}, (g,u_1,u_2) \in \semr{U} \}
+  In this model, each type $\Delta \vdash T$ is interpreted as a
+  triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Sub{\Set}$,
+  where $\semr{T} \subseteq G^n \times \semo{T} \times
+  \semo{T}$. Spelling this out explicitly, we have the following
+  interpretations, which are equivalent to Kennedy's original
+  relationally parametric model for dimension types:
+  \begin{displaymath}
+    \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+      \semr{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
+      \semr{\Delta \vdash T \times U} & = &
+      (|\Delta|,
+      \begin{array}[t]{@{}l}
+        \semo{T} \times \semo{U}, \\
+        \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semr{T}, (g,u_1,u_2) \in \semr{U} \}
+      \end{array}
+      \\
+      \semr{\Delta \vdash T \to U} & = &
+      (|\Delta|,
+      \begin{array}[t]{@{}l}
+        \semo{T} \to \semo{U}, \\
+        \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semr{T} \implies (g,f_1t_1, f_2t_2) \in \semr{U} \}
+      \end{array}
+      \\
+      \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
+      \begin{array}[t]{@{}l}
+        \semo{T},
+        \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} )
+      \end{array}
     \end{array}
-    \\
-    \semr{\Delta \vdash T \to U} & = &
-    (|\Delta|,
-    \begin{array}[t]{@{}l}
-      \semo{T} \to \semo{U}, \\
-      \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semr{T} \implies (g,f_1t_1, f_2t_2) \in \semr{U} \}
-    \end{array}
-    \\
-    \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
-    \begin{array}[t]{@{}l}
-     \semo{T},
-      \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} )
-    \end{array}
-  \end{array}
-\end{displaymath}
+  \end{displaymath}
+  Note that, in the interpretation types $\forall X.~T$, the
+  ``carrier'' (i.e., the second component) is exactly the carrier of
+  the interpretation of $T$.
 \end{example}
 
 
-
-We can also apply a natural relational model for the $\GrpSet$ $\lambda D$-model.
 \begin{example}\label{ex:relMon}
-Let $A$ be an Abelian group, $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\bigcup_{n\in \LAb} (\GroupSet{A^{n}})$, $u: \A \rightarrow \LAb$ be the fibration with each fibre above $n$ given by the category $\GroupSet{A^{n}}$ and $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Further we define $F:\bigcup_{n\in \LAb} (\GroupSet{A^{n}}) \rightarrow \Set$ to be the product preserving functor defined on objects $(X,\phi) \in \GroupSet{A^{n}}$ by $F(X, \phi) = A^{n} \times X \times X$ and on morphisms $(f, \alpha) : (X,\phi) \rightarrow (Y, \psi)$, where $(X,\phi) \in \GroupSet{A^{n}}$, $(Y,\psi) \in \GroupSet{A^{m}}$, $f: X \rightarrow Y$ and $\alpha : A^n \rightarrow A^m$ such that $\psi (\alpha, f) = f \phi$, by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (A,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq A \times A \times A$.
+  We can also apply Theorem \ref{thm:rel-model-generator} to obtain a
+  natural relational model for the $\GrpSet$ $\lambda D$-model. As
+  before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere
+  theory of Abelian groups $\LAb$. Let $\A$ be the category
+  $\bigcup_{n\in \LAb} (\GroupSet{G^{n}})$, $u: \A \rightarrow \LAb$
+  be the fibration with each fibre above $n$ given by the category
+  $\GroupSet{G^{n}}$ and $p:\Sub{\Set} \rightarrow \Set$ be the subset
+  fibration. Define $F:\bigcup_{n\in \LAb} (\GroupSet{G^{n}})
+  \rightarrow \Set$ to be the product preserving functor defined on
+  objects $(X,\phi) \in \GroupSet{G^{n}}$ by $F(X, \phi) = G^{n}
+  \times X \times X$ and on morphisms $(f, \alpha) : (X,\phi)
+  \rightarrow (Y, \psi)$, where $(X,\phi) \in \GroupSet{G^{n}}$,
+  $(Y,\psi) \in \GroupSet{G^{m}}$, $f: X \rightarrow Y$ and $\alpha :
+  G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by
+  $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$,
+  where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2)
+  \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
-Then each type $\Delta \vdash T$ is again interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, with $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. The only difference between the interpretation of types in this example and Example~\ref{ex:relKen} is the second component of the interpretation of dimension quantification.
-:
-\begin{displaymath}
-  \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
-    \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
-    \begin{array}[t]{@{}l}
-      \{ t \in |\semr{T}| \mathrel| \forall g \in G.~((e_{G^{|\Delta|}},g), t, t) \in \semr{T} \},\\
-      \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} \}
+  Then each type $\Delta \vdash T$ is again interpreted as a triple
+  $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Sub{\Set}$, with
+  $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. The only
+  difference between the interpretation of types in this example and
+  Example~\ref{ex:relKen} is the second component of the
+  interpretation of dimension quantification:
+  \begin{displaymath}
+    \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+      \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
+      \begin{array}[t]{@{}l}
+        \{ t \in |\semr{T}| \mathrel| \forall g \in G.~((e_{G^{|\Delta|}},g), t, t) \in \semr{T} \},\\
+        \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} \}
+      \end{array}
     \end{array}
-  \end{array}
-\end{displaymath}
+  \end{displaymath}
+  This interpretation, in contrast to the interpretation in Example
+  \ref{ex:relKen}, has ``cut-down'' the carrier of the interpretation
+  of $\forall$-types to only include the ``parametric'' elements. As a
+  consequence, this interpretation satisfies an analogue of the
+  \emph{Identity Extension} lemma from relationally parametric models
+  of System F \cite{reynolds1983types}. For all type interpretations
+  $(|\Delta|, \semo{T}, \semr{T})$, we have:
+  \begin{displaymath}
+    \forall x_1, x_2 \in \semo{T}.~(e,x_1,x_2) \in \semr{T} \Leftrightarrow x_1 = x_2
+  \end{displaymath}
+  Compare this to the identity extension property for System F models,
+  which states that if we instantiate the relational interpretation of
+  a type with the equality relation for all of its free variables,
+  then the resulting relation is the equality relation. In the current
+  setting, equality relations for the free variables are replaced by
+  the unit element of the groups $G^{|\Delta|}$. Indeed, this model is
+  equivalent to the restriction to one-dimensional scalings of the
+  reflexive graph model for System F$\omega$ with geometric symmetries
+  presented by Atkey \cite{atkey14conservation}.
 \end{example}
 
-\note{To Add: Identity extension Lemma.}
-\note{To Add: Reference to Bob's Noether's Theorem work}
-\note{To Add: Underlying sets the same as G-Sets}
-\note{To Add: Relational interp is related to G-Set action}
-\note{To Add: Kennedy's and ours equal on closed programs.}
+We end this discussion of relational models by showing the
+relationships between the models in Examples \ref{ex:relKen} and
+\ref{ex:relMon} and the $\GrpSet$ model we considered in detail in
+Section \ref{sec:MonSet}. By construction, the carriers of the
+interpretations of each type in the model in Example \ref{ex:relMon}
+and the $\GrpSet$ model are identical. Moreover, the relational
+interpretation in Example \ref{ex:relMon} and the group action in the
+$\GrpSet$ model are related in the obvious way:
+\begin{theorem}\label{thm:grp-rel-related}
+  For all types $\Delta \vdash T~\msf{Type}$, if the interpretation of
+  $T$ in the model of Example \ref{ex:relMon} is $(|\Delta|, A, P
+  \subseteq G^{|\Delta|} \times A \times A)$ and the $\GrpSet$ model
+  interpretation is $(G^n, A, \psi)$, then $(g, a_1, a_2) \in P
+  \Leftrightarrow \psi(g,a_1) = a_2$.
+\end{theorem}
+\begin{proof}
+  By induction on the derivation of $\Delta \vdash T~\msf{Type}$.
+\end{proof}
 
+Using Theorem \ref{thm:grp-rel-related}, we can see that we could have
+used the relationally parametric model to derive the results in
+Section \ref{sec:MonSet}. There is literally no difference between the
+two models, for the purposes of interpreting the types of our
+calculus.
 
+It remains to discuss the relationship between Kennedy's original
+relational model (Example \ref{ex:relKen}), and the relational model
+in Example \ref{ex:relMon}, that satisfies identity extension. As
+noted above, the difference between these interpretations lies in the
+different interpretations of the $\forall$-type: Kennedy's model does
+not restrict the carrier of the interpretation to just the
+``parametric'' elements, \emph{i.e.}, the elements that preserve all
+relations. Therefore, the interpretations of types that contain nested
+$\forall$s are not directly comparable. However, we can construct a
+logical relation between the two interpretations to show the following
+property:
+
+\begin{theorem}\label{thm:closed-prog-equiv}
+  For any closed term $\vdash t : \msf{bool}$, the interpretation of
+  $t$ in Kennedy's model is equal to the interpretation of $t$ in the
+  model of Example \ref{ex:relMon}.
+\end{theorem}
+
+By the compositionality of the semantics, this means that if we can
+show that two open terms $s$ and $t$ are equal in the model of Example
+\ref{ex:relMon} (and equivalently, the $\GrpSet$ model), then they
+will be contextually equivalent for Kennedy's model.
+
+\note{This also holds between the unit-erasure semantics and the one
+  of Example \ref{ex:relMon}. Not sure how to fit this in?}
 
 \section{Conclusions and Future Work} \label{sec:con}
 What's so special about G-Sets?
