@@ -97,10 +97,11 @@
 
 %Categories
 \newcommand{\msf}[1]{\mathsf{#1}} %Maths Font
-\newcommand{\Mon}{\msf{Mon}}
+\newcommand{\Grp}{\msf{Grp}}
 \newcommand{\Ab}{\msf{Ab}}
 \newcommand{\Set}{\msf{Set}}
 \newcommand{\Cat}{\msf{Cat}}
+\newcommand{\Gpd}{\msf{Gpd}}
 \newcommand{\Fib}{\msf{Fib}}
 \newcommand{\Fam}[1]{\msf{Fam}(#1)}
 \newcommand{\Sub}[1]{\msf{Sub}(#1)}
@@ -142,8 +143,10 @@
 \newcommand{\act}[1]{\cdot_{_{#1}}}
 \newcommand{\SetAct}[1]{(#1, \; \cdot_{_{#1}})}
 \newcommand{\GroupSet}[1]{#1/\!/\Set}
-\newcommand{\MonSet}{\GroupSet{\Mon}}
+\newcommand{\GrpSet}{\GroupSet{\Grp}}
 \newcommand{\CatSet}{\GroupSet{\Cat}}
+\newcommand{\GpdSet}{\GroupSet{\Gpd}}
+\newcommand{\sslice}{/\!/}
 \newcommand{\AbSet}{\GroupSet{\Ab}}
 \newcommand{\GSet}{\GroupSet{G}}
 \newcommand{\PermASet}{\GroupSet{\PermA}}
@@ -515,7 +518,7 @@ need to do three things: i) show that a $\lambda D$-model does in fact provide c
 
 
 
-\noindent {\bf I. Modelling Dimension Types:}
+\subsection{Modelling Dimension Types}
 To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects in the fibres above the dimension contexts in which they are defined. Cartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret such
 expressions. Formally, we interpret the
 syntax as follows.
@@ -538,7 +541,7 @@ In this paper we have only considered universal quantification of units but exis
 
 %It is now possible to add in some constants to represent various structure associated with dimensions. For example, polymorphic zero $\mathtt{0} : \forall u . \qnt(u)$, addition $\mathtt{+}: \forall u. \qnt(u) \rightarrow \qnt(u) \rightarrow \qnt(u)$ or multiplication $\mathtt{*} : \forall u_1 . \forall u_2 . \qnt(u_1) \rightarrow \qnt(u_2) \rightarrow \qnt(u_1 \cdot u_2)$. However, since we are mostly interested in the fibrational structure, we leave the addition of such constants to the reader.\\
 
-\noindent {\bf II. Examples of $\lambda D$-models:}
+\subsection{First examples of $\lambda D$-models}
 We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 \begin{example}(Unit Erasure Models)
@@ -565,105 +568,198 @@ This model does not support parametric dimension polymorphism. For instance, the
 \note{Explain why this is true ``inspecting types''. Explain what we mean here by parametric polymorphism and add something to the introduction about how we are looking for particular models.}
 \end{example}
 
-Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is Cartesian closed.
+Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is biartesian closed.
 
-We next look at a class of $\lambda D$ models that all share one thing in common --- the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct}, Example~\ref{ex:presheaves}, and Example~\ref{ex:fibrations}). But first we prove a lemma needed for the proof of the general theorem.
+\subsection{Techniques for building models, and further examples}
 
+We next look at a class of $\lambda D$ models that all share one thing in common --- the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}). 
 
-\begin{lemma}
-\label{lemma:RanAlongPrj}
- Suppose that $\A$, $\B$ and $\D$ are categories, $\pi: \A \times \B \rightarrow \A$ is a projection and $\phi:\A \times \B \rightarrow \mathcal{D}$ is a functor. Suppose further that for all objects $X,Y \in \A$ and $(A,B)\in \A \times \B$, the cotensor $\A(X, Y) \pitchfork \phi (A,B)$ exists in $\mathcal{D}$. Then\;  $(Ran_{\pi}\phi)A \cong \lim_{b\in \B} \phi (a,b)$.
+We first introduce some notation. 
+Let $\mathcal S$ be a category (e.g.~$\mathcal S=\Set$), and 
+consider the category $\Cat\sslice\mathcal S$:
+The objects are pairs $(C,P:C\to \mathcal S)$ of a small category $C$ and a functor $P$.
+The morphisms are also pairs $(F,\phi):(C,P)\to (D,Q)$,
+of a functor $F:C\to D$ and a natural transformation 
+$P\to QF$.
+The obvious projection functor $\Cat\sslice \mathcal S\to \Cat$,
+with $(C,P)\mapsto C$,
+is a fibration. The fibre over a small category $C$ is the category 
+of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
 
-\end{lemma}
-
-\begin{proof}
-Compute the right Kan extension of $\phi$ along $\pi$ by using the end formula as in \cite{mac1998categories}, then use Fubini's theorem and the fact that $(Ran_{id} F)a \cong Fa$, for any functor $F: \A\rightarrow \mathcal{D}$. Since $\phi$ is contravariant, we can reduce the resulting end to the required limit.
-\end{proof}
-The proof of this lemma can be done without the use of ends, instead just using limits. This means that we only have to assume that the category $\mathcal{D}$ is complete as opposed to having cotensors. The downside to this approach is that the proof is a little more lengthy and so we do not show it here.
-
+\paragraph*{A source of fibrations with simple products.}
 \begin{theorem}
 \label{thm:BC}
-Let $\E$ and $\B$ be categories with finite products, and $\mathcal{D}$ a small category. Suppose that $\SqFun : \B \rightarrow \Cat$ is a product-preserving functor and $p:\E\rightarrow \B$ a fibration with each fibre $\fibreE{X}$ given by the functor category $\mathcal{D}^{\SqFun[X]}$, and reindexing given by precomposition, i.e., for any $f:X\rightarrow Y \in \B$, $f^\ast (\phi : \SqFun[Y] \rightarrow \D) = \phi \circ \SqFun[f]$. Then, the reindexing of any projection map $\pi_{_{X}} :X\times Y \rightarrow X $ has a right adjoint $\pi_{_{X}}^\ast \dashv \forall_X$, given by the right Kan extension along $\SqFun[\pi_{_{X}}]$, which satisfies the Beck-Chevalley condition.
+If $\mathcal S$ has all small limits 
+then the fibration $\Cat\sslice \mathcal S\to \Cat$ has simple products.
 \end{theorem}
+\begin{proof}[Proof notes]
+This result appears to be fairly well known in the folklore, 
+(e.g.~\cite[end of \S 3]{lawvere-adjointness}, \cite{mellies-zeilberger})
+but since it is important in what follows we sketch a proof.
 
+For any functor $F:C\to D$,
+the reindexing functor $F^*:\mathcal S^D\to \mathcal S^C$ 
+has a right adjoint
+$F_*:\mathcal S^C\to\mathcal S^D$, which is called `right Kan extension along $F$',
+which always exists when $\mathcal S$ has limits.
 
-\begin{proof}
-The right adjoint is given by the right Kan extension along $\pi_{_{X}}$, $Ran_{\pi_{_{X}}} $, by definition. To see that the Beck-Chevalley condition holds we must show that for any functor $\psi: \SqFun[X'] \times \SqFun[Y] \rightarrow \D$ and any morphism $\; f:X\rightarrow X'$ in $\B$ that, \; $(\forall_X(f\times id)^\ast \psi)x \cong (f^\ast \forall_{X'} \psi) x$.
-
-By expanding each side of the isomorphism and then using lemma~\ref{lemma:RanAlongPrj} we see the result. Firstly, the left hand side
-\[
-(\forall_X (f \times id)^\ast \psi)x  \; \cong \; \lim_{y \in Y} (f \times id)^{\ast} \phi (x,y) \; \cong \; \lim_{y\in Y} \phi(fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
-\]
-and then the right hand side
-\[
-(f^\ast \forall_{X'} \psi) x  \; \cong \;  (Ran_{\pi_{_{X}}} \phi ) fx \; \cong \;       \lim_{y\in Y} \phi (fx,y) \text{ by lemma~\ref{lemma:RanAlongPrj}}
-\]
-
-and hence the result.
+For simple products, we are only interested in a right adjoint to weakening,
+i.e. in the functor $\forall_C:\mathcal S^{C\times D}\to \mathcal S^C$ 
+which is right Kan extension along
+along the projection functor $\pi_C:C\times D\to C$.
+Expanding the definitions, we see that $\forall_C(P):C\to\mathcal S$ is 
+a pointwise limit: 
+\begin{equation}
+(\forall_C\,P)(c)=\lim_{d\in D}P(c,d)\text.
+\label{eqn:forall-limit}
+\end{equation}
+The Beck-Chevalley condition requires that the canonical map
+$
+F^*\forall_{C'}
+\to 
+\forall_{C}(F\times \id_D)^*
+$
+is a natural isomorphism for all functors $F:C\to C'$. 
+Indeed, for any 
+$P:C\times D\to \mathcal S$, $c\in \mathcal C$:
+\begin{multline*}
+(F^*(\forall_{C'}\,P))(c)
+=
+(\forall_C\,P)(F(c))
+\cong
+\lim_{d\in D}(F(c),d)
+=
+\lim_{d\in D}(((F\times \id_D)^*(P))(c,d))
+\\\cong
+(\forall_{C}((F\times \id_D)^*(P))(c)
+\text.
+\end{multline*}
 \end{proof}
 
-As promised, we now apply Theorem~\ref{thm:BC} to give some more examples of $\lambda D$ models.
+\paragraph*{Change of base.}
+\label{sec:change-of-base}
+In general, a useful way of building fibrations is by changing the base.
+If $p:\E\ra \B$ be a fibration, 
+and $F:\A\ra \B$ is a functor,
+then the pullback of $p$ along $F$,
+denoted
+$F^\ast p : F^\ast \E \rightarrow \A$,
+is again a fibration.
+\begin{theorem}
+\label{thm:change-of-base}
+Let $p:\E\ra \B$ be a fibration, 
+and let $F:\A\ra \B$ be a functor.
+\begin{enumerate}
+\item If $p$ has simple products and $F$ preserves products, 
+then $F^\ast p : F^\ast \E \rightarrow \A$ has simple products.
+\item If $p$ is bicartesian closed then $F^\ast p: F^\ast \E \rightarrow \A$ 
+is bicartesian closed.
+\item If $G$ is an Abelian group object in $\A$ and 
+  $(p,F(G),Q)$ is a $\lambda D$-model 
+  then $(F^\ast p,G,(G,Q)$ is also a $\lambda D$-model.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+For item~(1): for any $A \in \A$ reindexing along a projection $\pi_{_{A}}: A \times A' \rightarrow A$ in $\A$ is by construction reindexing along $F(\pi_{_{A}})$ which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{FA}} : FA \times FA' \rightarrow FA$, which has a right adjoint and satisfies the Beck-Chevalley condition, since $p$ has simple products. 
 
-\begin{example}(A Parametric Model Built from Monoid Actions)
+For item~(2): $F^*p$ is a bicartesian closed fibration since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence bicartesian closed, and reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves the structure. 
+
+Item~(3) is an immediate corollary.
+\end{proof}
+
+Here is a simple illustration of the change of base result:
+The unit-erasure fibration $(\C\to 1)$ arises from pulling back the families fibration
+$\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
+
+
+\begin{example}(A Parametric Model Built from Group Actions)
 \label{ex:MonAct}
 
-Let $M$ be a monoid. Recall that a $M$-set consists of a set $A$ together with a function, called a monoid action, $\cdot_A:M\times A\to A$ such that $e\cdot_{A} a=a$ and $(mn)\cdot_A a=m\cdot_A (n\cdot_A a)$. Equivalently we can seen a $M$-set as a functor $\phi : \mathcal{M}\rightarrow \Set$, where $\mathcal{M}$ is a category with one object $\ast$ and morphisms are given by $\mathcal{M}(\ast, \ast) = M$, with composition as monoid multiplication. This functor is defined on objects by $\phi(\ast) = A$, and on morphisms by $(\phi m) a = m \cdot a$. In the reverse direction, a category with one object $\mathcal{M}$ and a functor $\phi : \mathcal{M} \rightarrow \Set$ define an $\mathcal{M}(\ast,\ast)$-set with carrier $\phi(\ast)$, which we denote $|\phi|$, and action given by $m \cdot a = \phi(m)a$. We will use these two descriptions interchangeably.
+Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a function, called a group action, $\cdot_A:G\times A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A (h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$ where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A) \rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism $\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f a)$. 
+%From now on we will omit subscripts of group actions where they can be inferred from context.
 
-The category $\MonSet$ has as objects pairs $(M,A)$ where $M$ is a monoid and $A$ is a $M$-set. A morphism $(M,A) \rightarrow (N,B)$ in $\MonSet$ is given by a monoid homomorphism $\phi:M\rightarrow N$ and a function $f:A \rightarrow B$ such that for any $m\in M$ and $a\in A$ we have $f (m\cdot_A a) = (\phi m)\cdot_B (f a)$. (Equivalently $\MonSet$ has objects given by functors $\phi : \mathcal{M} \rightarrow \Set$, and morphisms given by the obvious choice.) From now on we will omit subscripts of monoid actions where they can be inferred from context.
-
-Let $\Mon$ be the category of monoids and homomorphisms, then we call the forgetful functor $\MonSet\to \Mon$ the $\MonSet$ fibration.
+Let $\Grp$ be the category of groups and homomorphisms, then we call the forgetful functor $\GrpSet\to \Grp$ the $\GrpSet$ fibration.
 
 \begin{proposition}
-Let $p:\MonSet \rightarrow \Mon$ denote the $\MonSet$ fibration, let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p,G,Q)$ is a $\lambda D$ model.
+Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration, let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
 
 \begin{proof}
-For any monoid $M$ the functor category ${Set}^M$, which is the fibre above $M$, is a presheaf category and hence is Cartesian closed. To show that reindexing preserves the Cartesian closed structure is a standard argument, which we do not recall here. Note that there exists a product-preserving functor $\Mon \rightarrow \Cat$ which maps monoids to categories with one object, and monoid homomorphisms to functors. Hence, Theorem~\ref{thm:BC} says that any projection morphism $\pi : M \times G \rightarrow M$ has a right adjoint that satisfies the Beck-Chevalley condition.
+For any group $G$ the fibre above $G$ is the category of $G$-sets for fixed $G$.
+This is isomorphic to the 
+the functor category ${\Set}^G$, 
+where we consider the group $G$ as a category with one object $*$ 
+and $G$ as the set of morphisms.
+Indeed, there is a product-preserving, full and faithful functor $\Grp\to\Cat$,
+taking a group to the corresponding one-object category.
+The fibration $\GrpSet\to\Grp$ is thus the pullback of 
+the fibration $\CatSet\to\Cat$ along this embedding $\Grp \to \Cat$.
+Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}, 
+$\GrpSet\to\Grp$ has simple products. 
 
-A monoid can be given the structure of an Abelian group object in $\Mon$ if and only if it is an Abelian group, and then it forms an Abelian group object in a unique way. Hence $(p,G,Q)$ is a $\lambda D$-model.
+Each fibre is bicartesian closed. 
+The products, coproducts and function spaces are inherited from $\Set$.
+For the function space, let $A$ and $B$ be $G$-sets;
+then the set of functions $(A\to B)$ is also a $G$-set,
+with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(g^{-1}\cdot_A x)$.
+It follows that reindexing preserves the bicartesian closed structure.
+
+A group can be given the structure of an Abelian group object in $\Grp$ if it is an Abelian group. (Indeed, an Abelian group object in $\Grp$ is the same thing as an Abelian group). Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\MonSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+In the $\GrpSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
-More generally, instead of having sets and group actions, we also have $\lambda D$ models built from actions of categories: presheaves.
+More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
-\begin{example}(A Parametric Model Built from Presheaves)
+\begin{example}(A Parametric Model Built from Groupoid-actions)
 \label{ex:presheaves}
 
-Let $C$ be a category. Recall that a functor $C\to\Set$ is called a \emph{presheaf}. The category $\CatSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a category and $\phi:\A\to\Set$ is a presheaf. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\CatSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
+Recall that a \emph{groupoid} is a small category $C$ where every morphism is an isomorphism, and that a functor $C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
 
-Let $\Cat$ be the category of small categories and functors. Then the forgetful functor $\CatSet\to \Cat$, which we call the $\CatSet$ fibration, is a $\lambda \forall$-model. This is quite well-known (e.g.~\cite[end of \S 3]{lawvere-adjointness},\cite{mellies-zeilberger}).
+Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model. 
 The proof of this is very similar to Example~\ref{ex:MonAct}.
 
-Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a category
+The $\GpdSet$ fibration is related to the other fibrations by change of base. 
+\begin{itemize}
+\item 
+The families fibration $\Fam\Set\to\Set$ arises from pulling back the groupoid-action fibration
+$\GpdSet\to\Gpd$ along the discrete-groupoid-functor $\Set\to\Gpd$.
+\item The group-action fibration $\GrpSet\to\Grp$ arises from pulling
+  back the groupoid-action fibration $\GpdSet\to\Gpd$ along the functor
+  $\Grp\to\Gpd$ that regards each group as a groupoid with one
+  object.
+\end{itemize}
+
+We now discuss $\lambda D$-models in $\GpdSet$.
+
+Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a groupoid
 whose objects are elements of $H$ and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides
 composition of morphisms.
-This category can be given the structure of an Abelian group object in
-$\Cat$, and, moreover, every Abelian group in $\Cat$ arises in this way~\cite{brown-spencer}.
+This groupoid can be given the structure of an Abelian group object in
+$\Gpd$, and, moreover, every Abelian group in $\Gpd$ arises in this way~\cite{brown-spencer}.
 
-The $\CatSet$ fibration subsumes
-the monoid actions and families fibrations.
-For Example~\ref{ex:MonAct} (monoid actions),
+We have already seen that the $\GpdSet$ fibration subsumes the families and 
+group-actions fibrations. It also subsumes them as $\lambda D$-models. 
+To recover group-actions (Ex.~\ref{ex:MonAct}),
 let $G$ be an Abelian group of scale factors.
-The unique homomorphism $G\to 1$ induces a one-object category,
+The Abelian group object induced by 
+the unique homomorphism $G\to 1$ is a one-object groupoid,
 and hence we build
-the $\lambda D$-models of monoid actions (Example~\ref{ex:MonAct}).
-To recover Example~\ref{example:famset},
+the $\lambda D$-models of group actions.
+To recover the familes example (Ex.~\ref{example:famset}),
 fix a set of dimension constants and let $H$ be the
 free Abelian group on that set. The unique homomorphism $1\to H$ induces the
-discrete category whose objects are $H$, and hence we build the $\lambda D$-%
-models of families of sets (Example~\ref{example:famset}).
+discrete groupoid whose objects are $H$, and hence we build the $\lambda D$-%
+models of families of sets.
 We can also combine the two approaches
 by considering the zero homomorphism $G\to H$.
-In Section~\ref{sec:change-of-base} we discuss the relationships between these
-models by using change-of-base.
 \end{example}
 
-\begin{example}\label{ex:fibrations}
-A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda \forall$-model.
-\note{Is it interesting, though? Should it be included?}
-\end{example}
+% \begin{example}\label{ex:fibrations}
+% A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda \forall$-model.
+% \note{Is it interesting, though? Should it be included?}
+% \end{example}
 
 
 %\begin{example}
@@ -707,28 +803,9 @@ A third example in this class is given by the codomain fibration $cod: \Fib \rig
 % Which implies the result.
 % \end{proof}
 
-\subsection{Change of Base}
-\label{sec:change-of-base}
-A useful theorem for $\lambda D$ models is that they are closed under change of base, and in fact several of the examples that we have met so far arise this way.
-\begin{theorem}
-Let $(p: \E \ra \B, G, Q)$ be a $\lambda D$-model, $F:\A \ra \B$ be a finite product-preserving functor and $G'$ be an Abelian group object of $\A$ such that $FG' = G$.  Denote the pullback of $p$ along $F$ by $F^\ast p : F^\ast \E \rightarrow \A$. Then $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
-\end{theorem}
-
-\begin{proof}
-Firstly, $F^*p$ is a Cartesian closed fibration since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence Cartesian closed, and  reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves CCC structure. Secondly, for any $A \in \A$ reindexing along a projection $\pi_{_{A}}: A \times A' \rightarrow A$ in $\A$ is by construction reindexing along $F(\pi_{_{A}})$ which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{FA}} : FA \times FA' \rightarrow FA$, which has a right adjoint and satisfies the Beck-Chevalley condition, since $p$ has simple products. Finally $(G', Q)$ is over $G'$ as required and hence $\bbracket{F^{\ast}p, G', (G',Q)}$ is a $\lambda D$-model.
-\end{proof}
-
-\noindent The examples that are related by change-of-base are:
-\begin{itemize}
-\item The unit-erasure fibration $(\C\to 1)$ arises from pulling back the families fibration
-$\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
-\item The families fibration $\Fam\Set\to\Set$ arises from pulling back the presheaves fibration
-$\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
-\item The monoid-action fibration $\MonSet\to\Mon$ arises from pulling
-  back the presheaves fibration $\CatSet\to\Cat$ along the functor
-  $\Mon\to\Cat$ that regards each monoid as a category with one
-  object.
-\end{itemize}
+%\noindent The examples that are related by change-of-base are:
+%\begin{itemize}
+%\end{itemize}
 
 % Choosing an internal Abelian group in a category $\C$ is equivalent to giving a finite product-preserving functor from the
 % Lawvere theory of Abelian groups $\LAb$ into the category $\C$.
@@ -780,26 +857,27 @@ $\CatSet\to\Cat$ along the discrete-category-functor $\Set\to\Cat$.
 
 
 
-\section{Monoid Actions and Dimension Types}\label{sec:MonSet}
+\section{Group Actions and Dimension Types}\label{sec:MonSet}
 \note{Add something here about signatures}
 \note{Add that this can all be done for models that fit the Theorem~\ref{thm:BC} model}
 
-In this section we will look in greater detail at the $\lambda D$-model given by the $\MonSet$ fibration, and so we spell out the reindexing and simple product structure.
+In this section we will look in greater detail at the $\lambda D$-model given by the $\GrpSet$ fibration, and so we spell out the reindexing and simple product structure.
 
-Suppose that $\phi: \mathcal{M}\rightarrow \Set$ is an $M$-set, then reindexing along $\pi : M \times G \rightarrow M$ yields the $M \times G$-set given by $\phi \circ \pi$. Or in other words the $M \times G$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$.
+Suppose that $\phi: \mathcal{G}\rightarrow \Set$ is an $G$-set, then reindexing along $\pi : G \times H \rightarrow G$ yields the $G \times H$-set given by $\phi \circ \pi$. Or in other words the $G \times H$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$.
 
-Now suppose that $\psi : \mathcal{M} \times \mathcal{G} \rightarrow$ is an $M \times G$-set. By using Lemma~\ref{lemma:RanAlongPrj} we can see that the underlying set of $ (\forall _\pi \psi)$, is given by $\lim_{y\in \mathcal{G}} \psi (\ast, y)$. If we use the universal property of limits to note that
+Now suppose that $\psi : \mathcal{G} \times \mathcal{H} \rightarrow\Set $ is a $G \times H$-set. According to Theorem~\ref{thm:BC} (equation~\eqref{eqn:forall-limit}), 
+the underlying set of $ (\forall _\pi \psi)$ is given by $\lim_{y\in \mathcal{H}} \psi (\ast, y)$. If we use the universal property of limits to note that
 \[
- \lim_{y\in \mathcal{G}} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{G}} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
+ \lim_{y\in \mathcal{H}} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{H}} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
 \]
-then we can see that $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall g\in G \; \; \psi(e_A, g) y = y \}$, and the action on morphisms is given by $(\forall_\pi \psi) m \; x = \psi (m, e_G) x$.
+then we can see that $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall h\in H \; \; \psi(e_A, h) y = y \}$, and the action on morphisms is given by $(\forall_\pi \psi) g \; x = \psi (g, e_H) x$.
 
-Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make a particular choice of morphism in $G$, namely the identity element $e_G$. However, any element of $G$ would have given the same result since
+Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make a particular choice of morphism in $H$, namely the identity element $e_H$. However, any element of $H$ would have given the same result since
 \[
-  \psi (m, g) x = \psi (m, e_G) \cdot \psi (e_M, g) x = \psi (m, e_G) x
+  \psi (g, h) x = \psi (g, e_H) \cdot \psi (e_G, h) x = \psi (g, e_H) x
 \]
 
-A particularly nice property about this model, is that many of the properties of \UoM that Kennedy proves using parametricity, can be shown to hold in the $\MonSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+A particularly nice property about this model, is that many of the properties of \UoM that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -819,7 +897,7 @@ Explicitly, Lemma~\ref{lem:subst} says that the semantics of substituting a dime
 \]
 Or in other words, substitution of the $n^{th}$ unit variable is given by precomposition at the $n^{th}$ component.
 
-For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\MonSet$ interpretation.
+For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\GrpSet$ interpretation.
 
 \begin{lemma}
 \label{lemma:allarrows}
@@ -832,7 +910,7 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 By the Kan extension formula and Yoneda.
 \end{proof}
 
-This Lemma says that in the $\MonSet$ model a universally quantified variable over an arrow type, can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed. Finally, we note a useful corollary of Lemma~\ref{lemma:allarrows}.
+This Lemma says that in the $\GrpSet$ model a universally quantified variable over an arrow type, can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed. Finally, we note a useful corollary of Lemma~\ref{lemma:allarrows}.
 \begin{corollary}
 \label{cor:subs}
 Suppose that $\Delta, X \vdash T \; \msf{ Type}$, then
@@ -846,7 +924,7 @@ Suppose that $\Delta, X \vdash T \; \msf{ Type}$, then
 
 
 
-We now prove some theorems about the $\MonSet$ fibration that are akin to the parametricity results of Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Lemma~\ref{lemma:allarrows} and Corollary~\ref{cor:subs}. Firstly, lets have a look at the interplay between scaling factors and polymorphic functions.
+We now prove some theorems about the $\GrpSet$ fibration that are akin to the parametricity results of Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Lemma~\ref{lemma:allarrows} and Corollary~\ref{cor:subs}. Firstly, lets have a look at the interplay between scaling factors and polymorphic functions.
 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
@@ -884,7 +962,7 @@ Next, we wish to prove that the type  $\forall X . \qnt(X^2) \rightarrow \qnt(X)
  There is no term of type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\MonSet \rightarrow \Mon, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\MonSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{\qnt (X^2)}|, |\sem{\qnt(X)}|)
 \end{align*}
@@ -903,7 +981,7 @@ Next, we can prove a theorem that relates a dimensionally invariant function to 
 
 \begin{theorem}
  \label{lem:AppSubs}
-Consider the $\MonSet$ semantics for $\lambda D$-model. Then
+Consider the $\GrpSet$ semantics for $\lambda D$-model. Then
 \[
  |\sem{\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)}| \cong |\sem{\qnt(1)\rightarrow \qnt(1)}|
 \]
@@ -943,9 +1021,9 @@ which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$
 
 \section{Relational Models}
 \label{sec:param}
-In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\MonSet$ $\lambda D$-model are results that  Kennedy proves in \cite{Kennedy:1997:RPU:263699.263761} using parametricity. It's curious how the parametricity-style proofs in the $\MonSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One can't help but wonder, is the $\MonSet$ $\lambda D$-model really as good as having full-blown parametricity at your finger tips?
+In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy proves in \cite{Kennedy:1997:RPU:263699.263761} using parametricity. It's curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One can't help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at your finger tips?
 
-To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\MonSet$ $\lambda D$-model (Example~\ref{ex:relMon}). These two examples are intrinsically linked, which we make precise in Theorem~\ref{}.
+To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}). These two examples are intrinsically linked, which we make precise in Theorem~\ref{}.
 
 To begin this section, we must first recall a theorem about the composition of fibred structure.
 
@@ -1028,7 +1106,7 @@ Then each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}
 
 
 
-We can also apply a natural relational model for the $\MonSet$ $\lambda D$-model.
+We can also apply a natural relational model for the $\GrpSet$ $\lambda D$-model.
 \begin{example}\label{ex:relMon}
 Let $A$ be an Abelian group, $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\bigcup_{n\in \LAb} (\GroupSet{A^{n}})$, $u: \A \rightarrow \LAb$ be the fibration with each fibre above $n$ given by the category $\GroupSet{A^{n}}$ and $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Further we define $F:\bigcup_{n\in \LAb} (\GroupSet{A^{n}}) \rightarrow \Set$ to be the product preserving functor defined on objects $(X,\phi) \in \GroupSet{A^{n}}$ by $F(X, \phi) = A^{n} \times X \times X$ and on morphisms $(f, \alpha) : (X,\phi) \rightarrow (Y, \psi)$, where $(X,\phi) \in \GroupSet{A^{n}}$, $(Y,\psi) \in \GroupSet{A^{m}}$, $f: X \rightarrow Y$ and $\alpha : A^n \rightarrow A^m$ such that $\psi (\alpha, f) = f \phi$, by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (A,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq A \times A \times A$.
 
