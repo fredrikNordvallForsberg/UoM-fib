@@ -914,7 +914,7 @@ Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make
 \]
 
 
-A particularly nice property about this model, is that many of the properties of \UoM that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -940,7 +940,7 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 \label{lemma:allarrows}
  Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
 \[
-|\sem{\forall u. S \rightarrow T}| \cong \GSet (\sem{S}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank))
+|\sem{\forall u. S \rightarrow T}| \cong \GroupSet{G} (\sem{S}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank))
 \]
 \end{lemma}
 \begin{proof}
@@ -999,7 +999,7 @@ Next, we wish to prove that the type  $\forall X . \qnt(X^2) \rightarrow \qnt(X)
  There is no term of type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{\qnt (X^2)}|, |\sem{\qnt(X)}|)
 \end{align*}
@@ -1027,19 +1027,20 @@ Consider the $\GrpSet$ semantics for $\lambda D$-model. Then
 We obtain this result as a direct consequence of Corollary~\ref{cor:subs}.
 \end{proof}
 
-Finally, we prove a result about the higher order type $\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
+Finally, we prove a result about a higher order type.
+%$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There exists no non-trivial term of type $\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
+There exists no non-trivial term of type 
+\[\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\text.\]
 \end{theorem}
 \begin{proof}
-Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have that
- \[
-\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} = \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
- \]
-Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$ and $f \in Q \rightarrow Q$, we have that
-\[
-(g_1 g_2) \cdot tf = tf
+Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have
+ \begin{multline*}
+\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
+ \end{multline*}
+Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$ and any $f \in Q \rightarrow Q$, we have that
+\[(g_1 g_2) \cdot tf = tf
 \]
 which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$, then you reach a contradiction.
 \end{proof}
