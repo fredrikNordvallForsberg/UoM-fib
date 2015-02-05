@@ -227,6 +227,10 @@
 \affil[2]{University of Strathclyde}
 \affil[3]{University of Cambridge}
 \authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
+\Copyright{Robert Atkey and Neil Ghani and Fredrik Nordvall Forsberg and Timothy Revell and Sam Staton}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\subjclass{F.3.2 Semantics of Programming Languages.}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Category Theory, Units of Measure, Dimension Types, Type Theory.}% mandatory: Please provide 1-5 keywords
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -234,12 +238,11 @@
 \maketitle
 
 \begin{abstract}
+We provide a categorical framework for models of a type theory that has special types for physical quantities. The types are indexed by the physical dimensions that they involve. We use fibrations to organize this index structure in the models of the type theory. We develop some informative models of this type theory: firstly, a model based on group actions, which captures invariance under scaling, and secondly, a way of constructing new models using relational parametricity.
 
-  In 1998, Andrew Kennedy wrote a paper entitled Relational Parametricity and \UoM\cite{Kennedy:1997:RPU:263699.263761}. Inspired by the benefits afforded by the correspondence between $\lambda$-calculus and category theory, in this paper we give a categorical semantics to complement Kennedy's \UoM. We do this so as to make Kennedy's work more accessible to those of a semantic disposition and to discover natural extensions and alternative proofs of Kennedy's results suggested by the categorical perspective.
-
-  We start by following the standard approach in categorical logic by using fibrations to separate index-information (the units) from indexed-information (the types which may contain units). This leads us to the notion of a UoM-fibration. We prove some basic theorems about UoM-fibrations and give a variety of examples of \UoMFibrations, including a novel model based upon $G$-sets. We then explore parametricity for \UoM.
-
-  \note{rewrite}
+%  In 1998, Andrew Kennedy wrote a paper entitled Relational Parametricity and \UoM\cite{Kennedy:1997:RPU:263699.263761}. Inspired by the benefits afforded by the correspondence between $\lambda$-calculus and category theory, in this paper we give a categorical semantics to complement Kennedy's \UoM. We do this so as to make Kennedy's work more accessible to those of a semantic disposition and to discover natural extensions and alternative proofs of Kennedy's results suggested by the categorical perspective.
+%
+%  We start by following the standard approach in categorical logic by using fibrations to separate index-information (the units) from indexed-information (the types which may contain units). This leads us to the notion of a UoM-fibration. We prove some basic theorems about UoM-fibrations and give a variety of examples of \UoMFibrations, including a novel model based upon $G$-sets. We then explore parametricity for \UoM.
 \end{abstract}
 
 \section{Introduction}
@@ -260,7 +263,7 @@ f_\lengthDim\,(5\mathrm{m})=
 \label{eqn:doubleapp}
 \end{equation}
 
-\noindent There are a few key points that are worth emphasising about the above examples (\eqref{eqn:double},\eqref{eqn:doubleapp}).
+\noindent There are a few key points that are worth emphasising about examples \eqref{eqn:double} and \eqref{eqn:doubleapp} above:
 \begin{itemize}
 \item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. To emphasise this distinction, we use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
 \item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
@@ -531,7 +534,18 @@ We now give some examples of $\lambda D$-models. We begin by noting that in Kenn
 
 \begin{example}(Unit Erasure Models)
 \label{ex:UnitErasure}
-Let $\C$ be a Cartesian closed category. Then the functor $\C \ra \terminal$ is a $\lambda\forall$-fibration. The unique object of $\terminal$ is a trivial Abelian group object in $\terminal$. By taking $\C$ to be the category of complete partial orders and continuous functions, and by choosing the flat pointed cpo $\bbQ_{\bot}$ to interpret $\qnt$ we obtain a model corresponding to Kennedy's unit-erasure model.
+Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
+\terminal$ is a $\lambda\forall$-fibration. The unique object of
+$\terminal$ is a trivial Abelian group object. By taking $\C$ to be
+the category of complete partial orders and continuous functions, and
+by choosing the flat pointed cpo $\bbQ_{\bot}$ to interpret $\qnt$ we
+obtain a model corresponding to Kennedy's unit-erasure model. This
+model supports a plethora of primitive operations, including all the
+standard arithmetical ones. However, the model also contains many
+functions which are not dimensionally invariant --- Kennedy uses
+relational parametricity~\cite{reynolds1983types} to remove these
+unwanted elements; we will come back to his relational model in
+Section~\ref{sec:param}.
 \end{example}
 
 
@@ -540,22 +554,48 @@ We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category 
 \end{example}
 
 
-\begin{example}($\Fam\Set$ Model of Dimension Types) \label{example:famset}
-\noindent Let $\Fam\Set$ be the category whose objects are pairs of a set $I$ and an $I$-indexed family of sets. A morphism $(I,\{X_i\}_{i\in I})\to (J,\{Y_j\}_{j\in J})$ is a pair $(f,\{\phi\}_{i\in I})$ where $f$ is a function $f:I\to J$ and for all $i\in I$, $\phi_i$ is a function $\phi_i:X_i\to Y_{f(i)}$. It is well-known~\cite{} that the forgetful functor $\Fam\Set\to \Set$, taking a family $(I,\{X_i\}_{i\in I})$ to its index set $I$, is a $\lambda\forall$-fibration.
+\begin{example}($\Fam\Set$ Model of Dimension Types)
+\label{example:famset}
+Let $\Fam\Set$ be the category whose objects are pairs
+$(I,\{X_i\}_{i\in I})$ of a set $I$ and an $I$-indexed family of sets
+$\{X_i\}_{i\in I}$. A morphism $(I,\{X_i\}_{i\in I}) \to
+(J,\{Y_j\}_{j\in J})$ is a pair $(f,\{\phi_i\}_{i\in I})$ where $f$ is
+a function $f:I\to J$ and $\phi_i$ is a function $\phi_i:X_i\to
+Y_{f(i)}$ for all $i\in I$. It is well known that the forgetful
+functor $(I,\{X_i\}_{i\in I}) \mapsto I : \Fam\Set\to \Set$, taking a
+family to its index set, is a $\lambda\forall$-fibration (see e.g.\
+Jacobs~\cite[Lemma 1.9.5]{jacobs1999categorical}).  For any given set
+$B$ of physical dimensions (e.g.\ length, time, mass etc.), let $G$ be
+the free Abelian group on $B$. Suppose that we also have a set $Q_d$
+of quantities for each dimension $d \in G$ (for instance, we can
+choose $Q_d = \bbQ \times \{ \overline{d} \}$ where $\overline{d}$ is
+a unit of measure for the dimension $d$, e.g.\
+$\overline{\text{length}} = m$, $\overline{\text{time}} = s$,
+$\overline{d\cdot d'} = \overline{d}\cdot\overline{d'}$ etc). We then
+have a $\lambda D$-model with $\qnt$ interpreted as $(G,\{Q_d\}_{d\in
+  G})$.
 
-Any given set of physical dimensions (e.g. length, time, speed etc.) forms an Abelian group $G$, for example by forming the free Abelian group. Suppose that we also have a set of quantities for each dimension, $(G,\{Q_e\}_{e\in G})$. Then this forms a $\lambda D$-model.
+In this model, a dimension expression $\Dj{\Dvar_1,\dots, \Dvar_n}
+\Dim$ is interpreted as a function $G^n\to G$ using the free Abelian
+group structure on $G$: for each valuation of the dimension variables
+as physical dimensions, we have an interpretation of the expression as
+a physical dimension. A type with a free dimension variable $\Tj \Dvar
+T$ is interpreted as a family of sets, indexed by the dimensions in
+$G$. Similarly a term with a free dimension variable is interpreted as
+a family of functions, one for each dimension in $G$. This model does
+support many primitive operations, but it does not support dimension
+invariant polymorphism. For instance, the model supports adding a term
+$\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ which tests
+whether two dimensions are the same, which is clearly not invariant
+under change of representation.
 
-In this model, a dimension expression $(\Dj{\Dvar_1\dots \Dvar_n} \Dim)$ is interpreted as a function $G^n\to G$: for each valuation of the dimension variables as physical dimensions, we have an interpretation of the expression as a physical dimension. A type with a free dimension variable, $\Tj \Dvar T$, is interpreted as a family of sets, one for each dimension in $G$. Similarly a term in a free dimension variable is interpreted as a family of functions, one for each dimension in $G$.
+Related examples include the relations fibration $\Rel \to \Set$ and
+the subobject fibration $\Sub{\Set} \to \Set$. This example can also
+be generalised to the fibration $\Fam{\C}\to\Set$, which is a
+$\lambda\forall$-fibration if $\C$ is bicartesian closed.
 
-This model does not support \emph{parametric} dimension polymorphism. For instance, the model supports adding a term $\mathsf{eq}:\forall \Dvar_1.\forall \Dvar_2.\bool$ which tests whether two dimensions are the same, by inspecting the type.
-
-\note{Missing citation in the third sentence.}
 \end{example}
 
-
-Related examples include the relations fibration over $\Set$ and the subobject fibration over $\Set$, and one generalization of the above example is the fibration $\Fam{\C}\to\Set$, which is a $\lambda\forall$-fibration if $\C$ is biartesian closed.
-
-\subsection{Techniques for building models, and further examples}
 
 We next look at a class of $\lambda D$ models that all share one thing in common --- the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}).
 
@@ -744,7 +784,6 @@ by considering the zero homomorphism $G\to H$.
 % A third example in this class is given by the codomain fibration $cod: \Fib \rightarrow \Cat$, which has for any category $\A$, the fibre $\fibre{\Fib}{\A}$ consists of fibrations $\E \rightarrow \A$ for any category $\E$. To use Theorem~\ref{thm:BC} we must show that the fibres can be equivalently seen as functor categories $\mathcal{D}^{\SqFun[\A]}$ for a fixed category $\D$. By the Grothendiek construction we have that fibrations $\E \rightarrow \A$ are equivalent to functors $\A^{op} \rightarrow \Cat$. So by taking $\D$ to be $\Cat$ and the functor $\SqFun[\blank]:\Cat \rightarrow \Cat$ to be defined by $\SqFun[\A] = \A^{op}$ on objects, and $\SqFun[F] = F^{op} = F$ on morphisms, we are in the situation covered by Theorem~\ref{thm:BC}. Hence, by using similar arguments to Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}, we can show that $cod:\Fib \rightarrow \Cat$ is a $\lambda \forall$-model.
 % \note{Is it interesting, though? Should it be included?}
 % \end{example}
->>>>>>> 314c45b717fd6707234fd36bab1467f2d0da984f
 
 
 %\begin{example}
