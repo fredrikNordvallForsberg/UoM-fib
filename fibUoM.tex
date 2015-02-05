@@ -1031,18 +1031,22 @@ Finally, we prove a result about a higher order type.
 %$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There exists no non-trivial term of type 
+There is no term of type 
 \[\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\text.\]
 \end{theorem}
 \begin{proof}
 Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have
  \begin{multline*}
-\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
+\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G,\ f:Q\to Q. \; \; (g_1 g_2) \cdot (t(f))=
+t(\lambda q\in Q.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
-Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$ and any $f \in Q \rightarrow Q$, we have that
-\[(g_1 g_2) \cdot tf = tf
+Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, putting
+$f=\id_Q$ we get that
+\[
+(g_1 g_2) \cdot (t(id_Q)) = t(\lambda q\in Q.\,g_2\cdot (g_1^{-1}\cdot q))
 \]
-which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$, then you reach a contradiction.
+which is not possible. Let $g_1 = 1$ and $g_2 = -1$, 
+so that $-1\cdot t(id_Q)=t(id_Q)$, a contradiction.
 \end{proof}
 
 
