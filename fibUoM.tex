@@ -248,10 +248,11 @@ We provide a categorical framework for models of a type theory that has special 
 \end{abstract}
 
 \section{Introduction}
-This paper is about semantic models of programs that manipulate physical quantities, such as length or time. To measure a physical quantity we use units, such as metres, inches, seconds or hours. The particular units that we choose do not effect how we can describe a physical system, or the programs that we can write about it, and so in this paper our focus is on \emph{dimensions}.
-A dimension is simply a physical quantity that can be measured. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimension, but they can be multiplied.
+This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimension, but they can be multiplied. 
 
-Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity $x$ of a given dimension $X$, and returns its double.
+To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of a given dimension.
+
+Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity~$x$ of a given dimension $X$, and returns its double, which has the same dimension.
 \begin{equation}
 f\coloneqq (\Lambda X.\,\lambda x:\qnt(X).\,x+x)
 :\ \forall X.\,\qnt(X)\to \qnt(X)
@@ -267,7 +268,11 @@ f_\lengthDim\,(5\mathrm{m})=
 \noindent There are a few key points that are worth emphasising about examples \eqref{eqn:double} and \eqref{eqn:doubleapp} above:
 \begin{itemize}
 \item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. To emphasise this distinction, we use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
-\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
+\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$. 
+%There are also dimensionless constants, e.g. 
+%$5:\qnt(1)$.
+%,
+%and we can multiply quantities, e.g. $5\mathrm{m}:\qnt(\lengthDim)$.
 \end{itemize}
 
 Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. Our starting point is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models.
@@ -279,7 +284,7 @@ The main contributions of this paper are as follows.
 
 \item An important example of a $\lambda D$-model is built from group actions (Example~\ref{ex:GrpAct}).
 %This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism.
-A difficulty here is how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
+A difficulty with set-theoretic models of dimension polymorphism is as follows: how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
 
 \item We show how the $\lambda D$-model built from group actions supports a diverse range of parametricity-like theorems, without the need to define a separate relational semantics (Section~\ref{sec:MonSet}). This results in simple proofs of theorems that would otherwise require more heavy machinery.
 
@@ -462,7 +467,8 @@ For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
 \ \mathrm{s}:\qnt(\timeDim),
 \\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
-\\& 1:\qnt(1), 
+%\\& 
+\ 1:\qnt(1), 
 \\&\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}),
 \\& {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool)\text.
 \end{array}\]
@@ -543,7 +549,7 @@ Section~\ref{sec:param}.
 
 
 \begin{example}(Syntactical Models)
-We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$, and the fibre $\ClLD_n$ consists of types and (equivalence classes of) terms definable with $n$ dimension variables, where terms are considered modulo conversion. This is a term model and hence provides a completeness result for $\lambda D$-models.
+We can construct a $\lambda \forall$-fibration $\ClLD$ from the syntax in a standard way. The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$. The fibre $\ClLD_n$ over $n$ is the category whose objects are types with $n$ dimension variables, and whose morphisms are terms in context, modulo a standard notion of conversion. The object $1$ in $\LAb$ is an Abelian group object, and $(\ClLD\to\LAb,1,(\Tj X{\qnt(X)}))$ is a $\lambda D$-model.
 \end{example}
 
 
@@ -561,7 +567,7 @@ Jacobs~\cite[Lemma 1.9.5]{jacobs1999categorical}).  For any given set
 $B$ of fundamental dimensions (e.g.\ $\lengthDim$, $\timeDim$, $\massDim$ etc.), let $G$ be
 the free Abelian group on $B$. Suppose that we also have a set $Q_d$
 of quantities for each dimension $d \in G$ (for instance, we can
-choose $Q_d = \bbQ \times \{ \overline{d} \}$ where $\overline{d}$ is
+choose $Q_d = \mathbb R^+ \times \{ \overline{d} \}$ where $\overline{d}$ is
 a unit of measure for the dimension $d$, e.g.\
 $\overline{\lengthDim} = \mathrm m$, $\overline{\timeDim} = \mathrm s$,
 $\overline{d\cdot d'} = \overline{d}\cdot\overline{d'}$ etc). We then
@@ -590,17 +596,18 @@ $\lambda\forall$-fibration if $\C$ is bicartesian closed.
 
 \paragraph*{A Source of Fibrations with Simple Products}
 
-We next look at a particular class of $\lambda D$ models, where the fibres in the $\lambda \forall$-fibration are functors. We prove a general theorem for such fibrations, and instantiate it to construct several examples. We first introduce some notation. Let $\mathcal S$ be a category (typically $\mathcal S=\Set$), and consider the category $\Cat\lslice\mathcal S$. The objects are pairs $(\C,P:C\to \mathcal S)$, where $\C$ is a small category $C$ and $P:\C\to \mathcal S$ a functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$ is the category of functors $[\C\to\mathcal S]$, and reindexing is given by precomposition of functors.
+We next look at a particular class of $\lambda D$ models, where the fibres in the $\lambda \forall$-fibration are functors. We prove a general theorem for such fibrations, and instantiate it to construct several examples. We first introduce some notation. Let $\mathcal S$ be a category (typically $\mathcal S=\Set$), and consider the category $\Cat\lslice\mathcal S$. The objects are pairs $(\C,P:\C\to \mathcal S)$, where $\C$ is a small category and $P:\C\to \mathcal S$ a functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$ is the category $\mathcal S^{\mathcal C}$ of 
+functors $[\mathcal C\to\mathcal S]$ and natural transformations between them. Reindexing is given by precomposition of functors.
 \begin{theorem}
 \label{thm:BC}
 If $\mathcal S$ has all small limits
 then the fibration $\Cat\lslice \mathcal S\to \Cat$ has simple products.
 \end{theorem}
 
-This result appears to be fairly well-known folklore (see e.g.\ Lawvere~\cite[end of \S 3]{lawvere-adjointness}, Mellies and Zeilberger~\cite{mellies-zeilberger}), but since it is important in what follows we sketch a proof.
+This result appears to be fairly well-known folklore (see e.g.\ Lawvere~\cite[end of \S 3]{lawvere-adjointness}, Melli\`es and Zeilberger~\cite{mellies-zeilberger}), but since it is important in what follows we sketch a proof.
 
 \begin{proof}[Proof Sketch]
-For any functor $F:\C\to \D$, the reindexing functor $F^*:\mathcal S^\D\to \mathcal S^\C$ has a right adjoint $F_*:\mathcal S^\C\to\mathcal S^\D$, known as the `right Kan extension along $F$', which always exists when $\mathcal S$ has limits. For simple products, we are only interested in a right adjoint to weakening, i.e.\ in the functor $\forall_\C:\mathcal S^{\C\times \D}\to \mathcal S^\C$ which is the right Kan extension along along the projection functor $\pi_\C:\C\times \D\to \C$. Expanding the definitions, we see that $\forall_\C(P):\C\to\mathcal S$ is a point-wise limit:
+For any functor $F:\C\to \D$, the reindexing functor $F^*:\mathcal S^\D\to \mathcal S^\C$ has a right adjoint $F_*:\mathcal S^\C\to\mathcal S^\D$, known as the `right Kan extension along $F$', which always exists when~$\mathcal S$ has limits. For simple products, we are only interested in a right adjoint to weakening, i.e.\ in the functor $\forall_\C:\mathcal S^{\C\times \D}\to \mathcal S^\C$ which is the right Kan extension along along the projection functor $\pi_\C:\C\times \D\to \C$. Expanding the definitions, we see that $\forall_\C(P):\C\to\mathcal S$ is a point-wise limit:
 \begin{equation}
 (\forall_\C\,P)(c)=\lim_{d\in \D}P(c,d)\enspace\text.
 \label{eqn:forall-limit}
@@ -670,7 +677,7 @@ Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a 
 Let $G$ be an Abelian group, and let $Q$ be a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
 \begin{proof}
-For any group $H$, the fibre above $H$ is the category of $H$-sets.
+For any group $H$, the fibre above $H$ is the category of $H$-sets and equivariant functions.
 This is isomorphic to the
 the functor category ${\Set}^H$,
 where we consider the group $H$ as a category with one object $\star$
@@ -693,7 +700,7 @@ It follows that reindexing preserves the bicartesian closed structure.
 Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}. 
 
 The $\GrpSet$ model cannot support dimension constants because there is only one group homomorphism $1\to G$. 
 It does support several term constants, which we discuss after Theorem~\ref{thm:allArrows}. \end{example}
@@ -847,14 +854,13 @@ hence  $|\forall_\pi \psi | = \{y \in |\psi| \mathrel | \forall h\in H\;.\; (e_A
 Notice that to give the group action of $\forall_\pi \psi$, we had to
 make a particular choice of an element in $H$, namely the identity
 element $e_H$. However, any element of $H$ would have given the same
-result, since
+result, since for all $y \in |\forall_\pi \psi |$,
 \[
    (g, h) \cdot_{\psi} y
  = ((g, e_H)(e_G, h)) \cdot_{\psi} y
  = (g, e_H) \cdot_{\psi} ((e_G, h) \cdot_{\psi} y)
  = (g, e_H) \cdot_{\psi} y
-\]
-for all $y \in |\forall_\pi \psi |$.\\
+\text.\]
 
 Many of the properties of dimension types that Kennedy proves using
 parametricity can be shown to hold in the $\GrpSet$-fibration, without
@@ -889,7 +895,7 @@ By the Kan extension formula and Yoneda.
 \end{proof}
 
 This Theorem says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed.
-In otherwords, it is interpreted as the set of functions that are equivariant
+In other words, it is interpreted as the set of functions that are equivariant
 in the last argument.
 
 In particular, if $\Tj{X_1\dots X_n} {S,T}$ then 
@@ -899,12 +905,12 @@ We use this fact to conclude that the group actions model supports
 several term constants. For any $q\in Q$, we can accommodate 
 a term constant $q:\qnt(1)$, which is interpreted by $\sem q=q$.
 When $Q=G$,
-we can also accommodate a term constant
+we can also accommodate a term constant for multiplication
 \[\times :\forall X.\forall Y.\,\qnt(X)\times\qnt(Y)\to\qnt(X\cdot Y)\]
 which is interpreted as the group operation.
 When $Q=G=(\mathbb R^+,\times,1)$, the positive reals, 
 we also have addition,
-\[+ :\forall X.\,\qnt(X)\times\qnt(X)\to\qnt(X)\text.\]
+\ $+ :\forall X.\,\qnt(X)\times\qnt(X)\to\qnt(X)$\,,
 which is equivariant since $q(r+s)=qr+qs$.
 \begin{theorem}
 \label{thm:quantArrowT}
@@ -950,7 +956,7 @@ for $r\in G$.
  There is no ground term  $\vdash t : \forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Theorem~\ref{thm:allArrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we exhibit a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Theorem~\ref{thm:allArrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (\sem{\qnt (X^2)}, \sem{\qnt(X)})
 \end{align*}
@@ -959,10 +965,9 @@ i.e. any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, sa
 f (g^2 \cdot x) = g \cdot (fx) \tag{$\ast$}
 \end{equation}
 If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contradictions. To this end suppose that $f(-1) = -1$, then by $(\ast)$
-\[
- f((-1)^2 \cdot -1) = (-1) \cdot f(-1)
-\]
-Which is a contradiction since the he left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such $f$.
+we have 
+$f((-1)^2 \cdot -1) = (-1) \cdot f(-1)$,
+which is a contradiction since the left-hand side is equal to $-1$ and the right-hand side is equal to~$1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such~$f$.
 \end{proof}
 
 This result can be extended to also include terms $t$ using primitive
@@ -970,7 +975,7 @@ operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
 \rightarrow \qnt(X)$, as long as these operations can be interpreted
 in the model in question. 
 For example, the result holds in the presence of multiplication
-\[\times:\forall X.\forall Y.\,\qnt X\times\qnt Y\to\qnt(X\cdot Y)\text.\]
+\[\times:\forall X.\forall Y.\,\qnt(X)\times\qnt (Y)\to\qnt(X\cdot Y)\text.\]
 Note however that this model does not
 support a polymorphic zero constant $0 : \forall \Dvar
 .\, \qnt(\Dvar)$, as such a primitive would of course gives rise
@@ -1001,7 +1006,8 @@ There is no term
 \begin{proof}
 Choose $G$ and $Q$ to be $\bbZ_2$. Interpreting the type of $t$, we have
  \begin{multline*}
-\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (\bbZ_2 \rightarrow \bbZ_2) \rightarrow \bbZ_2 \; | \; \forall g_1,  g_2 \in \bbZ_2,\ f:\bbZ_2\to \bbZ_2. \; \; (g_1 g_2) \cdot (t(f))=
+\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=
+\{ t \in (\bbZ_2 {\rightarrow} \bbZ_2) {\rightarrow} \bbZ_2 \; | \; \forall g_1,  g_2 \in \bbZ_2,\ f:\bbZ_2{\to} \bbZ_2. \; (g_1 g_2) \cdot (t(f))=
 t(\lambda q\in \bbZ_2.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
 Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, instantiating $f=\id_Q$ we get that $(g_1 g_2) \cdot (t(\id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))$ for all $g_1$ and $g_2$, but this is not possible. If $g_1 = 1$ and $g_2 = -1$, then the equation reduces to $-1\cdot t(\id_Q)=t(\id_Q)$, which is a contradiction since $t(\id_Q) \in \bbZ_2 = \{-1, 1\}$.
@@ -1031,7 +1037,7 @@ In Section~\ref{sec:MonSet} we pointed out that many of the results that we prov
 To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model. This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
 
 To begin this section, we first recall a theorem about the composition of fibred structure.
-
+\\
 
 \noindent
 \begin{minipage}[l]{0.75\linewidth}
@@ -1248,7 +1254,7 @@ To conclude, we have studied a typed $\lambda$-calculus with polymorphism over p
 
 One particular model turned out to be particularly straightforward and yet informative --- the model based on group actions (Example~\ref{ex:GrpAct}). Of course, automorphisms and group actions play a key role in the classical model theory of first order logic, but in this paper we have shown that these techniques are also useful on the other side of the Curry-Howard correspondence. Many arguments about the $\lambda D$-calculus, including type isomorphisms and definability arguments, can be made in this model (Section~\ref{sec:MonSet}).
 
-Parametricity is most often studied using relational techniques, and in this paper we have developed a method for building relational $\lambda D$-models (Theorem~\ref{thm:rel-model-generator}). By utilising this method we were able to reconstruct two particular relational models: a relational model due to Kennedy (Example~\ref{ex:relKen}, \cite{Kennedy:1997:RPU:263699.263761}) and a restriction of a relational model due to Atkey~(Example~\ref{ex:relMon}, \cite{atkey14conservation}). Although the group-actions model is different in style, we showed (formally) that it is actually closely related to the two relational models~(Theorems~\ref{thm:grp-rel-related} and~\ref{thm:closed-prog-equiv}).
+Parametricity is most often studied using relational techniques, and in this paper we have developed a method for building relational $\lambda D$-models (Theorem~\ref{thm:rel-model-generator}). Using this method we were able to reconstruct two particular relational models: a relational model due to Kennedy (Example~\ref{ex:relKen}, \cite{Kennedy:1997:RPU:263699.263761}) and a restriction of a relational model due to Atkey~(Example~\ref{ex:relMon}, \cite{atkey14conservation}). Although the group-actions model is different in style, we showed (formally) that it is actually closely related to the two relational models~(Theorems~\ref{thm:grp-rel-related} and~\ref{thm:closed-prog-equiv}).
 
 
 \paragraph*{Acknowledgements}
