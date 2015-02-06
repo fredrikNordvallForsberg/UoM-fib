@@ -1144,22 +1144,10 @@ erasure model.
 
 It remains to discuss the relationship between Kennedy's original relational model (Example \ref{ex:relKen}), and the relational model in Example \ref{ex:relMon}, that satisfies the identity extension property. As noted above, the difference between these interpretations lies in the semantics of the $\forall$-type. Kennedy's model does not restrict the carrier of the interpretation to just the ``parametric'' elements, \emph{i.e.}, the elements that preserve all relations. Therefore, the interpretations of types that contain nested $\forall$s are not directly comparable. We might expect that we could observe a difference between the two models when proving statements about terms whose types contain negatively nested foralls. However, Kennedy's original work does not present any results involving terms with such types, and we have not found any natural examples. This is in contrast with the situation with relationally parametric models of System F, where the proof that final coalgebras can be represented crucially relies on the restriction of the interpretation of quantified types to the parametric elements \cite{birkedal2005categorical}.
 
-Therefore, we are in a position where our $\GrpSet$ model, and the
-equivalent relational model in Example \ref{ex:relMon}, do not appear
-to offer any practical advantage over Kennedy's original
-model. Nevertheless, the $\GrpSet$ model does offer an alternative
-interpetation of dimension types that does not use relations, and
-directly links the semantics to symmetry.
+Therefore, our $\GrpSet$ model and the equivalent relational model in Example \ref{ex:relMon} practically coincides with Kennedy's original model, but offer the advantage of not requiring a separate relational semantics to prove important theorems. This in many cases makes proofs of these theorems clearer. Additionally, the $\GrpSet$ model offers an interpretation that directly links the semantics to symmetry.
 
 \section{Concluding remarks} \label{sec:con}
-We have studied
-a typed $\lambda$-calculus with polymorphism over physical dimensions,
-which we called $\lambda D$ (Sect.~\ref{sec:Not}).
-We developed a model theory for the calculus.
-Under the Curry-Howard correspondence, the $\lambda D$-calculus is a
-fragment of first-order logic where the domain of discourse is an unspecified Abelian group,
-and so our notion of model~(Def.~\ref{def:lamDModel})
-is based on standard fibrational techniques in categorical logic.
+We have studied a typed $\lambda$-calculus with polymorphism over physical dimensions, which we called $\lambda D$ (Sect.~\ref{sec:Not}). We developed a model theory for the calculus. Under the Curry-Howard correspondence, the $\lambda D$-calculus is a fragment of first-order logic where the domain of discourse is an unspecified Abelian group, and so our notion of model~(Def.~\ref{def:lamDModel}) is based on standard fibrational techniques in categorical logic.
 
 Among the models we found one particular model that is
 straightforward and yet informative:
