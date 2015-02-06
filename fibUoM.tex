@@ -287,7 +287,7 @@ The main contributions of this paper are as follows.
 \end{enumerate}
 
 
-\section{Types with Physical Dimensions}
+\section{Types with Physical Dimensions:}
 \label{sec:Not}
 We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions, based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variable, we have two kinds of context.
 
@@ -700,11 +700,11 @@ $\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
 \begin{example}(Models over the Lawvere theory)
 \label{ex:Lawvere}
 Let $(p:\E\to\B,G,Q)$ be a $\lambda D$-model.
-Recall that for Lawvere theory $\LAb$ 
+Recall that for Lawvere theory $\LAb$
 there is a unique product-preserving functor
-$F:\LAb\to \B$ such that $F(1)=G$.  
+$F:\LAb\to \B$ such that $F(1)=G$.
 By Theorem~\ref{thm:change-of-base},
-we have a $\lambda D$-model $(F\ast p,1,(1,Q))$. 
+we have a $\lambda D$-model $(F\ast p,1,(1,Q))$.
 \end{example}
 \begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
@@ -1031,21 +1031,21 @@ Finally, we prove a result about a higher order type.
 %$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There is no term of type 
+There is no term of type
 \[\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\text.\]
 \end{theorem}
 \begin{proof}
 Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have
  \begin{multline*}
-\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G,\ f:Q\to Q. \; \; (g_1 g_2) \cdot (t(f))=
-t(\lambda q\in Q.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
+\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (\bbZ_2 \rightarrow \bbZ_2) \rightarrow \bbZ_2 \; | \; \forall g_1,  g_2 \in \bbZ_2,\ f:\bbZ_2\to \bbZ_2. \; \; (g_1 g_2) \cdot (t(f))=
+t(\lambda q\in \bbZ_2.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
 Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, putting
 $f=\id_Q$ we get that
 \[
-(g_1 g_2) \cdot (t(id_Q)) = t(\lambda q\in Q.\,g_2\cdot (g_1^{-1}\cdot q))
+(g_1 g_2) \cdot (t(id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))
 \]
-which is not possible. Let $g_1 = 1$ and $g_2 = -1$, 
+which is not possible. Let $g_1 = 1$ and $g_2 = -1$,
 so that $-1\cdot t(id_Q)=t(id_Q)$, a contradiction.
 \end{proof}
 
@@ -1114,28 +1114,9 @@ Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in 
 \end{proof}
 
 \begin{example}\label{ex:relKen}
-  This example uses Theorem \ref{thm:rel-model-generator} to generate
-  Kennedy's original relationally parametric model of dimension types
-  \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension
-  erasure model back in Example \ref{ex:UnitErasure}. Let $G$ be an
-  Abelian group. Then using the notation from above, let $\mathcal{L}$
-  be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category
-  $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the
-  fibration given by the first projection, and
-  $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define
-  $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving
-  functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X)
-  = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X)
-  \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally we let $Q_0 =
-  G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G
-  \times G \times G$.
+This example uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension erasure model back in Example \ref{ex:UnitErasure}. Let $G$ be an Abelian group. Then using the notation from above, let $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the fibration given by the first projection, and $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X) = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X) \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally we let $Q_0 = G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
-  In this model, each type $\Delta \vdash T$ is interpreted as a
-  triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Sub{\Set}$,
-  where $\semr{T} \subseteq G^n \times \semo{T} \times
-  \semo{T}$. Spelling this out explicitly, we have the following
-  interpretations, which are equivalent to Kennedy's original
-  relationally parametric model for dimension types:
+In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, where $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. Spelling this out explicitly, we have the following interpretations, which are equivalent to Kennedy's original relationally parametric model for dimension types:
   \begin{displaymath}
     \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
       \semr{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
@@ -1160,35 +1141,12 @@ Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in 
       \end{array}
     \end{array}
   \end{displaymath}
-  Note that, in the interpretation types $\forall X.~T$, the
-  ``carrier'' (i.e., the second component) is exactly the carrier of
-  the interpretation of $T$.
+Note that, in the interpretation types $\forall X.~T$, the ``carrier'' (i.e., the second component) is exactly the carrier of the interpretation of $T$.
 \end{example}
 
 
 \begin{example}\label{ex:relMon}
-  We can also apply Theorem \ref{thm:rel-model-generator} to obtain a
-  natural relational model for the $\GrpSet$ $\lambda D$-model 
-  (Example~\ref{ex:MonAct}). As
-  before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere
-  theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ 
-  be the pullback of fibration $\GrpSet\to\Grp$ along the 
-  unique product-preserving 
-  functor 
-  $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere},
-  so that the objects of $\A$ are triples 
-  $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set.
-  Let 
-  $p:\Sub{\Set} \rightarrow \Set$ be the subset
-  fibration. Define $F:\A\rightarrow \Set$ 
-  to be the product preserving functor defined on
-  objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n}
-  \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi)
-  \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha :
-  G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by
-  $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$,
-  where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2)
-  \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
+We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural relational model for the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:MonAct}). As before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ be the pullback of fibration $\GrpSet\to\Grp$ along the unique product-preserving functor $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere}, so that the objects of $\A$ are triples $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set. Let $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Define $F:\A\rightarrow \Set$ to be the product preserving functor defined on objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n} \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi) \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha : G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
   Then each type $\Delta \vdash T$ is again interpreted as a triple
   $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Sub{\Set}$, with
