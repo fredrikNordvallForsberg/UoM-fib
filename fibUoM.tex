@@ -523,7 +523,7 @@ In this paper we have only considered universal quantification of units but exis
 We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 
-\begin{example}(Unit Erasure Models)
+\begin{example}(Unit-erasure models)
 \label{ex:UnitErasure}
 Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
 \terminal$ is a $\lambda\forall$-fibration. The unique object of
@@ -540,12 +540,12 @@ Section~\ref{sec:param}.
 \end{example}
 
 
-\begin{example}(Syntax of Dimension Types)
+\begin{example}(Syntactical models)
 We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$, and the fibre $\ClLD_n$ consists of types and (equivalence classes of) terms definable with $n$ dimension variables, where terms are considered modulo conversion. This is a term model and hence provides a completeness result for $\lambda D$-models.
 \end{example}
 
 
-\begin{example}($\Fam\Set$ Model of Dimension Types)
+\begin{example}(The dimension-indexed families model)
 \label{example:famset}
 Let $\Fam\Set$ be the category whose objects are pairs
 $(I,\{X_i\}_{i\in I})$ of a set $I$ and an $I$-indexed family of sets
@@ -599,7 +599,7 @@ We first introduce some notation.  Let $\mathcal S$ be a category
 $\Cat\lslice\mathcal S$: The objects are pairs $(\C,P:C\to \mathcal
 S)$, where $\C$ is a small category $C$ and $P:\C\to \mathcal S$ a
 functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a
-functor $F:\C\to \D$ and a natural transformation $\phi : P\to Q \circ F$.  The
+functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The
 obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$
 is the category of functors $[\C\to\mathcal S]$, and reindexing is by
 precomposition of functors.
@@ -699,7 +699,7 @@ By Theorem~\ref{thm:change-of-base}, we have a $\lambda D$-model
 $(F^\ast p,1,(1, Q))$.
 \end{example}
 
-\begin{example}(A Model Built from Group Actions)
+\begin{example}(A model built from group actions)
 \label{ex:MonAct}
 Let $G$ be a group. Recall that a $G$-set consists of a set $A$
 together with a group action, i.e.\ a function $\cdot_A:G\times
@@ -747,9 +747,9 @@ In the $\GrpSet$ fibration, we model a type with a free dimension variable $\Tj\
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
-\begin{example}(A Model Built from Groupoid-actions)
+\begin{example}(A model built from groupoid actions)
 \label{ex:presheaves}
-Recall that a \emph{groupoid} is a small category $C$ where every morphism is an isomorphism, and that a functor $C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
+Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$.
 
 Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model.
 The proof of this is very similar to Example~\ref{ex:MonAct}.
