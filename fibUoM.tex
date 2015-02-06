@@ -521,17 +521,17 @@ In this paper we have only considered universal quantification of units but exis
 
 
 \subsection{First Examples of $\lambda D$-Models}
-We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper \cite{Kennedy:1997:RPU:263699.263761}, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
+We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper \cite{Kennedy:1997:RPU:263699.263761}, a simpler approach is taken to the semantics of dimensions, the dimensions are simply thrown away in a {\em dimension-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 
-\begin{example}(Unit-erasure models)
+\begin{example}(Dimension-Erasure Models)
 \label{ex:UnitErasure}
 Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
 \terminal$ is a $\lambda\forall$-fibration. The unique object of
 $\terminal$ is a trivial Abelian group object. By taking $\C$ to be
 the category of complete partial orders and continuous functions, and
 by choosing the flat pointed cpo $\bbQ_{\bot}$ to interpret $\qnt$ we
-obtain a model corresponding to Kennedy's unit-erasure model. This
+obtain a model corresponding to Kennedy's dimension-erasure model. This
 model supports a plethora of primitive operations, including all the
 standard arithmetical ones. However, the model also contains many
 functions which are not dimensionally invariant --- Kennedy uses
@@ -541,12 +541,12 @@ Section~\ref{sec:param}.
 \end{example}
 
 
-\begin{example}(Syntactical models)
+\begin{example}(Syntactical Models)
 We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$, and the fibre $\ClLD_n$ consists of types and (equivalence classes of) terms definable with $n$ dimension variables, where terms are considered modulo conversion. This is a term model and hence provides a completeness result for $\lambda D$-models.
 \end{example}
 
 
-\begin{example}(The dimension-indexed families model)
+\begin{example}(The Dimension-Indexed Families Model)
 \label{example:famset}
 Let $\Fam\Set$ be the category whose objects are pairs
 $(I,\{X_i\}_{i\in I})$ of a set $I$ and an $I$-indexed family of sets
@@ -688,7 +688,7 @@ Item~\eqref{item:lambdaD} is an immediate corollary.
 
 
 Here is a simple illustration of the change of base result:
-The unit-erasure fibration $\C\to 1$ arises from pulling back the families fibration
+The dimension-erasure fibration $\C\to 1$ arises from pulling back the families fibration
 $\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
 
 \begin{example}(Models over the Lawvere theory $\LAb$)
@@ -700,7 +700,7 @@ By Theorem~\ref{thm:change-of-base}, we have a $\lambda D$-model
 $(F^\ast p,1,(1, Q))$.
 \end{example}
 
-\begin{example}(A model built from group actions)
+\begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
 Let $G$ be a group. Recall that a $G$-set consists of a set $A$
 together with a group action, i.e.\ a function $\cdot_A:G\times
@@ -748,7 +748,7 @@ In the $\GrpSet$ fibration, we model a type with a free dimension variable $\Tj\
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
-\begin{example}(A model built from groupoid actions)
+\begin{example}(A model Built from Groupoid Actions)
 \label{ex:presheaves}
 Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$.
 Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model.
@@ -895,15 +895,13 @@ by considering the zero homomorphism $G\to H$.
 
 \section{Group Actions and Dimension Types}\label{sec:MonSet}
 \note{Add something here about signatures}
-\note{Add that this can all be done for models that fit the Theorem~\ref{thm:BC} model}
 
 \noindent In this section we will look in greater detail at the $\lambda D$-model given by the $\GrpSet$ fibration, and so we spell out the reindexing and simple product structure.
 
 
 Suppose that $\phi: \mathcal{G}\rightarrow \Set$ is an $G$-set, then reindexing along $\pi : G \times H \rightarrow G$ yields the $G \times H$-set given by $\phi \circ \pi$. Or in other words the $G \times H$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$.
 
-Now suppose that $\psi : \mathcal{G} \times \mathcal{H} \rightarrow\Set $ is a $G \times H$-set. According to Theorem~\ref{thm:BC} (equation~\eqref{eqn:forall-limit}),
-the underlying set of $ (\forall _\pi \psi)$ is given by $\lim_{y\in \mathcal{H}} \psi (\ast, y)$. If we use the universal property of limits to note that
+Now suppose that $\psi : \mathcal{G} \times \mathcal{H} \rightarrow\Set $ is a $G \times H$-set. According to Theorem~\ref{thm:BC} (equation~\eqref{eqn:forall-limit}), the underlying set of $ (\forall _\pi \psi)$ is given by $\lim_{y\in \mathcal{H}} \psi (\ast, y)$. If we use the universal property of limits to note that
 \[
  \lim_{y\in \mathcal{H}} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{H}} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
 \]
@@ -915,7 +913,7 @@ Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make
 \]
 
 
-A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. \note{(Bob) In light of the theorem in Section 5 below, this model does capture parametricity. Just remove next sentence, or forward ref?} The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
