@@ -523,7 +523,7 @@ In this paper we have only considered universal quantification of units but exis
 We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper, a simpler approach is taken to the semantics of dimensions, the dimensions/units are simply thrown away in a {\em unit-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
 
 
-\begin{example}(Unit Erasure Models)
+\begin{example}(Unit-erasure models)
 \label{ex:UnitErasure}
 Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
 \terminal$ is a $\lambda\forall$-fibration. The unique object of
@@ -540,12 +540,12 @@ Section~\ref{sec:param}.
 \end{example}
 
 
-\begin{example}(Syntax of Dimension Types)
+\begin{example}(Syntactical models)
 We can construct a $\lambda D$-model $\ClLD$ from the syntax. The base category $\B$ is the Lawvere theory of Abelian groups $\LAb$, and the fibre $\ClLD_n$ consists of types and (equivalence classes of) terms definable with $n$ dimension variables, where terms are considered modulo conversion. This is a term model and hence provides a completeness result for $\lambda D$-models.
 \end{example}
 
 
-\begin{example}($\Fam\Set$ Model of Dimension Types)
+\begin{example}(The dimension-indexed families model)
 \label{example:famset}
 Let $\Fam\Set$ be the category whose objects are pairs
 $(I,\{X_i\}_{i\in I})$ of a set $I$ and an $I$-indexed family of sets
@@ -599,7 +599,7 @@ We first introduce some notation.  Let $\mathcal S$ be a category
 $\Cat\lslice\mathcal S$: The objects are pairs $(\C,P:C\to \mathcal
 S)$, where $\C$ is a small category $C$ and $P:\C\to \mathcal S$ a
 functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a
-functor $F:\C\to \D$ and a natural transformation $\phi : P\to Q \circ F$.  The
+functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The
 obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$
 is the category of functors $[\C\to\mathcal S]$, and reindexing is by
 precomposition of functors.
@@ -698,28 +698,37 @@ functor $F:\LAb\to \B$ such that $F(1)=G$.
 By Theorem~\ref{thm:change-of-base}, we have a $\lambda D$-model
 $(F^\ast p,1,(1, Q))$.
 \end{example}
-\begin{example}(A Model Built from Group Actions)
-\label{ex:MonAct}
-Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a function, called a group action, $\cdot_A:G\times A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A (h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$ where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A) \rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism $\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f a)$.
-%From now on we will omit subscripts of group actions where they can be inferred from context.
 
-Let $\Grp$ be the category of groups and homomorphisms, then we call the forgetful functor $\GrpSet\to \Grp$ the $\GrpSet$ fibration.
+\begin{example}(A model built from group actions)
+\label{ex:MonAct}
+Let $G$ be a group. Recall that a $G$-set consists of a set $A$
+together with a group action, i.e.\ a function $\cdot_A:G\times
+A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A
+(h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$
+where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A)
+\rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism
+$\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for
+any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f
+a)$.
+%From now on we will omit subscripts of group actions where they can be inferred from context.
+%
+Let $\Grp$ be the category of groups and homomorphisms. We call the forgetful functor $p : \GrpSet\to \Grp$ the $\GrpSet$ fibration.
 
 \begin{proposition}
-Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration, let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p,G,Q)$ is a $\lambda D$-model.
+%Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration,
+Let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
-
 \begin{proof}
-For any group $G$ the fibre above $G$ is the category of $G$-sets for fixed $G$.
+For any group $H$, the fibre above $H$ is the category of $H$-sets.
 This is isomorphic to the
-the functor category ${\Set}^G$,
-where we consider the group $G$ as a category with one object $*$
-and $G$ as the set of morphisms.
+the functor category ${\Set}^H$,
+where we consider the group $H$ as a category with one object $*$
+and a morphism for each element of $H$.
 Indeed, there is a product-preserving, full and faithful functor $\Grp\to\Cat$,
 taking a group to the corresponding one-object category.
 The fibration $\GrpSet\to\Grp$ is thus the pullback of
 the fibration $\CatSet\to\Cat$ along this embedding $\Grp \to \Cat$.
-Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base},
+Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}\eqref{item:simpl-prod},
 $\GrpSet\to\Grp$ has simple products.
 
 Each fibre is bicartesian closed.
@@ -728,51 +737,50 @@ For the function space, let $A$ and $B$ be $G$-sets;
 then the set of functions $(A\to B)$ is also a $G$-set,
 with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
 It follows that reindexing preserves the bicartesian closed structure.
-(This is not the case more generally for $\CatSet\to\Cat$.)
-
-A group can be given the structure of an Abelian group object in $\Grp$ if it is an Abelian group. (Indeed, an Abelian group object in $\Grp$ is the same thing as an Abelian group). Hence $(p,G,Q)$ is a $\lambda D$-model.
+(This is not the case more generally for $\CatSet\to\Cat$, so Theorem~\ref{thm:change-of-base}\eqref{item:biCCC} does not apply.)
+%
+Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+In the $\GrpSet$ fibration, we model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
-\begin{example}(A Model Built from Groupoid-actions)
+\begin{example}(A model built from groupoid actions)
 \label{ex:presheaves}
-Recall that a \emph{groupoid} is a small category $C$ where every morphism is an isomorphism, and that a functor $C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \Rightarrow \psi \cdot F$ between functors $\A \to\Set$.
-
+Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$.
 Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model.
 The proof of this is very similar to Example~\ref{ex:MonAct}.
 
-The $\GpdSet$ fibration is related to the other fibrations by change of base.
+The $\GpdSet$ fibration is related to the other fibrations by change of base:
 \begin{itemize}
 \item
-The families fibration $\Fam\Set\to\Set$ arises from pulling back the groupoid-action fibration
+The families fibration $\Fam\Set\to\Set$ from Example~\ref{example:famset} arises from pulling back the groupoid action fibration
 $\GpdSet\to\Gpd$ along the discrete-groupoid-functor $\Set\to\Gpd$.
-\item The group-action fibration $\GrpSet\to\Grp$ arises from pulling
-  back the groupoid-action fibration $\GpdSet\to\Gpd$ along the functor
-  $\Grp\to\Gpd$ that regards each group as a groupoid with one
-  object.
+\item The group action fibration $\GrpSet\to\Grp$ from
+  Example~\ref{ex:MonAct} arises from pulling back the groupoid action
+  fibration $\GpdSet\to\Gpd$ along the functor $\Grp\to\Gpd$ that
+  regards each group as a groupoid with one object.
 \end{itemize}
 
 We now discuss $\lambda D$-models in $\GpdSet$.
-
+%
 Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a groupoid
-whose objects are elements of $H$ and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides
+whose objects are the elements of $H$, and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides
 composition of morphisms.
 This groupoid can be given the structure of an Abelian group object in
 $\Gpd$, and, moreover, every Abelian group in $\Gpd$ arises in this way~\cite{brown-spencer}.
 
 We have already seen that the $\GpdSet$ fibration subsumes the families and
-group-actions fibrations. It also subsumes them as $\lambda D$-models.
-To recover group-actions (Ex.~\ref{ex:MonAct}),
+group actions fibrations. It also subsumes them as $\lambda D$-models.
+To recover group actions (Example~\ref{ex:MonAct}),
 let $G$ be an Abelian group of scale factors.
 The Abelian group object induced by
 the unique homomorphism $G\to 1$ is a one-object groupoid,
 and hence we build
 the $\lambda D$-models of group actions.
-To recover the familes example (Ex.~\ref{example:famset}),
+To recover the families example (Example~\ref{example:famset}),
 fix a set of dimension constants and let $H$ be the
 free Abelian group on that set. The unique homomorphism $1\to H$ induces the
 discrete groupoid whose objects are $H$, and hence we build the $\lambda D$-%
