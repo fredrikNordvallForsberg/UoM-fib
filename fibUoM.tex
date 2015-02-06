@@ -750,38 +750,37 @@ More generally, instead of having sets and group actions, we also have $\lambda 
 \begin{example}(A model built from groupoid actions)
 \label{ex:presheaves}
 Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$.
-
 Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model.
 The proof of this is very similar to Example~\ref{ex:MonAct}.
 
-The $\GpdSet$ fibration is related to the other fibrations by change of base.
+The $\GpdSet$ fibration is related to the other fibrations by change of base:
 \begin{itemize}
 \item
-The families fibration $\Fam\Set\to\Set$ arises from pulling back the groupoid-action fibration
+The families fibration $\Fam\Set\to\Set$ from Example~\ref{example:famset} arises from pulling back the groupoid action fibration
 $\GpdSet\to\Gpd$ along the discrete-groupoid-functor $\Set\to\Gpd$.
-\item The group-action fibration $\GrpSet\to\Grp$ arises from pulling
-  back the groupoid-action fibration $\GpdSet\to\Gpd$ along the functor
-  $\Grp\to\Gpd$ that regards each group as a groupoid with one
-  object.
+\item The group action fibration $\GrpSet\to\Grp$ from
+  Example~\ref{ex:MonAct} arises from pulling back the groupoid action
+  fibration $\GpdSet\to\Gpd$ along the functor $\Grp\to\Gpd$ that
+  regards each group as a groupoid with one object.
 \end{itemize}
 
 We now discuss $\lambda D$-models in $\GpdSet$.
-
+%
 Let $f:G\to H$ be a homomorphism of Abelian groups. This induces a groupoid
-whose objects are elements of $H$ and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides
+whose objects are the elements of $H$, and where the hom-sets are $\mathrm{mor}(h,h')=\{g\in G~|~f(g)\cdot_Hh=h'\}$. The group operation in $G$ provides
 composition of morphisms.
 This groupoid can be given the structure of an Abelian group object in
 $\Gpd$, and, moreover, every Abelian group in $\Gpd$ arises in this way~\cite{brown-spencer}.
 
 We have already seen that the $\GpdSet$ fibration subsumes the families and
-group-actions fibrations. It also subsumes them as $\lambda D$-models.
-To recover group-actions (Ex.~\ref{ex:MonAct}),
+group actions fibrations. It also subsumes them as $\lambda D$-models.
+To recover group actions (Example~\ref{ex:MonAct}),
 let $G$ be an Abelian group of scale factors.
 The Abelian group object induced by
 the unique homomorphism $G\to 1$ is a one-object groupoid,
 and hence we build
 the $\lambda D$-models of group actions.
-To recover the familes example (Ex.~\ref{example:famset}),
+To recover the families example (Example~\ref{example:famset}),
 fix a set of dimension constants and let $H$ be the
 free Abelian group on that set. The unique homomorphism $1\to H$ induces the
 discrete groupoid whose objects are $H$, and hence we build the $\lambda D$-%
