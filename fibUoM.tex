@@ -462,7 +462,7 @@ For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
 \ \mathrm{s}:\qnt(\timeDim),
 \\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
-\\& 1:\qnt(1), 0 : \forall \Dvar . \qnt(\Dvar),
+\\& 1:\qnt(1), 
 \\&\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}),
 \\& {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool)\text.
 \end{array}\]
@@ -508,9 +508,9 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
-\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot XY^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$. We assume that there is a given interpretation $\sem d : 1 \to G$ for every primitive dimension constant $d \in \Deltadim$.
+\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$. We assume that there is a given interpretation $\sem d : 1 \to G$ for every primitive dimension constant $d \in \Deltadim$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}\!^* (Q)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
@@ -693,8 +693,10 @@ It follows that reindexing preserves the bicartesian closed structure.
 Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=\mathbb Q^+$, the positive rationals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
-\end{example}
+In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+
+The $\GrpSet$ model cannot support dimension constants because there is only one group homomorphism $1\to G$. 
+It does support several term constants, which we discuss after Theorem~\ref{thm:allArrows}. \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
@@ -887,7 +889,23 @@ By the Kan extension formula and Yoneda.
 \end{proof}
 
 This Theorem says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed.
+In otherwords, it is interpreted as the set of functions that are equivariant
+in the last argument.
 
+In particular, if $\Tj{X_1\dots X_n} {S,T}$ then 
+the type $(\forall \vec X.\,S\to T)$ is interpreted as the set
+of all homomorphisms $\GroupSet {\mathcal G^n}(\sem S,\sem T)$. 
+We use this fact to conclude that the group actions model supports 
+several term constants. For any $q\in Q$, we can accommodate 
+a term constant $q:\qnt(1)$, which is interpreted by $\sem q=q$.
+When $Q=G$,
+we can also accommodate a term constant
+\[\times :\forall X.\forall Y.\,\qnt(X)\times\qnt(Y)\to\qnt(X\cdot Y)\]
+which is interpreted as the group operation.
+When $Q=G=(\mathbb R^+,\times,1)$, the positive reals, 
+we also have addition,
+\[+ :\forall X.\,\qnt(X)\times\qnt(X)\to\qnt(X)\text.\]
+which is equivariant since $q(r+s)=qr+qs$.
 \begin{theorem}
 \label{thm:quantArrowT}
 Suppose that $\Delta, X \vdash T \; \msf{ Type}$. Then $|\sem{\forall
@@ -921,14 +939,15 @@ This theorem tells us that polymorphic functions are \emph{invariant under scali
 %
 If we apply Theorem~\ref{thm:quantArrowT} to the type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$, we see that
 \[
- |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong G \text{,}
+ |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong Q \text{,}
 \]
-which implies that terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ vary only by scalar multiplication.
-
+Putting $Q=G$, we conclude that all the terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ 
+are of the form $\Lambda X.\,\lambda q:\qnt(X).\ r\times q^n$
+for $r\in G$.
 
 \begin{theorem}
 \label{thm:UninhabType}
- There is no term  $\vdash t : \forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
+ There is no ground term  $\vdash t : \forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
 To see this we show that there exists a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Theorem~\ref{thm:allArrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
@@ -949,22 +968,25 @@ Which is a contradiction since the he left-hand side is equal to $-1$ and the ri
 This result can be extended to also include terms $t$ using primitive
 operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
 \rightarrow \qnt(X)$, as long as these operations can be interpreted
-in the model in question. Note in particular that this model does not
-support a polymorphic zero operation $0 : \forall \Dvar
-. \qnt(\Dvar)$, as such a primitive operation would of course gives rise
+in the model in question. 
+For example, the result holds in the presence of multiplication
+\[\times:\forall X.\forall Y.\,\qnt X\times\qnt Y\to\qnt(X\cdot Y)\text.\]
+Note however that this model does not
+support a polymorphic zero constant $0 : \forall \Dvar
+.\, \qnt(\Dvar)$, as such a primitive would of course gives rise
 to a trivial counterexample to the theorem.
 
 Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (or for a more modern introduction see Sonin~\cite{sonin2001physical}).
 
-\begin{theorem}
+\begin{theorem}We have a bijection
  \label{thm:AppSubs}
- Suppose that both $\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)$ and $\qnt(1)\rightarrow \qnt(1)$, are well-formed types in context. Then
+% Suppose that both $\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)$ and $\qnt(1)\rightarrow \qnt(1)$, are well-formed types in context. Then
  \[
- |\sem{\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)}| \cong |\sem{\qnt(1)\rightarrow \qnt(1)}|
+ |\sem{\forall X . \qnt(X) \times \qnt(X) \rightarrow \qnt(1)}| \cong |\sem{\qnt(1)\rightarrow \qnt(1)}|
  \]
 \end{theorem}
 \begin{proof}
-We obtain this result as a direct consequence of Theorem~\ref{thm:quantArrowT}.
+This is a consequence of Theorem~\ref{thm:quantArrowT}, after currying.
 \end{proof}
 
 We finish this section with another uninhabitedness result, this time
