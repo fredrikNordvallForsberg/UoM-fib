@@ -1230,8 +1230,38 @@ will be contextually equivalent for Kennedy's model.
 \note{This also holds between the unit-erasure semantics and the one
   of Example \ref{ex:relMon}. Not sure how to fit this in?}
 
-\section{Conclusions and Future Work} \label{sec:con}
-What's so special about G-Sets?
+\section{Concluding remarks} \label{sec:con}
+We have studied 
+a typed $\lambda$-calculus with polymorphism over physical dimensions,
+which we called $\lambda D$ (Sect.~\ref{sec:Not}).
+We developed a model theory for the calculus.
+Under the Curry-Howard correspondence, the $\lambda D$-calculus is a 
+fragment of first-order logic where the domain of discourse is an unspecified Abelian group,
+and so our notion of model~(Def.~\ref{def:lamDModel}) 
+is based on standard fibrational techniques in categorical logic.
+
+Among the models we found one particular model that is
+straightforward and yet informative:
+it is a model based on group actions (Ex.~\ref{ex:MonAct}). 
+Of course, automomorphisms and group actions play a key role in the
+classical model theory of first order logic, but in this paper we have shown that 
+these techniques are also useful on the other side of the Curry-Howard correspondence.
+Many arguments about the $\lambda D$-calculus,
+including type isomorphisms and definability arguments, can be made in this model
+(Sect.~\ref{sec:MonSet}).
+
+Parametricity is most often studied using relational techniques. 
+We have developed a method for building relational $\lambda D$-models (Thm.~\ref{thm:rel-model-generator}),
+and we used it to reconstruct two particular relational models:
+a relational 
+model due to Kennedy (Ex.~\ref{ex:relKen}, \cite{Kennedy:1997:RPU:263699.263761}) and 
+a restriction of 
+a relational 
+model due to the Atkey~(Ex.~\ref{ex:relMon}, \cite{atkey14conservation}). 
+Although the group-actions model is different in style,
+we showed that it is actually closely related to the
+two relational models~(Theorems~\ref{thm:grp-rel-related} and~\ref{thm:closed-prog-equiv}).
+
 
 \paragraph*{Acknowledegements.}
 We are grateful to participants in a discussion on the categories mailing list
