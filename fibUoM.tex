@@ -701,28 +701,37 @@ functor $F:\LAb\to \B$ such that $F(1)=G$.
 By Theorem~\ref{thm:change-of-base}, we have a $\lambda D$-model
 $(F^\ast p,1,(1, Q))$.
 \end{example}
+
 \begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
-Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a function, called a group action, $\cdot_A:G\times A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A (h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$ where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A) \rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism $\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f a)$.
+Let $G$ be a group. Recall that a $G$-set consists of a set $A$
+together with a group action, i.e.\ a function $\cdot_A:G\times
+A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A
+(h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$
+where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A)
+\rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism
+$\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for
+any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f
+a)$.
 %From now on we will omit subscripts of group actions where they can be inferred from context.
-
-Let $\Grp$ be the category of groups and homomorphisms, then we call the forgetful functor $\GrpSet\to \Grp$ the $\GrpSet$ fibration.
+%
+Let $\Grp$ be the category of groups and homomorphisms. We call the forgetful functor $p : \GrpSet\to \Grp$ the $\GrpSet$ fibration.
 
 \begin{proposition}
-Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration, let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p,G,Q)$ is a $\lambda D$-model.
+%Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration,
+Let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
-
 \begin{proof}
-For any group $G$ the fibre above $G$ is the category of $G$-sets for fixed $G$.
+For any group $H$, the fibre above $H$ is the category of $H$-sets.
 This is isomorphic to the
-the functor category ${\Set}^G$,
-where we consider the group $G$ as a category with one object $*$
-and $G$ as the set of morphisms.
+the functor category ${\Set}^H$,
+where we consider the group $H$ as a category with one object $*$
+and a morphism for each element of $H$.
 Indeed, there is a product-preserving, full and faithful functor $\Grp\to\Cat$,
 taking a group to the corresponding one-object category.
 The fibration $\GrpSet\to\Grp$ is thus the pullback of
 the fibration $\CatSet\to\Cat$ along this embedding $\Grp \to \Cat$.
-Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base},
+Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}\eqref{item:simpl-prod},
 $\GrpSet\to\Grp$ has simple products.
 
 Each fibre is bicartesian closed.
@@ -731,12 +740,12 @@ For the function space, let $A$ and $B$ be $G$-sets;
 then the set of functions $(A\to B)$ is also a $G$-set,
 with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
 It follows that reindexing preserves the bicartesian closed structure.
-(This is not the case more generally for $\CatSet\to\Cat$.)
-
-A group can be given the structure of an Abelian group object in $\Grp$ if it is an Abelian group. (Indeed, an Abelian group object in $\Grp$ is the same thing as an Abelian group). Hence $(p,G,Q)$ is a $\lambda D$-model.
+(This is not the case more generally for $\CatSet\to\Cat$, so Theorem~\ref{thm:change-of-base}\eqref{item:biCCC} does not apply.)
+%
+Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, we model a type with a free dimension variable, $\Tj\Dvar T$, as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+In the $\GrpSet$ fibration, we model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
