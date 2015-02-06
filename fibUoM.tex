@@ -819,13 +819,13 @@ We have already seen that the $\GpdSet$ fibration subsumes the families and grou
 \section{Group Actions and Dimension Types}\label{sec:MonSet}
 
 In this section we will look in greater detail at the $\lambda
-D$-model given by the $\GrpSet$ fibration. We first spell out the
-reindexing and simple product structure.  Given a group $G$, we write
-$\mathcal{G}$ when we consider it as a one-element category.
-Suppose that $\phi: \mathcal{G} \rightarrow \Set$ is a $G$-set
-(considered as a functor). We will write $|\phi| \coloneqq
+D$-model given by the $\GrpSet$ fibration. It turns out that many interesting theorems can be proven in this model, and so to aid us in this task we first concretely spell out the
+reindexing and simple product structure.
+
+Given a group $G$, we write the scripted version, which has morphisms given by elements of $G$ and composition given by group multiplication. Suppose that $\phi: \mathcal{G} \rightarrow \Set$ is a $G$-set
+(considered as a functor). Then we will write $|\phi| \coloneqq
 \phi(\star)$ for the underlying carrier set of $\phi$.  Reindexing
-along $\pi : G \times H \rightarrow G$ yields the $G \times H$-set
+along $\pi : \mathcal{G} \times \mathcal{H} \rightarrow \mathcal{G}$ yields the $G \times H$-set
 given by $\phi \circ \pi$. In other words, $\pi^\ast\phi$ is a $G
 \times H$-set with the same underlying carrier $|\pi^{\ast}\phi| =
 |\phi|$ as the $G$-set $\phi$, and action given by $(g,h)
@@ -839,7 +839,7 @@ _\pi \psi$ is given by $|\forall _\pi \psi| = \lim_{y\in \mathcal{H}}
 \[
  \lim_{y\in \mathcal{H}} \psi (\star, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{H}} \psi (\star, y)} \cong \GroupSet{\mathcal{H}}\bbracket{K1, \psi (\star, \blank)} \enspace \text,
 \]
-hence  $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall h\in H\;.\; (e_A, h) \cdot_{\psi} y = y \}$, and the action is given by $g \cdot_{\forall_\pi \psi} x = (g, e_H) \cdot_{\psi} x$.
+hence  $|\forall_\pi \psi | = \{y \in |\psi| \mathrel | \forall h\in H\;.\; (e_A, h) \cdot_{\psi} y = y \}$, and the action is given by $g \cdot_{\forall_\pi \psi} x = (g, e_H) \cdot_{\psi} x$.
 %
 Notice that to give the group action of $\forall_\pi \psi$, we had to
 make a particular choice of an element in $H$, namely the identity
@@ -851,13 +851,11 @@ result, since
  = (g, e_H) \cdot_{\psi} ((e_G, h) \cdot_{\psi} y)
  = (g, e_H) \cdot_{\psi} y
 \]
-for all $y \in |\forall_\pi \psi |$.
+for all $y \in |\forall_\pi \psi |$.\\
 
 Many of the properties of dimension types that Kennedy proves using
 parametricity can be shown to hold in the $\GrpSet$-fibration, without
-having to define a separate relational semantics. We first note three
-semantic isomorphisms. The first is a substitution lemma, which holds
-in any model.
+having to define a separate relational semantics and this is the content of Theorems~\ref{thm:allArrows} - \ref{thm:UninhabInt}. Before we formally state and prove these we introduce a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -879,32 +877,33 @@ Or in other words, substitution of the $n^{th}$ unit variable is given by precom
 
 For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\GrpSet$ interpretation.
 
-\begin{lemma}
-\label{lemma:allarrows}
+\begin{theorem}
+\label{thm:allArrows}
  Suppose that $X_1, \ldots, X_n, X \vdash S,T \; \msf{ Type}$. Then
 \[
 |\sem{\forall X. S \rightarrow T}| \cong \GroupSet{\mathcal{G}} (\sem{S}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank))
 \]
-\end{lemma}
+\end{theorem}
 \begin{proof}
 By the Kan extension formula and Yoneda.
 \end{proof}
 
-This Lemma says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed. Finally, we note a useful corollary of Lemma~\ref{lemma:allarrows}.
-\begin{corollary}
-\label{cor:subs}
+This Theorem says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed.
+
+\begin{theorem}
+\label{thm:quantArrowT}
 Suppose that $\Delta, X \vdash T \; \msf{ Type}$. Then
  \[
   |\sem{\forall X . \qnt(X) \rightarrow T}| \cong |\sem{T[1/X]}|
 \]
-\end{corollary}
+\end{theorem}
 \begin{proof}
- By Lemma~\ref{lemma:allarrows}, Lemma~\ref{lem:subst} and Yoneda.
+ By Theorem~\ref{thm:allArrows}, Lemma~\ref{lem:subst} and Yoneda.
 \end{proof}
 
 
 
-We now prove some theorems about the $\GrpSet$ fibration that are akin to the parametricity results of Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Lemma~\ref{lemma:allarrows} and Corollary~\ref{cor:subs}. First, we take a look at the interplay between scaling factors and polymorphic functions.
+We now prove some theorems about the $\GrpSet$ fibration that are parametricity results in Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Theorem~\ref{thm:allArrows} and Theorem~\ref{thm:quantArrowT}. First, we take a look at the interplay between scaling factors and polymorphic functions.
 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
@@ -914,9 +913,9 @@ Suppose $\Deltadim; \Gammaops \vdash t : \forall X. \qnt(X) \rightarrow \qnt(X^n
 \]
 \end{theorem}
 \begin{proof}
-We know from Lemma~\ref{lemma:allarrows} that
+We know from Theorem~\ref{thm:allArrows} that
 \[
-\sem{t} \in \GSet(\sem{\qnt(X)},\sem{\qnt(X^n)})
+\sem{t} \in \GroupSet{\mathcal{G}}(\sem{\qnt(X)},\sem{\qnt(X^n)})
 \]
 % This means that $\sem{t}$ must satisfy the diagram
 % \begin{diagram}
@@ -928,22 +927,19 @@ In other words, $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$ for all $x \in |\sem
 \end{proof}
 This theorem tells us that polymorphic functions are \emph{invariant under scaling}. Intuitively we see that scaling factors must be changed in an appropriately polymorphic way.
 
-If we apply Corollary~\ref{cor:subs} to the type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ we see that
+If we apply Theorem~\ref{thm:quantArrowT} to the type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ we see that
 \[
- |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong G
+ |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong G \text{,}
 \]
-This implies that terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ vary only by scalar multiplication.
+which implies that terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ vary only by scalar multiplication.
 
-
-Next, we wish to prove that the type $\forall X . \qnt(X^2)
-\rightarrow \qnt(X)$ is uninhabited.
 
 \begin{theorem}
 \label{thm:UninhabType}
  There is no term  $\vdash t : \forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Theorem~\ref{thm:allArrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (\sem{\qnt (X^2)}, \sem{\qnt(X)})
 \end{align*}
@@ -951,11 +947,11 @@ i.e. any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, sa
 \begin{equation}
 f (g^2 \cdot x) = g \cdot (fx) \tag{$\ast$}
 \end{equation}
-If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contradictions. Suppose that $f(-1) = -1$, then by $(\ast)$
+If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contradictions. To this end suppose that $f(-1) = -1$, then by $(\ast)$
 \[
  f((-1)^2 \cdot -1) = (-1) \cdot f(-1)
 \]
-But the left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such $f$, as required.
+Which is a contradiction since the he left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such $f$.
 \end{proof}
 
 This result can be extended to also include terms $t$ using primitive
@@ -963,27 +959,26 @@ operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
 \rightarrow \qnt(X)$, as long as these operations can be interpreted
 in the model in question. Note in particular that this model does not
 support a polymorphic zero operation $0 : \forall \Dvar
-. \qnt(\Dvar)$; such a primitive operation would of course gives rise
+. \qnt(\Dvar)$, as such a primitive operation would of course gives rise
 to a trivial counterexample to the theorem.
 
-Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (see Sonin~\cite{sonin2001physical} for a modern introduction).
+Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (or for a more modern introduction see Sonin~\cite{sonin2001physical}).
 
 \begin{theorem}
- \label{lem:AppSubs}
-Consider the $\GrpSet$ semantics for $\lambda D$-model. Then
-\[
+ \label{thm:AppSubs}
+ Suppose that both $\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)$ and $\qnt(1)\rightarrow \qnt(1)$, are well-formed types in context. Then
+ \[
  |\sem{\forall X . \qnt(X) \rightarrow \qnt(X) \rightarrow \qnt(1)}| \cong |\sem{\qnt(1)\rightarrow \qnt(1)}|
-\]
+ \]
 \end{theorem}
 \begin{proof}
-We obtain this result as a direct consequence of Corollary~\ref{cor:subs}.
+We obtain this result as a direct consequence of Theorem~\ref{thm:quantArrowT}.
 \end{proof}
 
-Finally, we prove a result about a higher order type.
-%$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
+We finish this section with another result about a type that is uninhabited, only this time it's higher order.
 
 \begin{theorem}\label{thm:UninhabInt}
-There is no term 
+There is no term
 \[
 \vdash t : \forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\enspace \text.
 \]
@@ -994,15 +989,9 @@ Choose $G$ and $Q$ to be $\bbZ_2$. Interpreting the type of $t$, we have
 \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (\bbZ_2 \rightarrow \bbZ_2) \rightarrow \bbZ_2 \; | \; \forall g_1,  g_2 \in \bbZ_2,\ f:\bbZ_2\to \bbZ_2. \; \; (g_1 g_2) \cdot (t(f))=
 t(\lambda q\in \bbZ_2.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
-Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, instantiating
-$f=\id_Q$ we get that
-\[
-(g_1 g_2) \cdot (t(\id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))
-\]
-for all $g_1$ and $g_2$, which is not possible: if $g_1 = 1$ and $g_2 = -1$,
-then the equation reduces to $-1\cdot t(\id_Q)=t(\id_Q)$, a contradiction since $t(\id_Q) \in \bbZ_2 = \{-1, 1\}$.
+Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, instantiating $f=\id_Q$ we get that $(g_1 g_2) \cdot (t(\id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))$ for all $g_1$ and $g_2$, but this is not possible. If $g_1 = 1$ and $g_2 = -1$, then the equation reduces to $-1\cdot t(\id_Q)=t(\id_Q)$, which is a contradiction since $t(\id_Q) \in \bbZ_2 = \{-1, 1\}$.
 \end{proof}
-Again, the result can be extended to terms 
+Again, the result can be extended to terms
 \[
 \Gammaops \vdash t : \forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)
 \]
