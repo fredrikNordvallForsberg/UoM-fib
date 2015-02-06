@@ -142,14 +142,13 @@
 %GSets
 \newcommand{\act}[1]{\cdot_{_{#1}}}
 \newcommand{\SetAct}[1]{(#1, \; \cdot_{_{#1}})}
-\newcommand{\GroupSet}[1]{#1/\!/\Set}
-\newcommand{\GrpSet}{\GroupSet{\Grp}}
-\newcommand{\CatSet}{\GroupSet{\Cat}}
-\newcommand{\GpdSet}{\GroupSet{\Gpd}}
-\newcommand{\sslice}{/\!/}
-\newcommand{\AbSet}{\GroupSet{\Ab}}
+\newcommand{\GroupSet}[1]{[#1,\Set]}
+\newcommand{\Lslice}[1]{#1/\!/\Set}
+\newcommand{\GrpSet}{\Lslice{\Grp}}
+\newcommand{\CatSet}{\Lslice{\Cat}}
+\newcommand{\GpdSet}{\Lslice{\Gpd}}
+\newcommand{\lslice}{/\!/}
 \newcommand{\GSet}{\GroupSet{G}}
-\newcommand{\PermASet}{\GroupSet{\PermA}}
 
 %BB Sets
 \newcommand{\bbA}{\mathbb{A}}
@@ -187,6 +186,7 @@
 \newcommand{\bool}{\msf{bool}}
 \newcommand{\lengthDim}{\mathit{Length}}
 \newcommand{\timeDim}{\mathit{Time}}
+\newcommand{\massDim}{\mathit{Mass}}
 \newcommand{\UoMterm}{ \Delta ; \Gamma \vdash t :T }
 \newcommand{\UoMtype}{\Delta \vdash T \; \msf{ Type}}
 \newcommand{\UoMFibration}{UoM-fibration\xspace}
@@ -217,7 +217,7 @@
 \newcommand{\id}{\mathrm{id}}
 
 % Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Categorical Models of Dimension Types}
+\title{Models for polymorphism over physical dimensions}
 \author[1]{Robert Atkey}
 \author[2]{Neil Ghani}
 \author[2]{Fredrik Nordvall Forsberg}
@@ -516,11 +516,11 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
-\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X_1, X_2 \vdash X_1 \cdot X_2^{-1}}(g_1,g_2) = g_1 \cdot g_2^{-1}$. We assume that there is an interpretation $d_i : 1 \to G$ for every primitive dimension constant $d_i \in \Deltadim$.
+\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot XY^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$. We assume that there is a given interpretation $\sem d : 1 \to G$ for every primitive dimension constant $d \in \Deltadim$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\Delta \vdash \qnt(D)$ are interpreted by reindexing the object $Q$ along $\sem{\Dj \Delta D}$, i.e. $\sem{\Delta \vdash \qnt(D)} = \sem{\Dj \Delta D}^\ast (Q)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}\!^* (Q)$.
 
-\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
+\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
 \item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\etaops : 1 \to \sem{\Gammaops}$ of all the primitive operations.
 \end{itemize}
@@ -565,12 +565,12 @@ Y_{f(i)}$ for all $i\in I$. It is well known that the forgetful
 functor $(I,\{X_i\}_{i\in I}) \mapsto I : \Fam\Set\to \Set$, taking a
 family to its index set, is a $\lambda\forall$-fibration (see e.g.\
 Jacobs~\cite[Lemma 1.9.5]{jacobs1999categorical}).  For any given set
-$B$ of physical dimensions (e.g.\ length, time, mass etc.), let $G$ be
+$B$ of fundamental dimensions (e.g.\ $\lengthDim$, $\timeDim$, $\massDim$ etc.), let $G$ be
 the free Abelian group on $B$. Suppose that we also have a set $Q_d$
 of quantities for each dimension $d \in G$ (for instance, we can
 choose $Q_d = \bbQ \times \{ \overline{d} \}$ where $\overline{d}$ is
 a unit of measure for the dimension $d$, e.g.\
-$\overline{\text{length}} = m$, $\overline{\text{time}} = s$,
+$\overline{\lengthDim} = \mathrm m$, $\overline{\timeDim} = \mathrm s$,
 $\overline{d\cdot d'} = \overline{d}\cdot\overline{d'}$ etc). We then
 have a $\lambda D$-model with $\qnt$ interpreted as $(G,\{Q_d\}_{d\in
   G})$.
@@ -601,12 +601,12 @@ We next look at a class of $\lambda D$ models that all share one thing in common
 
 We first introduce some notation.
 Let $\mathcal S$ be a category (e.g.~$\mathcal S=\Set$), and
-consider the category $\Cat\sslice\mathcal S$:
+consider the category $\Cat\lslice\mathcal S$:
 The objects are pairs $(C,P:C\to \mathcal S)$ of a small category $C$ and a functor $P$.
 The morphisms are also pairs $(F,\phi):(C,P)\to (D,Q)$,
 of a functor $F:C\to D$ and a natural transformation
 $P\to QF$.
-The obvious projection functor $\Cat\sslice \mathcal S\to \Cat$,
+The obvious projection functor $\Cat\lslice \mathcal S\to \Cat$,
 with $(C,P)\mapsto C$,
 is a fibration. The fibre over a small category $C$ is the category
 of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
@@ -615,7 +615,7 @@ of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
 \begin{theorem}
 \label{thm:BC}
 If $\mathcal S$ has all small limits
-then the fibration $\Cat\sslice \mathcal S\to \Cat$ has simple products.
+then the fibration $\Cat\lslice \mathcal S\to \Cat$ has simple products.
 \end{theorem}
 \begin{proof}[Proof notes]
 This result appears to be fairly well known in the folklore,
@@ -697,7 +697,15 @@ Here is a simple illustration of the change of base result:
 The unit-erasure fibration $(\C\to 1)$ arises from pulling back the families fibration
 $\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
 
-
+\begin{example}(Models over the Lawvere theory)
+\label{ex:Lawvere}
+Let $(p:\E\to\B,G,Q)$ be a $\lambda D$-model.
+Recall that for Lawvere theory $\LAb$ 
+there is a unique product-preserving functor
+$F:\LAb\to \B$ such that $F(1)=G$.  
+By Theorem~\ref{thm:change-of-base},
+we have a $\lambda D$-model $(F\ast p,1,(1,Q))$. 
+\end{example}
 \begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
 Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a function, called a group action, $\cdot_A:G\times A\to A$ such that $e\cdot_{A} a=a$ and $(gh)\cdot_A a=g\cdot_A (h\cdot_A a)$. The category $\GrpSet$ has as objects pairs $(G,A)$ where $G$ is a group and $A$ is a $G$-set. A morphism $(G,A) \rightarrow (H,B)$ in $\GrpSet$ is given by a group homomorphism $\phi:G\rightarrow H$ and a function $f:A \rightarrow B$ such that for any $g\in G$ and $a\in A$ we have $f (g\cdot_A a) = (\phi g)\cdot_B (f a)$.
@@ -726,8 +734,9 @@ Each fibre is bicartesian closed.
 The products, coproducts and function spaces are inherited from $\Set$.
 For the function space, let $A$ and $B$ be $G$-sets;
 then the set of functions $(A\to B)$ is also a $G$-set,
-with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(g^{-1}\cdot_A x)$.
+with $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
 It follows that reindexing preserves the bicartesian closed structure.
+(This is not the case more generally for $\CatSet\to\Cat$.)
 
 A group can be given the structure of an Abelian group object in $\Grp$ if it is an Abelian group. (Indeed, an Abelian group object in $\Grp$ is the same thing as an Abelian group). Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
@@ -905,7 +914,7 @@ Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make
 \]
 
 
-A particularly nice property about this model, is that many of the properties of \UoM that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -931,7 +940,7 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 \label{lemma:allarrows}
  Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
 \[
-|\sem{\forall u. S \rightarrow T}| \cong \GSet (\sem{S}(\underbrace{\ast,\ldots,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,\ldots,\ast}_{n-\text{times}}, \blank))
+|\sem{\forall u. S \rightarrow T}| \cong \GroupSet{G} (\sem{S}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank))
 \]
 \end{lemma}
 \begin{proof}
@@ -990,7 +999,7 @@ Next, we wish to prove that the type  $\forall X . \qnt(X^2) \rightarrow \qnt(X)
  There is no term of type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = \{ -1, 1\}$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{\qnt (X^2)}|, |\sem{\qnt(X)}|)
 \end{align*}
@@ -1018,21 +1027,26 @@ Consider the $\GrpSet$ semantics for $\lambda D$-model. Then
 We obtain this result as a direct consequence of Corollary~\ref{cor:subs}.
 \end{proof}
 
-Finally, we prove a result about the higher order type $\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
+Finally, we prove a result about a higher order type.
+%$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There exists no non-trivial term of type $\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
+There is no term of type 
+\[\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\text.\]
 \end{theorem}
 \begin{proof}
-Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have that
- \[
-\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} = \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G \; \; (g_1 g_2) \cdot t = t \}
- \]
-Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$ and $f \in Q \rightarrow Q$, we have that
+Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have
+ \begin{multline*}
+\sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (Q \rightarrow Q) \rightarrow Q \; | \; \forall g_1,  g_2 \in G,\ f:Q\to Q. \; \; (g_1 g_2) \cdot (t(f))=
+t(\lambda q\in Q.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
+ \end{multline*}
+Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, putting
+$f=\id_Q$ we get that
 \[
-(g_1 g_2) \cdot tf = tf
+(g_1 g_2) \cdot (t(id_Q)) = t(\lambda q\in Q.\,g_2\cdot (g_1^{-1}\cdot q))
 \]
-which is not possible. Since for any value of $tf$, let $g_1 = 1$ and $g_2 = -1$, then you reach a contradiction.
+which is not possible. Let $g_1 = 1$ and $g_2 = -1$, 
+so that $-1\cdot t(id_Q)=t(id_Q)$, a contradiction.
 \end{proof}
 
 
@@ -1154,18 +1168,23 @@ Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in 
 
 \begin{example}\label{ex:relMon}
   We can also apply Theorem \ref{thm:rel-model-generator} to obtain a
-  natural relational model for the $\GrpSet$ $\lambda D$-model. As
+  natural relational model for the $\GrpSet$ $\lambda D$-model 
+  (Example~\ref{ex:MonAct}). As
   before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere
-  theory of Abelian groups $\LAb$. Let $\A$ be the category
-  $\bigcup_{n\in \LAb} (\GroupSet{G^{n}})$, $u: \A \rightarrow \LAb$
-  be the fibration with each fibre above $n$ given by the category
-  $\GroupSet{G^{n}}$ and $p:\Sub{\Set} \rightarrow \Set$ be the subset
-  fibration. Define $F:\bigcup_{n\in \LAb} (\GroupSet{G^{n}})
-  \rightarrow \Set$ to be the product preserving functor defined on
-  objects $(X,\phi) \in \GroupSet{G^{n}}$ by $F(X, \phi) = G^{n}
-  \times X \times X$ and on morphisms $(f, \alpha) : (X,\phi)
-  \rightarrow (Y, \psi)$, where $(X,\phi) \in \GroupSet{G^{n}}$,
-  $(Y,\psi) \in \GroupSet{G^{m}}$, $f: X \rightarrow Y$ and $\alpha :
+  theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ 
+  be the pullback of fibration $\GrpSet\to\Grp$ along the 
+  unique product-preserving 
+  functor 
+  $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere},
+  so that the objects of $\A$ are triples 
+  $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set.
+  Let 
+  $p:\Sub{\Set} \rightarrow \Set$ be the subset
+  fibration. Define $F:\A\rightarrow \Set$ 
+  to be the product preserving functor defined on
+  objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n}
+  \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi)
+  \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha :
   G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by
   $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$,
   where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2)
