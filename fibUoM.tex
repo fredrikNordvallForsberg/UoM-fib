@@ -218,7 +218,7 @@
 \newcommand{\id}{\mathrm{id}}
 
 % Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Models for polymorphism over physical dimensions}
+\title{Models for Polymorphism over Physical Dimensions}
 \author[1]{Robert Atkey}
 \author[2]{Neil Ghani}
 \author[2]{Fredrik Nordvall Forsberg}
@@ -248,7 +248,6 @@ We provide a categorical framework for models of a type theory that has special 
 
 \section{Introduction}
 This paper is about semantic models of programs that manipulate physical quantities, such as length or time. To measure a physical quantity we use units, such as metres, inches, seconds or hours. The particular units that we choose do not effect how we can describe a physical system, or the programs that we can write about it, and so in this paper our focus is on \emph{dimensions}.
-
 A dimension is simply a physical quantity that can be measured. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimension, but they can be multiplied.
 
 Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity $x$ of a given dimension $X$, and returns its double.
@@ -478,7 +477,7 @@ Next up we give a general categorical semantics for the $\lambda D$ type theory.
 A \emph{$\lambda\forall$-fibration} is a bicartesian closed fibration with simple products.
 \end{definition}
 
-It is well-known that $\lambda \forall$-fibrations give a categorical model of the fragment of first-order logic without existential quantifiers. Although this is well-known, we briefly introduce the basic notions now, since they are central to our development. We refer to \cite{jacobs1999categorical} for the full details.
+It is well-known that $\lambda \forall$-fibrations give a categorical model of the fragment of first-order logic without existential quantifiers. Nevertheless, we briefly introduce the basic notions now, since they are central to our development. We refer to \cite{jacobs1999categorical} for the full details.
 
 A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. These conditions (along with the structure in Definition~\ref{def:lamDModel}) allow us to model the $\lambda D$ type theory. The basic idea is that dimension contexts will be interpreted as objects $\B$. Then for each $B\in\B$ we consider the full subcategory $\E_B$ of $\E$, with objects $E\in\E$ for which $p(E)=B$. The objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_B$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$. Since $p$ is a fibration, for each morphism $f:B\to B'$ in $\B$ there is a canonical associated reindexing functor $f^\ast:\E_{B'}\to \E_B$, which we will use to describe substitution for dimension variables in types and terms.
 
@@ -496,7 +495,7 @@ An equivalent way to define Abelian group objects if $\B$ has chosen products is
 
 We remark that the Abelian group $G$ in a $\lambda D$-model is analogous to the generic object in a model of \SystemF.
 
-In order to ascertain the value of Definition~\ref{def:lamDModel}, we need to do three things: i) show that a $\lambda D$-model does in fact provide categorical models of dimension types, ii) give some examples of $\lambda D$-models, and iii) prove some theorems to show the viability of reasoning at this level of abstraction.
+In order to ascertain the value of Definition~\ref{def:lamDModel}, we now do three things: i) we show that a $\lambda D$-model in fact does provide categorical models of dimension types, ii) we give examples of $\lambda D$-models, and iii) we prove theorems that show the viability of reasoning at this level of abstraction.
 
 
 
@@ -531,10 +530,11 @@ Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
 $\terminal$ is a trivial Abelian group object. By taking $\C$ to be
 the category of complete partial orders and continuous functions, and
 by choosing the flat pointed cpo $\bbQ_{\bot}$ to interpret $\qnt$ we
-obtain a model corresponding to Kennedy's dimension-erasure model. This
-model supports a plethora of primitive operations, including all the
-standard arithmetical ones. However, the model also contains many
-functions which are not dimensionally invariant --- Kennedy uses
+obtain a model corresponding to Kennedy's dimension-erasure
+model. This model supports a plethora of primitive operations,
+including all the standard arithmetical ones. However, the model also
+contains many functions which are not dimensionally invariant, i.e.\
+they do not scale appropriately under change of units --- Kennedy uses
 relational parametricity~\cite{reynolds1983types} to remove these
 unwanted elements; we will come back to his relational model in
 Section~\ref{sec:param}.
