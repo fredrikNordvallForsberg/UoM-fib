@@ -269,21 +269,20 @@ f_\lengthDim\,(5\mathrm{m})=
 \item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
 
-Several authors have developed programming languages with type systems that support physical quantities. Our starting point is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. In this we take a different approach by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models.
-
-\note{Add references.}
-
+Several authors have developed programming languages with type systems that support physical quantities. Our starting point is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models.
 
 
 The main contributions of this paper are as follows.
 \begin{enumerate}
-\item We provide a general notion of a model for a programming language with dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that, for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
+\item We provide a general notion of a model for a programming language with dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
-\item An important example of a $\lambda D$-model is the actions of scaling groups (Section~\ref{sec:MonSet}). This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism. A difficulty here is, how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
+\item An important example of a $\lambda D$-model is built from group actions (Example~\ref{ex:MonAct}).
+%This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism.
+A difficulty here is how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
 
-\note{Do we actually do this point? And does it really describe a contribution?}
+\item We show how the $\lambda D$-model built from group actions supports a diverse range of parametricity-like theorems, without the need to define a separate relational semantics (Section~\ref{sec:MonSet}). This results in simple proofs of theorems that would otherwise require more heavy machinery.
 
-\item We give new ways of building models, by extending relational parametricity techniques for typed lambda calculus to the setting with dimensions (Section~\ref{sec:param}).
+\item We explore the relationship between the parametricity-like theorems of the $\lambda D$-model built from group actions, and a natural notion of a relational model (Section~\ref{sec:param}). Formally, we show that when interpreting the syntax these two notions coincide.
 \end{enumerate}
 
 
@@ -647,18 +646,18 @@ $
 is a natural isomorphism for all functors $F:C\to C'$.
 Indeed, for any
 $P:C\times D\to \mathcal S$, $c\in \mathcal C$:
-\begin{multline*}
+\begin{align*}
 (F^*(\forall_{C'}\,P))(c)
-=
+ =
 (\forall_C\,P)(F(c))
 \cong
 \lim_{d\in D}(F(c),d)
-=
-\lim_{d\in D}(((F\times \id_D)^*(P))(c,d))
-\\\cong
+ & =
+\lim_{d\in D}(((F\times \id_D)^*(P))(c,d)) \\
+ & \cong
 (\forall_{C}((F\times \id_D)^*(P))(c)
 \text.
-\end{multline*}
+\end{align*}
 \end{proof}
 
 \paragraph*{Change of Base}
@@ -1113,8 +1112,10 @@ $(G,(Q_0,Q_R), F^\ast p \circ u :F^{\ast} \E \rightarrow \mathcal{L})$ as constr
 Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{F^\ast \E}{G}$. To check that $F^\ast p \circ u$ is a Cartesian closed fibration is a simple exercise that we leave to the reader. And to see that $F^\ast p \circ u$ has simple products we first note that since $p$ has all products, so does $F^\ast p$. Hence, $F^\ast p \circ u$ has simple products by Theorem~\ref{thm:CompOfProd}.
 \end{proof}
 
+Next, we look at an example that uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension erasure model back in Example \ref{ex:UnitErasure}.
+
 \begin{example}\label{ex:relKen}
-This example uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension erasure model back in Example \ref{ex:UnitErasure}. Let $G$ be an Abelian group. Then using the notation from above, let $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the fibration given by the first projection, and $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X) = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X) \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally we let $Q_0 = G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
+Let $G$ be an Abelian group. Then using the notation from above, let $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the fibration given by the first projection, and $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X) = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X) \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally, we let $Q_0 = G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
 In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, where $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. Spelling this out explicitly, we have the following interpretations, which are equivalent to Kennedy's original relationally parametric model for dimension types:
   \begin{displaymath}
@@ -1144,9 +1145,10 @@ In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|
 Note that, in the interpretation types $\forall X.~T$, the ``carrier'' (i.e., the second component) is exactly the carrier of the interpretation of $T$.
 \end{example}
 
+We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural relational model for the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:MonAct}).
 
 \begin{example}\label{ex:relMon}
-We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural relational model for the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:MonAct}). As before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ be the pullback of fibration $\GrpSet\to\Grp$ along the unique product-preserving functor $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere}, so that the objects of $\A$ are triples $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set. Let $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Define $F:\A\rightarrow \Set$ to be the product preserving functor defined on objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n} \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi) \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha : G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
+As before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$. Let $u:\A\to\LAb$ be the pullback of fibration $\GrpSet\to\Grp$ along the unique product-preserving functor $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere}, so that the objects of $\A$ are triples $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set. Let $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Define $F:\A\rightarrow \Set$ to be the product preserving functor defined on objects $(n,X,\phi) \in \A$ by $F(n,X, \phi) = G^{n} \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi) \rightarrow (m, Y,\psi)$, where $f: X \rightarrow Y$ and $\alpha : G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$, by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
   Then each type $\Delta \vdash T$ is again interpreted as a triple
   $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Sub{\Set}$, with
@@ -1159,7 +1161,7 @@ We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural rela
       \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
       \begin{array}[t]{@{}l}
         \{ t \in |\semr{T}| \mathrel| \forall g \in G.~((e_{G^{|\Delta|}},g), t, t) \in \semr{T} \},\\
-        \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} \}
+        \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} )
       \end{array}
     \end{array}
   \end{displaymath}
