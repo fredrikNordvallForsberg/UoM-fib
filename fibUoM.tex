@@ -588,69 +588,70 @@ $\lambda\forall$-fibration if $\C$ is bicartesian closed.
 
 \end{example}
 
-
-We next look at a class of $\lambda D$ models that all share one thing in common --- the fibres in the $\lambda \forall$ fibration are functors (in a particularly nice way). Interestingly, we can prove a general theorem (Theorem~\ref{thm:BC}) that gives these $\lambda D$ models as simple examples (Example~\ref{ex:MonAct} and Example~\ref{ex:presheaves}).
-
-We first introduce some notation.
-Let $\mathcal S$ be a category (e.g.~$\mathcal S=\Set$), and
-consider the category $\Cat\lslice\mathcal S$:
-The objects are pairs $(C,P:C\to \mathcal S)$ of a small category $C$ and a functor $P$.
-The morphisms are also pairs $(F,\phi):(C,P)\to (D,Q)$,
-of a functor $F:C\to D$ and a natural transformation
-$P\to QF$.
-The obvious projection functor $\Cat\lslice \mathcal S\to \Cat$,
-with $(C,P)\mapsto C$,
-is a fibration. The fibre over a small category $C$ is the category
-of functors $[C\to\Set]$, and reindexing is by precomposition of functors.
-
 \paragraph*{A Source of Fibrations with Simple Products}
+
+We next look at a particular class of $\lambda D$ models, where the
+fibres in the $\lambda \forall$ fibration are functors. We prove a
+general theorem for such fibrations, and instantiate it to construct
+several examples.
+%
+We first introduce some notation.  Let $\mathcal S$ be a category
+(typically $\mathcal S=\Set$), and consider the category
+$\Cat\lslice\mathcal S$: The objects are pairs $(\C,P:C\to \mathcal
+S)$, where $\C$ is a small category $C$ and $P:\C\to \mathcal S$ a
+functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a
+functor $F:\C\to \D$ and a natural transformation $\phi : P\to Q \circ F$.  The
+obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$
+is the category of functors $[\C\to\mathcal S]$, and reindexing is by
+precomposition of functors.
+
 \begin{theorem}
 \label{thm:BC}
 If $\mathcal S$ has all small limits
 then the fibration $\Cat\lslice \mathcal S\to \Cat$ has simple products.
 \end{theorem}
 \begin{proof}[Proof notes]
-This result appears to be fairly well known in the folklore,
-(e.g.~\cite[end of \S 3]{lawvere-adjointness}, \cite{mellies-zeilberger})
+This result appears to be fairly well known folklore
+(see e.g.\ Lawvere~\cite[end of \S 3]{lawvere-adjointness}, Mellies and Zeilberger~\cite{mellies-zeilberger}),
 but since it is important in what follows we sketch a proof.
 
-For any functor $F:C\to D$,
-the reindexing functor $F^*:\mathcal S^D\to \mathcal S^C$
+For any functor $F:\C\to \D$,
+the reindexing functor $F^*:\mathcal S^\D\to \mathcal S^\C$
 has a right adjoint
-$F_*:\mathcal S^C\to\mathcal S^D$, which is called `right Kan extension along $F$',
+$F_*:\mathcal S^\C\to\mathcal S^\D$, `right Kan extension along $F$',
 which always exists when $\mathcal S$ has limits.
 
 For simple products, we are only interested in a right adjoint to weakening,
-i.e. in the functor $\forall_C:\mathcal S^{C\times D}\to \mathcal S^C$
-which is right Kan extension along
-along the projection functor $\pi_C:C\times D\to C$.
-Expanding the definitions, we see that $\forall_C(P):C\to\mathcal S$ is
+i.e.\ in the functor $\forall_\C:\mathcal S^{\C\times \D}\to \mathcal S^\C$
+which is the right Kan extension along
+along the projection functor $\pi_\C:\C\times \D\to \C$.
+Expanding the definitions, we see that $\forall_\C(P):\C\to\mathcal S$ is
 a pointwise limit:
 \begin{equation}
-(\forall_C\,P)(c)=\lim_{d\in D}P(c,d)\text.
+(\forall_\C\,P)(c)=\lim_{d\in \D}P(c,d)\enspace\text.
 \label{eqn:forall-limit}
 \end{equation}
 The Beck-Chevalley condition requires that the canonical map
 $
-F^*\forall_{C'}
+F^*\forall_{\C'}
 \to
-\forall_{C}(F\times \id_D)^*
+\forall_{\C}(F\times \id_\D)^*
 $
-is a natural isomorphism for all functors $F:C\to C'$.
+is a natural isomorphism for all functors $F:\C\to \C'$.
 Indeed, for any
-$P:C\times D\to \mathcal S$, $c\in \mathcal C$:
-\begin{multline*}
-(F^*(\forall_{C'}\,P))(c)
+$P:\C\times \D\to \mathcal S$, $c\in \mathcal \C$:
+\begin{align*}
+(F^*(\forall_{\C'}\,P))(c)
 =
-(\forall_C\,P)(F(c))
+(\forall_\C\,P)(F(c))
 \cong
-\lim_{d\in D}(F(c),d)
-=
-\lim_{d\in D}(((F\times \id_D)^*(P))(c,d))
-\\\cong
-(\forall_{C}((F\times \id_D)^*(P))(c)
-\text.
-\end{multline*}
+\lim_{d\in \D}(F(c),d)
+&=
+\lim_{d\in \D}(((F\times \id_\D)^*(P))(c,d)) \\
+&\cong
+(\forall_{\C}((F\times \id_\D)^*(P))(c)
+\enspace \text. \qedhere
+\end{align*}
 \end{proof}
 
 \paragraph*{Change of Base}
@@ -658,7 +659,7 @@ $P:C\times D\to \mathcal S$, $c\in \mathcal C$:
 In general, a useful way of building fibrations is by changing the base.
 If $p:\E\ra \B$ be a fibration,
 and $F:\A\ra \B$ is a functor,
-then the pullback of $p$ along $F$,
+then the pullback of $p$ along $F$ in $\Cat$,
 denoted
 $F^\ast p : F^\ast \E \rightarrow \A$,
 is again a fibration.
@@ -666,37 +667,39 @@ is again a fibration.
 \label{thm:change-of-base}
 Let $p:\E\ra \B$ be a fibration,
 and let $F:\A\ra \B$ be a functor.
-\begin{enumerate}
+\begin{enumerate}[(i)]
 \item If $p$ has simple products and $F$ preserves products,
 then $F^\ast p : F^\ast \E \rightarrow \A$ has simple products.
+\label{item:simpl-prod}
 \item If $p$ is bicartesian closed then $F^\ast p: F^\ast \E \rightarrow \A$
 is bicartesian closed.
+\label{item:biCCC}
 \item If $G$ is an Abelian group object in $\A$ and
-  $(p,F(G),Q)$ is a $\lambda D$-model
-  then $(F^\ast p,G,(G,Q)$ is also a $\lambda D$-model.
+  $(p,F(G),Q)$ is a $\lambda D$-model,
+  then $(F^\ast p,G,(G, Q))$ is also a $\lambda D$-model.
+\label{item:lambdaD}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-For item~(1): for any $A \in \A$ reindexing along a projection $\pi_{_{A}}: A \times A' \rightarrow A$ in $\A$ is by construction reindexing along $F(\pi_{_{A}})$ which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{FA}} : FA \times FA' \rightarrow FA$, which has a right adjoint and satisfies the Beck-Chevalley condition, since $p$ has simple products.
+For item~\eqref{item:simpl-prod}: for any $A \in \A$, reindexing along a projection $\pi_{_{A}}: A \times A' \rightarrow A$ in $\A$ is by construction reindexing along $F(\pi_{_{A}})$ in $\B$, which (as $F$ preserves finite products) is the same as reindexing along a projection $\pi_{_{FA}} : FA \times FA' \rightarrow FA$, which has a right adjoint and satisfies the Beck-Chevalley condition, since $p$ has simple products.
 
-For item~(2): $F^*p$ is a bicartesian closed fibration since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence bicartesian closed, and reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves the structure.
+For item~\eqref{item:biCCC}: $F^*p$ is a bicartesian closed fibration since each fibre $\fibre{(F^*\E)}{A}$ is by construction of the form $\fibreE{FA}$ and hence bicartesian closed, and reindexing by $f$ in $\A$ is by construction defined to be reindexing by $Ff$ in $\B$ which preserves the structure.
 
-Item~(3) is an immediate corollary.
+Item~\eqref{item:lambdaD} is an immediate corollary.
 \end{proof}
 
 
 Here is a simple illustration of the change of base result:
-The unit-erasure fibration $(\C\to 1)$ arises from pulling back the families fibration
+The unit-erasure fibration $\C\to 1$ arises from pulling back the families fibration
 $\Fam\C\to\Set$ along the unique product-preserving functor $1\to\Set$.
 
-\begin{example}(Models over the Lawvere theory)
+\begin{example}(Models over the Lawvere theory $\LAb$)
 \label{ex:Lawvere}
-Let $(p:\E\to\B,G,Q)$ be a $\lambda D$-model.
-Recall that for Lawvere theory $\LAb$
-there is a unique product-preserving functor
-$F:\LAb\to \B$ such that $F(1)=G$.
-By Theorem~\ref{thm:change-of-base},
-we have a $\lambda D$-model $(F\ast p,1,(1,Q))$.
+Let $(p:\E\to\B,G,Q)$ be a $\lambda D$-model.  Recall that the Abelian
+group object $G$ in $\B$ gives rise to a unique product-preserving
+functor $F:\LAb\to \B$ such that $F(1)=G$.
+By Theorem~\ref{thm:change-of-base}, we have a $\lambda D$-model
+$(F^\ast p,1,(1, Q))$.
 \end{example}
 \begin{example}(A Model Built from Group Actions)
 \label{ex:MonAct}
