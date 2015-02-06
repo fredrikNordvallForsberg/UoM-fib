@@ -520,7 +520,7 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\Delta \vdash \qnt(D)$ are interpreted by reindexing the object $Q$ along $\sem{\Dj \Delta D}$, i.e. $\sem{\Delta \vdash \qnt(D)} = \sem{\Dj \Delta D}^\ast (Q)$.
 
-\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,..., x_n:T_n} = \sem{\Delta \vdash T_1} \times ... \times \sem{\Delta \vdash T_n}$.
+\item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
 \item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\etaops : 1 \to \sem{\Gammaops}$ of all the primitive operations.
 \end{itemize}
@@ -931,7 +931,7 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 \label{lemma:allarrows}
  Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
 \[
-|\sem{\forall u. S \rightarrow T}| \cong \GSet (\sem{S}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank))
+|\sem{\forall u. S \rightarrow T}| \cong \GSet (\sem{S}(\underbrace{\ast,\ldots,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,\ldots,\ast}_{n-\text{times}}, \blank))
 \]
 \end{lemma}
 \begin{proof}
