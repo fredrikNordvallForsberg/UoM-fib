@@ -176,8 +176,8 @@
 
 %Semantics
 \newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}}
-\newcommand{\semo}[1]{\ensuremath{\llbracket #1 \rrbracket _o} \;}
-\newcommand{\semr}[1]{\ensuremath{\llbracket #1 \rrbracket _r} \;}
+\newcommand{\semo}[1]{\ensuremath{\llbracket #1 \rrbracket _o}}
+\newcommand{\semr}[1]{\ensuremath{\llbracket #1 \rrbracket _r}}
 
 %%%Units of Measure%%%%
 \newcommand{\unitTy}{\msf{1}}
@@ -1022,18 +1022,29 @@ in the model.
 
 \section{Relational Models}
 \label{sec:param}
-In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy proves in \cite{Kennedy:1997:RPU:263699.263761} using parametricity. It's curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One can't help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at your finger tips?
+In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy~\cite{Kennedy:1997:RPU:263699.263761} proves using parametricity. It is curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One cannot help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at ones finger tips?
 
-To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
+To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model. This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
 
-To begin this section, we must first recall a theorem about the composition of fibred structure. \\
+To begin this section, we first recall a theorem about the composition of fibred structure.
 
 
 \noindent
 \begin{minipage}[l]{0.75\linewidth}
 \begin{theorem}
 \label{thm:CompOfProd}
-Suppose that $p:\A \rightarrow \B$ and $q:\B \rightarrow \mathcal{\C}$ are fibrations and that $u:\A \rightarrow \mathcal{\C}$ denotes the composite $q \circ p$ (and hence is also a fibration). Suppose further that $q$ has simple products, and for any projection map $\pi : X \times Y \rightarrow X$ in $\mathcal{\C}$ we denote the Cartesian morphism in $\B$ above it by $\pi^\S_B : \pi^\ast B \rightarrow B$. Then $u$ has simple products that are preserved by $p$ if and only if for any projection map $\pi : X \times Y \rightarrow Y$ in $\mathcal{C}$, the functor $(\pi^\S_B)^\ast : \A_B \rightarrow \fibre{\A}{\pi^\ast B}$ has right adjoints for all $B \in \B_{\C}$, satisfying the Beck-Chevalley condition.\\
+Suppose that $p:\A \rightarrow \B$ and $q:\B \rightarrow \mathcal{\C}$
+are fibrations and let $u:\A \rightarrow \mathcal{\C}$ denote the
+composite $q \circ p$ (hence $u$ is also a fibration). Suppose further
+that $q$ has simple products.
+For any projection map $\pi_{q(B)} : q(B) \times Y \rightarrow
+q(B)$ in $\mathcal{\C}$, denote the Cartesian morphism in $\B$ above
+it by $\pi^\S_{q(B)} : \pi^\ast B \rightarrow B$. Then $u$ has simple
+products that are preserved by $p$ if and only if for any projection
+map $\pi : q(B) \times Y \rightarrow q(B)$ in $\mathcal{C}$, the functor
+$(\pi^\S_{q(B)})^\ast : \A_B \rightarrow \fibre{\A}{\pi^\ast B}$ has
+right adjoints for all $B \in \B$, satisfying the Beck-Chevalley
+condition.\\
 \end{theorem}
 \end{minipage}
 \begin{minipage}{0.25\textwidth}
@@ -1049,58 +1060,84 @@ Suppose that $p:\A \rightarrow \B$ and $q:\B \rightarrow \mathcal{\C}$ are fibra
 \noindent
 \begin{minipage}{\linewidth}
 \begin{proof}
-This theorem is proven by using the factorisation and lifting properties of the 2-category $Fib$ as outlined in \cite{hermida1999some}. Though the proof is not too difficult it does require 2-categorical technology, which we do not introduce here. Hence, we leave the proof as an exercise for the 2-category-savvy reader.
+This theorem is proven by using the factorisation and lifting properties of the 2-category $Fib$ as outlined by Hermida~\cite{hermida1999some}. Though the proof is not too difficult, it does require 2-categorical technology, which we do not introduce here. Hence, we leave the proof as an exercise for the 2-category-savvy reader.
 \end{proof}
 \end{minipage}
 \vspace{8mm}
 
 \noindent
 \begin{minipage}[l]{0.75\linewidth}
-  Now to use this theorem. Given a $\lambda D$-model and a logic, there is a natural way to glue them together to provide a relational semantics.
+We now put this theorem to use. Given a $\lambda D$-model $q : \A \rightarrow \mathcal{L}$ and a logic $p: \E \rightarrow \B$, there is a natural way to glue them together to provide a relational semantics.
 
-Let $(u:\A \rightarrow \mathcal{L}, \, G,\, Q_0)$ be a $\lambda D$-model, $F:\A \rightarrow \B$ a product preserving functor and $p: \E \rightarrow \B$ a Cartesian closed fibration with products. Consider the pullback of $p$ along $F$, and let $Q_R$ denote an object in the fibre $\fibreE{F(Q_0)}$.
+\begin{theorem}
+\label{thm:rel-model-generator}
+Let $(q:\A \rightarrow \mathcal{L}, \, G,\, Q_0)$ be a $\lambda D$-model, $F:\A \rightarrow \B$ a product preserving functor and $p: \E \rightarrow \B$ a bicartesian closed fibration with products. Consider the pullback of $p$ along $F$, and let $Q_R$ denote an object in the fibre $\fibreE{F(Q_0)}$.
+Then $(q \circ F^\ast p :F^{\ast} \E \rightarrow \mathcal{L}, G,(Q_0,Q_R))$  is a $\lambda D$-model.
+\end{theorem}
+
  \end{minipage}
-\begin{minipage}{0.25\textwidth} \vspace{-4mm}
+\begin{minipage}{0.25\textwidth} 
+\scalebox{0.9}{
 \begin{diagram}
  F^\ast (\E)	\SEpbk	&\rTo		&\E \\
   \dTo<{F^\ast p}	&		&\dTo>{p}\\
   \A			&\rTo_{F}	&\B\\
+  \dTo<{q}      	&		&\\
+  \mathcal{L}		&       	&
  \end{diagram}
+}
  \end{minipage}
 
 
-\begin{theorem}\label{thm:rel-model-generator}
-$(F^\ast p \circ u :F^{\ast} \E \rightarrow \mathcal{L}, G,(Q_0,Q_R))$ as constructed above, is a $\lambda D$-model.
-\end{theorem}
 
 \begin{proof}
-Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{(F^\ast \E)}{G}$. To check that $F^\ast p \circ u$ is a bicartesian closed fibration is a simple exercise that we leave to the reader. And to see that $F^\ast p \circ u$ has simple products we first note that since $p$ has all products, so does $F^\ast p$. Hence, $F^\ast p \circ u$ has simple products by Theorem~\ref{thm:CompOfProd}.
+Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{(F^\ast \E)}{G}$. To check that $F^\ast p \circ u$ is a bicartesian closed fibration is a simple exercise. Finally, since $p$ has all products, so does $F^\ast p$. Hence, $F^\ast p \circ u$ has simple products by Theorem~\ref{thm:CompOfProd}.
 \end{proof}
 
 Next, we look at an example that uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension-erasure model back in Example \ref{ex:UnitErasure}.
 
 \begin{example}\label{ex:relKen}
-Let $G$ be an Abelian group. Then using the notation from above, let $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$ be the category $\LAb \times \Set$, $u: \LAb \times \Set \rightarrow \LAb$ be the fibration given by the first projection, and $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X) = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X) \rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally, we let $Q_0 = G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
+Let $G$ be an Abelian group. Then using the notation from 
+Theorem~\ref{thm:rel-model-generator}, let
+$\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$
+be the category $\LAb \times \Set$, $q: \LAb \times \Set \rightarrow
+\LAb$ be the fibration given by the first projection, and
+$p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define
+$F:\LAb \times \Set \rightarrow \Set$ to be the product preserving
+functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X)
+= G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X)
+\rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally, we let $Q_0
+= G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G
+\times G \times G$.
 
 In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, where $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. Spelling this out explicitly, we have the following interpretations, which are equivalent to Kennedy's original relationally parametric model for dimension types:
   \begin{displaymath}
     \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
-      \semr{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
-      \semr{\Delta \vdash T \times U} & = &
+      \sem{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
+      \sem{\Delta \vdash T \times U} & = &
       (|\Delta|,
       \begin{array}[t]{@{}l}
         \semo{T} \times \semo{U}, \\
         \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semr{T}, (g,u_1,u_2) \in \semr{U} \}
       \end{array}
       \\
-      \semr{\Delta \vdash T \to U} & = &
+      \sem{\Delta \vdash T + U} & = &
+      (|\Delta|,
+      \begin{array}[t]{@{}l}
+        \semo{T} + \semo{U}, \\
+        \{ (g, \inj_1\,t,\inj_1\,t') \mathrel| (g,t,t') \in \semr{T} \}
+        \cup 
+        \{ (g, \inj_2\,u,\inj_2\,u') \mathrel| (g,u,u') \in \semr{U} \}
+      \end{array}
+      \\
+      \sem{\Delta \vdash T \to U} & = &
       (|\Delta|,
       \begin{array}[t]{@{}l}
         \semo{T} \to \semo{U}, \\
         \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semr{T} \implies (g,f_1t_1, f_2t_2) \in \semr{U} \}
       \end{array}
       \\
-      \semr{\Delta \vdash \forall X.~T} & = & (|\Delta|,
+      \sem{\Delta \vdash \forall X.~T} & = & (|\Delta|,
       \begin{array}[t]{@{}l}
         \semo{T},
         \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} )
