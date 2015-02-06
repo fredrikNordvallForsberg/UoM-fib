@@ -175,7 +175,7 @@
 
 
 %Semantics
-\newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket} \;}
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}}
 \newcommand{\semo}[1]{\ensuremath{\llbracket #1 \rrbracket _o} \;}
 \newcommand{\semr}[1]{\ensuremath{\llbracket #1 \rrbracket _r} \;}
 
@@ -462,7 +462,7 @@ For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
 \ \mathrm{s}:\qnt(\timeDim),
 \\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
-\\& 1:\qnt(1),
+\\& 1:\qnt(1), 0 : \forall \Dvar . \qnt(\Dvar),
 \\&\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}),
 \\& {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool)\text.
 \end{array}\]
@@ -610,17 +610,17 @@ F^*\forall_{\C'}
 \to
 \forall_{\C}(F\times \id_\D)^*
 $
-is a natural isomorphism for all functors $F:\C\to \C'$. Indeed, for any $P:C\times D\to \mathcal S$, $c\in \mathcal C$:
+is a natural isomorphism for all functors $F:\C\to \C'$. Indeed, for any $P:\C\times \D\to \mathcal S$, $c \in \C$:
 \begin{align*}
-(F^*(\forall_{C'}\,P))(c)
+(F^*(\forall_{\C'}\,P))(c)
  =
-(\forall_C\,P)(F(c))
+(\forall_{\C}\,P)(F(c))
 \cong
-\lim_{d\in D}(F(c),d)
+\lim_{d\in \D}(F(c),d)
  & =
-\lim_{d\in D}(((F\times \id_D)^*(P))(c,d)) \\
+\lim_{d\in \D}(((F\times \id_\D)^*(P))(c,d)) \\
  & \cong
-(\forall_{C}((F\times \id_D)^*(P))(c)
+(\forall_{\C}((F\times \id_\D)^*(P))(c)
 \enspace \text. \qedhere
 \end{align*}
 \end{proof}
@@ -669,9 +669,25 @@ Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a 
 Let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
 \begin{proof}
-For any group $H$, the fibre above $H$ is the category of $H$-sets. This is isomorphic to the the functor category ${\Set}^H$, where we consider the group $H$ as a category with one object $*$ and a morphism for each element of $H$. There is a product-preserving, full and faithful functor $\Grp\to\Cat$, taking a group to the corresponding one-object category. The fibration $\GrpSet\to\Grp$ is therefore given by the pullback of the fibration $\CatSet\to\Cat$ along this embedding $\Grp \to \Cat$. Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}\eqref{item:simpl-prod}, $\GrpSet\to\Grp$ has simple products.
+For any group $H$, the fibre above $H$ is the category of $H$-sets.
+This is isomorphic to the
+the functor category ${\Set}^H$,
+where we consider the group $H$ as a category with one object $\star$
+and a morphism for each element of $H$.
+Indeed, there is a product-preserving, full and faithful functor $\Grp\to\Cat$,
+taking a group to the corresponding one-object category.
+The fibration $\GrpSet\to\Grp$ is thus the pullback of
+the fibration $\CatSet\to\Cat$ along this embedding $\Grp \to \Cat$.
+Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}\eqref{item:simpl-prod},
+$\GrpSet\to\Grp$ has simple products.
 
-Each fibre is bicartesian closed. The products, coproducts and function spaces are inherited from $\Set$. For the function space, let $A$ and $B$ be $G$-sets; then the set of functions $(A\to B)$ is also a $G$-set, with the action given by $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$. It follows that reindexing preserves the bicartesian closed structure. (This is not the case more generally for $\CatSet\to\Cat$, so Theorem~\ref{thm:change-of-base}\eqref{item:biCCC} does not apply.)
+Each fibre is bicartesian closed.
+The products, coproducts and function spaces are inherited from $\Set$.
+For the function space, let $A$ and $B$ be $G$-sets;
+then the set of functions $(A\to B)$ is also a $G$-set,
+with the action given by $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
+It follows that reindexing preserves the bicartesian closed structure.
+(This is not the case more generally for $\CatSet\to\Cat$, so Theorem~\ref{thm:change-of-base}\eqref{item:biCCC} does not apply.)
 %
 Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
@@ -801,32 +817,53 @@ We have already seen that the $\GpdSet$ fibration subsumes the families and grou
 
 
 \section{Group Actions and Dimension Types}\label{sec:MonSet}
-\note{Add something here about signatures}
 
-\noindent In this section we will look in greater detail at the $\lambda D$-model given by the $\GrpSet$ fibration, and so we spell out the reindexing and simple product structure.
+In this section we will look in greater detail at the $\lambda
+D$-model given by the $\GrpSet$ fibration. We first spell out the
+reindexing and simple product structure.  Given a group $G$, we write
+$\mathcal{G}$ when we consider it as a one-element category.
+Suppose that $\phi: \mathcal{G} \rightarrow \Set$ is a $G$-set
+(considered as a functor). We will write $|\phi| \coloneqq
+\phi(\star)$ for the underlying carrier set of $\phi$.  Reindexing
+along $\pi : G \times H \rightarrow G$ yields the $G \times H$-set
+given by $\phi \circ \pi$. In other words, $\pi^\ast\phi$ is a $G
+\times H$-set with the same underlying carrier $|\pi^{\ast}\phi| =
+|\phi|$ as the $G$-set $\phi$, and action given by $(g,h)
+\act{\pi^{\ast}\phi} x = g \act{\phi} x$.
 
-
-Suppose that $\phi: \mathcal{G}\rightarrow \Set$ is an $G$-set, then reindexing along $\pi : G \times H \rightarrow G$ yields the $G \times H$-set given by $\phi \circ \pi$. Or in other words the $G \times H$-set with underlying carrier given by $A$ and the action given by $(m,g) \act{\pi^{\ast}A} x = m \act{A} x$.
-
-Now suppose that $\psi : \mathcal{G} \times \mathcal{H} \rightarrow\Set $ is a $G \times H$-set. According to Theorem~\ref{thm:BC} (equation~\eqref{eqn:forall-limit}), the underlying set of $ (\forall _\pi \psi)$ is given by $\lim_{y\in \mathcal{H}} \psi (\ast, y)$. If we use the universal property of limits to note that
+Now suppose that $\psi : \mathcal{G} \times \mathcal{H} \rightarrow\Set $ is a $G \times
+H$-set. According to Theorem~\ref{thm:BC}
+(equation~\eqref{eqn:forall-limit}), the underlying set of $\forall
+_\pi \psi$ is given by $|\forall _\pi \psi| = \lim_{y\in \mathcal{H}}
+\psi (\star, y)$. By the universal property of limits,
 \[
- \lim_{y\in \mathcal{H}} \psi (\ast, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{H}} \psi (\ast, y)} \cong Nat \bbracket{K1, \psi (\ast, \blank)}
+ \lim_{y\in \mathcal{H}} \psi (\star, y) \cong \Set \bbracket{1, \lim_{y\in \mathcal{H}} \psi (\star, y)} \cong \GroupSet{\mathcal{H}}\bbracket{K1, \psi (\star, \blank)} \enspace \text,
 \]
-then we can see that $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall h\in H \; \; \psi(e_A, h) y = y \}$, and the action on morphisms is given by $(\forall_\pi \psi) g \; x = \psi (g, e_H) x$.
-
-Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make a particular choice of morphism in $H$, namely the identity element $e_H$. However, any element of $H$ would have given the same result since
+hence  $|\forall_\pi \psi | = \{y \in |\psi| \; \; | \; \; \forall h\in H\;.\; (e_A, h) \cdot_{\psi} y = y \}$, and the action is given by $g \cdot_{\forall_\pi \psi} x = (g, e_H) \cdot_{\psi} x$.
+%
+Notice that to give the group action of $\forall_\pi \psi$, we had to
+make a particular choice of an element in $H$, namely the identity
+element $e_H$. However, any element of $H$ would have given the same
+result, since
 \[
-  \psi (g, h) x = \psi (g, e_H) \cdot \psi (e_G, h) x = \psi (g, e_H) x
+   (g, h) \cdot_{\psi} y
+ = ((g, e_H)(e_G, h)) \cdot_{\psi} y
+ = (g, e_H) \cdot_{\psi} ((e_G, h) \cdot_{\psi} y)
+ = (g, e_H) \cdot_{\psi} y
 \]
+for all $y \in |\forall_\pi \psi |$.
 
-
-A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+Many of the properties of dimension types that Kennedy proves using
+parametricity can be shown to hold in the $\GrpSet$-fibration, without
+having to define a separate relational semantics. We first note three
+semantic isomorphisms. The first is a substitution lemma, which holds
+in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
-Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denotes a dimension expression, then
+Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denotes a dimension expression. Then
 \[
- \sem{T[D/X]} \cong (id_{\sem{\Delta}} , \sem{D})^\ast \sem{T}
+ \sem{T[D/X]} \cong (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T}
 \]
 \end{lemma}
 \begin{proof}
@@ -836,7 +873,7 @@ Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denot
 
 Explicitly, Lemma~\ref{lem:subst} says that the semantics of substituting a dimension expression for a dimension variable is given by reindexing along the identity paired with the dimension expression. Since reindexing is given by precomposition we have that
 \[
- (id_{\sem{\Delta}} , \sem{D})^\ast \sem{T} \cong \sem{T}(id_{\sem{\Delta}}, \sem{D})
+ (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T} \cong \sem{T}(\id_{\sem{\Delta}}, \sem{D})
 \]
 Or in other words, substitution of the $n^{th}$ unit variable is given by precomposition at the $n^{th}$ component.
 
@@ -844,19 +881,19 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 
 \begin{lemma}
 \label{lemma:allarrows}
- Suppose that $\Delta, u \vdash S,T \; \msf{ Type}$, then
+ Suppose that $X_1, \ldots, X_n, X \vdash S,T \; \msf{ Type}$. Then
 \[
-|\sem{\forall u. S \rightarrow T}| \cong \GroupSet{G} (\sem{S}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\ast,...,\ast}_{n-\text{times}}, \blank))
+|\sem{\forall X. S \rightarrow T}| \cong \GroupSet{\mathcal{G}} (\sem{S}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank))
 \]
 \end{lemma}
 \begin{proof}
 By the Kan extension formula and Yoneda.
 \end{proof}
 
-This Lemma says that in the $\GrpSet$ model a universally quantified variable over an arrow type, can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed. Finally, we note a useful corollary of Lemma~\ref{lemma:allarrows}.
+This Lemma says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed. Finally, we note a useful corollary of Lemma~\ref{lemma:allarrows}.
 \begin{corollary}
 \label{cor:subs}
-Suppose that $\Delta, X \vdash T \; \msf{ Type}$, then
+Suppose that $\Delta, X \vdash T \; \msf{ Type}$. Then
  \[
   |\sem{\forall X . \qnt(X) \rightarrow T}| \cong |\sem{T[1/X]}|
 \]
@@ -867,11 +904,11 @@ Suppose that $\Delta, X \vdash T \; \msf{ Type}$, then
 
 
 
-We now prove some theorems about the $\GrpSet$ fibration that are akin to the parametricity results of Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Lemma~\ref{lemma:allarrows} and Corollary~\ref{cor:subs}. Firstly, lets have a look at the interplay between scaling factors and polymorphic functions.
+We now prove some theorems about the $\GrpSet$ fibration that are akin to the parametricity results of Kennedy's original paper. The proofs here involve applications of Lemma~\ref{lem:subst}, Lemma~\ref{lemma:allarrows} and Corollary~\ref{cor:subs}. First, we take a look at the interplay between scaling factors and polymorphic functions.
 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
-Let $t$ be a closed term of type $\forall X. \qnt(X) \rightarrow \qnt(X^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(X)}|$,
+Suppose $\Deltadim; \Gammaops \vdash t : \forall X. \qnt(X) \rightarrow \qnt(X^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(X)}|$,
 \[
 \sem{t} (g \cdot x) = g^n \cdot \sem{t} x
 \]
@@ -879,7 +916,7 @@ Let $t$ be a closed term of type $\forall X. \qnt(X) \rightarrow \qnt(X^n)$, whe
 \begin{proof}
 We know from Lemma~\ref{lemma:allarrows} that
 \[
-\sem{t} \in \GSet(|\sem{\qnt(X)}|,|\sem{\qnt(X^n)}|)
+\sem{t} \in \GSet(\sem{\qnt(X)},\sem{\qnt(X^n)})
 \]
 % This means that $\sem{t}$ must satisfy the diagram
 % \begin{diagram}
@@ -887,7 +924,7 @@ We know from Lemma~\ref{lemma:allarrows} that
 % \dTo<{\qnt(u)g}     &                      &\dTo>{\qnt(u^n)m } \\
 % |\qnt(u)|        &\rTo_{\sem{t}}        &|\qnt(u^n)| \\
 % \end{diagram}
-Or in other words $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$, for all $x \in |\sem{\qnt(X)}|$ as required.
+In other words, $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$ for all $x \in |\sem{\qnt(X)}|$ as required.
 \end{proof}
 This theorem tells us that polymorphic functions are \emph{invariant under scaling}. Intuitively we see that scaling factors must be changed in an appropriately polymorphic way.
 
@@ -898,29 +935,38 @@ If we apply Corollary~\ref{cor:subs} to the type $\forall X. \qnt(X)\rightarrow 
 This implies that terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ vary only by scalar multiplication.
 
 
-Next, we wish to prove that the type  $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is uninhabited.
+Next, we wish to prove that the type $\forall X . \qnt(X^2)
+\rightarrow \qnt(X)$ is uninhabited.
 
 \begin{theorem}
 \label{thm:UninhabType}
- There is no term of type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
+ There is no term  $\vdash t : \forall X . \qnt(X^2) \rightarrow \qnt(X)$., i.e., we cannot write a polymorphic square root function.
 \end{theorem}
 \begin{proof}
-To see this we show that there exists a model where the existence of such a term is impossible, for simplicity we assume that the typing context is empty. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  consisting of the $\GrpSet$ fibration, and the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ as the exponentiable Abelian group object and the $Q$ object. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
+To see this we show that there exists a model where the existence of such a term is impossible. Consider the $\lambda D$-model $(p:\GrpSet \rightarrow \Grp, \mathbb{Z}_2, \mathbb{Z}_2)$  where the Abelian group $\mathbb{Z}_2 = (\{ -1, 1\},\cdot,1)$ is used to interpret both dimensions and units. Lemma~\ref{lemma:allarrows} says that the interpretation of the type $\forall X . \qnt(X^2) \rightarrow \qnt(X)$ is given by
 \begin{align*}
-  |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (|\sem{\qnt (X^2)}|, |\sem{\qnt(X)}|)
+  |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (\sem{\qnt (X^2)}, \sem{\qnt(X)})
 \end{align*}
-Or in other words, any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, satisfies for all $g, x \in \bbZ_2$
-\[
-f (g^2 \cdot x) = g \cdot (fx) \; \; \; \; (\ast)
-\]
+i.e. any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, satisfies for all $g, x \in \bbZ_2$
+\begin{equation}
+f (g^2 \cdot x) = g \cdot (fx) \tag{$\ast$}
+\end{equation}
 If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contradictions. Suppose that $f(-1) = -1$, then by $(\ast)$
 \[
  f((-1)^2 \cdot -1) = (-1) \cdot f(-1)
 \]
-But the left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no non-trivial $f$, as required.
+But the left-hand side is equal to $-1$ and the right-hand side is equal to $1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such $f$, as required.
 \end{proof}
 
-Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis, which first appeared here \cite{buckingham1914physically} but a more modern introduction can be found here \cite{sonin2001physical}.
+This result can be extended to also include terms $t$ using primitive
+operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
+\rightarrow \qnt(X)$, as long as these operations can be interpreted
+in the model in question. Note in particular that this model does not
+support a polymorphic zero operation $0 : \forall \Dvar
+. \qnt(\Dvar)$; such a primitive operation would of course gives rise
+to a trivial counterexample to the theorem.
+
+Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (see Sonin~\cite{sonin2001physical} for a modern introduction).
 
 \begin{theorem}
  \label{lem:AppSubs}
@@ -937,24 +983,31 @@ Finally, we prove a result about a higher order type.
 %$\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)$.
 
 \begin{theorem}\label{thm:UninhabInt}
-There is no term of type
-\[\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\text.\]
+There is no term 
+\[
+\vdash t : \forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)\enspace \text.
+\]
 \end{theorem}
 \begin{proof}
-Set $G$ to be $\bbZ_2$ and similarly $Q$ to be $\bbZ_2$ as well. Then interpreting this type we have
+Choose $G$ and $Q$ to be $\bbZ_2$. Interpreting the type of $t$, we have
  \begin{multline*}
 \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)} \\=\ \  \{ t \in (\bbZ_2 \rightarrow \bbZ_2) \rightarrow \bbZ_2 \; | \; \forall g_1,  g_2 \in \bbZ_2,\ f:\bbZ_2\to \bbZ_2. \; \; (g_1 g_2) \cdot (t(f))=
 t(\lambda q\in \bbZ_2.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
-Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, putting
+Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, instantiating
 $f=\id_Q$ we get that
 \[
-(g_1 g_2) \cdot (t(id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))
+(g_1 g_2) \cdot (t(\id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))
 \]
-which is not possible. Let $g_1 = 1$ and $g_2 = -1$,
-so that $-1\cdot t(id_Q)=t(id_Q)$, a contradiction.
+for all $g_1$ and $g_2$, which is not possible: if $g_1 = 1$ and $g_2 = -1$,
+then the equation reduces to $-1\cdot t(\id_Q)=t(\id_Q)$, a contradiction since $t(\id_Q) \in \bbZ_2 = \{-1, 1\}$.
 \end{proof}
-
+Again, the result can be extended to terms 
+\[
+\Gammaops \vdash t : \forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)
+\]
+as long as all primitive operations in $\Gammaops$ can be interpreted
+in the model.
 
 % \note{****Add to other document that it is easy to generate ``free theorems'' in MonSet fibration and there are many examples especially when playing around with \qnt(X) and arrows}
 
