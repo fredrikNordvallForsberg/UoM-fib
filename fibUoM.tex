@@ -274,7 +274,7 @@ Several authors have developed programming languages with type systems that supp
 
 The main contributions of this paper are as follows.
 \begin{enumerate}
-\item We provide a general notion of a model for a programming language with dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
+\item We provide a general notion of a model for a programming language with physical dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
 \item An important example of a $\lambda D$-model is built from group actions (Example~\ref{ex:MonAct}).
 %This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism.
@@ -288,7 +288,7 @@ A difficulty here is how does one understand $\qnt(\Dvar)$ as a set, if the dime
 
 \section{Types with Physical Dimensions}
 \label{sec:Not}
-We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions, based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variables, we have two kinds of contexts.
+We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variables, we have two kinds of contexts.
 
 \vspace{3mm} \noindent {\bf Dimensions and Dimension Contexts:}
 A dimension context $\Delta$ is a finite list of distinct
