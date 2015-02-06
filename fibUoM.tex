@@ -19,6 +19,7 @@
 \usepackage{diagrams}
 %\RequirePackage[all]{xy}
 %\usepackage{wrapfig}
+\theoremstyle{plain}
 \newtheorem{proposition}[theorem]{Proposition}
 
 %Bibliography
@@ -666,7 +667,7 @@ Let $G$ be a group. Recall that a $G$-set consists of a set $A$ together with a 
 
 \begin{proposition}
 %Let $p:\GrpSet \rightarrow \Grp$ be the $\GrpSet$ fibration,
-Let $G$ be an Abelian group, and $Q$ a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
+Let $G$ be an Abelian group, and let $Q$ be a $G$-set. Then $(p : \GrpSet \rightarrow \Grp,G,Q)$ is a $\lambda D$-model.
 \end{proposition}
 \begin{proof}
 For any group $H$, the fibre above $H$ is the category of $H$-sets.
@@ -692,7 +693,7 @@ It follows that reindexing preserves the bicartesian closed structure.
 Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, we model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set, and a term with a free dimension variable as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
+In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=\mathbb Q^+$, the positive rationals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
@@ -1225,7 +1226,7 @@ To conclude, we have studied a typed $\lambda$-calculus with polymorphism over p
 
 One particular model turned out to be particularly straightforward and yet informative --- the model based on group actions (Example~\ref{ex:GrpAct}). Of course, automorphisms and group actions play a key role in the classical model theory of first order logic, but in this paper we have shown that these techniques are also useful on the other side of the Curry-Howard correspondence. Many arguments about the $\lambda D$-calculus, including type isomorphisms and definability arguments, can be made in this model (Section~\ref{sec:MonSet}).
 
-Parametricity is most often studied using relational techniques, and in this paper we have developed a method for building relational $\lambda D$-models (Theorem~\ref{thm:rel-model-generator}). By utilising this method we were able to reconstruct two particular relational models: a relational model due to Kennedy (Example~\ref{ex:relKen}, \cite{Kennedy:1997:RPU:263699.263761}) and a restriction of a relational model due to the Atkey~(Example~\ref{ex:relMon}, \cite{atkey14conservation}). Although the group-actions model is different in style, we showed (formally) that it is actually closely related to the two relational models~(Theorems~\ref{thm:grp-rel-related} and~\ref{thm:closed-prog-equiv}).
+Parametricity is most often studied using relational techniques, and in this paper we have developed a method for building relational $\lambda D$-models (Theorem~\ref{thm:rel-model-generator}). By utilising this method we were able to reconstruct two particular relational models: a relational model due to Kennedy (Example~\ref{ex:relKen}, \cite{Kennedy:1997:RPU:263699.263761}) and a restriction of a relational model due to Atkey~(Example~\ref{ex:relMon}, \cite{atkey14conservation}). Although the group-actions model is different in style, we showed (formally) that it is actually closely related to the two relational models~(Theorems~\ref{thm:grp-rel-related} and~\ref{thm:closed-prog-equiv}).
 
 
 \paragraph*{Acknowledgements}
