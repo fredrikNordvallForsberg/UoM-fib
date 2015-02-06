@@ -822,8 +822,8 @@ In this section we will look in greater detail at the $\lambda
 D$-model given by the $\GrpSet$ fibration. It turns out that many interesting theorems can be proven in this model, and so to aid us in this task we first concretely spell out the
 reindexing and simple product structure.
 
-Given a group $G$, we write the scripted version, which has morphisms given by elements of $G$ and composition given by group multiplication. Suppose that $\phi: \mathcal{G} \rightarrow \Set$ is a $G$-set
-(considered as a functor). Then we will write $|\phi| \coloneqq
+Given a group $G$, we write $\mathcal{G}$ (with a different font) for the corresponding one-element category, which has morphisms given by elements of $G$ and composition given by group multiplication. Suppose that $\phi: \mathcal{G} \rightarrow \Set$ is a $G$-set
+(considered as a functor). We write $|\phi| \coloneqq
 \phi(\star)$ for the underlying carrier set of $\phi$.  Reindexing
 along $\pi : \mathcal{G} \times \mathcal{H} \rightarrow \mathcal{G}$ yields the $G \times H$-set
 given by $\phi \circ \pi$. In other words, $\pi^\ast\phi$ is a $G
@@ -859,10 +859,7 @@ having to define a separate relational semantics and this is the content of Theo
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
-Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denotes a dimension expression. Then
-\[
- \sem{T[D/X]} \cong (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T}
-\]
+Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denotes a dimension expression. Then $\sem{T[D/X]} \cong (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T}$.
 \end{lemma}
 \begin{proof}
  By induction on the structure of $T$.
@@ -871,9 +868,9 @@ Suppose that $\Delta, X \vdash T \; \msf{ Type}$ and that $\Dj\Delta \Dim$ denot
 
 Explicitly, Lemma~\ref{lem:subst} says that the semantics of substituting a dimension expression for a dimension variable is given by reindexing along the identity paired with the dimension expression. Since reindexing is given by precomposition we have that
 \[
- (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T} \cong \sem{T}(\id_{\sem{\Delta}}, \sem{D})
+ (\id_{\sem{\Delta}} , \sem{D})^\ast \sem{T} \cong \sem{T}(\id_{\sem{\Delta}}, \sem{D}) \enspace \text,
 \]
-Or in other words, substitution of the $n^{th}$ unit variable is given by precomposition at the $n^{th}$ component.
+i.e., substitution of the $n^{th}$ unit variable is given by precomposition at the $n^{th}$ component.
 
 For the rest of this section, we will use semantic brackets $\sem{\, \underline{\hspace{2mm}}\, }$ to refer only to the $\GrpSet$ interpretation.
 
@@ -892,10 +889,8 @@ This Theorem says that in the $\GrpSet$ model a universally quantified variable 
 
 \begin{theorem}
 \label{thm:quantArrowT}
-Suppose that $\Delta, X \vdash T \; \msf{ Type}$. Then
- \[
-  |\sem{\forall X . \qnt(X) \rightarrow T}| \cong |\sem{T[1/X]}|
-\]
+Suppose that $\Delta, X \vdash T \; \msf{ Type}$. Then $|\sem{\forall
+  X . \qnt(X) \rightarrow T}| \cong |\sem{T[1/X]}|$.
 \end{theorem}
 \begin{proof}
  By Theorem~\ref{thm:allArrows}, Lemma~\ref{lem:subst} and Yoneda.
@@ -908,26 +903,22 @@ We now prove some theorems about the $\GrpSet$ fibration that are parametricity 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
 Suppose $\Deltadim; \Gammaops \vdash t : \forall X. \qnt(X) \rightarrow \qnt(X^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(X)}|$,
-\[
-\sem{t} (g \cdot x) = g^n \cdot \sem{t} x
-\]
+we have $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$.
 \end{theorem}
 \begin{proof}
 We know from Theorem~\ref{thm:allArrows} that
-\[
-\sem{t} \in \GroupSet{\mathcal{G}}(\sem{\qnt(X)},\sem{\qnt(X^n)})
-\]
+$\sem{t} \in \GroupSet{\mathcal{G}}(\sem{\qnt(X)},\sem{\qnt(X^n)})$.
 % This means that $\sem{t}$ must satisfy the diagram
 % \begin{diagram}
 % |\qnt(u)|       &\rTo^{\sem{t}}        &|\qnt(u^n)| \\
 % \dTo<{\qnt(u)g}     &                      &\dTo>{\qnt(u^n)m } \\
 % |\qnt(u)|        &\rTo_{\sem{t}}        &|\qnt(u^n)| \\
 % \end{diagram}
-In other words, $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$ for all $x \in |\sem{\qnt(X)}|$ as required.
+In other words, $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$ for all $x \in |\sem{\qnt(X)}|$, as required.
 \end{proof}
 This theorem tells us that polymorphic functions are \emph{invariant under scaling}. Intuitively we see that scaling factors must be changed in an appropriately polymorphic way.
-
-If we apply Theorem~\ref{thm:quantArrowT} to the type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ we see that
+%
+If we apply Theorem~\ref{thm:quantArrowT} to the type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$, we see that
 \[
  |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong G \text{,}
 \]
@@ -975,7 +966,8 @@ Next, we can prove a theorem that relates a dimensionally invariant function to 
 We obtain this result as a direct consequence of Theorem~\ref{thm:quantArrowT}.
 \end{proof}
 
-We finish this section with another result about a type that is uninhabited, only this time it's higher order.
+We finish this section with another uninhabitedness result, this time
+about a higher order type.
 
 \begin{theorem}\label{thm:UninhabInt}
 There is no term
