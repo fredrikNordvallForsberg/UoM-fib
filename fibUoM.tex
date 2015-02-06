@@ -915,7 +915,7 @@ Notice that to give the action of $\forall_\pi \psi$ on morphisms we had to make
 \]
 
 
-A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
+A particularly nice property about this model, is that many of the properties of dimension types that Kennedy proves using parametricity, can be shown to hold in the $\GrpSet$-fibration, without having to define a separate relational semantics. \note{(Bob) In light of the theorem in Section 5 below, this model does capture parametricity. Just remove next sentence, or forward ref?} The downside of not giving a separate relational semantics is that we do not capture the complete essence of parametricity, just a useful portion of it. We first note three semantic isomorphisms. The first is a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -1066,7 +1066,7 @@ so that $-1\cdot t(id_Q)=t(id_Q)$, a contradiction.
 \label{sec:param}
 In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy proves in \cite{Kennedy:1997:RPU:263699.263761} using parametricity. It's curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One can't help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at your finger tips?
 
-To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}). These two examples are intrinsically linked, which we make precise in Theorem~\ref{thm:closed-prog-equiv}.
+To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model . This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
 
 To begin this section, we must first recall a theorem about the composition of fibred structure.
 
@@ -1210,8 +1210,25 @@ $\GrpSet$ model are related in the obvious way:
 Using Theorem \ref{thm:grp-rel-related}, we can see that we could have
 used the relationally parametric model to derive the results in
 Section \ref{sec:MonSet}. There is literally no difference between the
-two models, for the purposes of interpreting the types of our
-calculus.
+two models for the purposes of interpreting the types of our calculus.
+
+We can also relate the relationally parametric model from Example
+\ref{ex:relMon} to the dimension-erasure semantics in Example
+\ref{ex:UnitErasure}. By constructing a logical relation between the
+two models, we can show:
+\begin{theorem}\label{thm:closed-prog-equiv}
+  For any closed term $\vdash t : \msf{bool}$, the interpretation of
+  $t$ in the dimension erasure model of Example \ref{ex:UnitErasure}
+  is equal to the interpretation of $t$ in the relationally parametric
+  model of Example \ref{ex:relMon}.
+\end{theorem}
+
+\noindent
+By the compositionality of both interpretations, this theorem means
+that if we can show that two open terms $s$ and $t$ are equal in the
+model of Example \ref{ex:relMon} (and equivalently, the $\GrpSet$
+model), then they will be contextually equivalent for the dimension
+erasure model.
 
 It remains to discuss the relationship between Kennedy's original
 relational model (Example \ref{ex:relKen}), and the relational model
@@ -1221,23 +1238,23 @@ different interpretations of the $\forall$-type: Kennedy's model does
 not restrict the carrier of the interpretation to just the
 ``parametric'' elements, \emph{i.e.}, the elements that preserve all
 relations. Therefore, the interpretations of types that contain nested
-$\forall$s are not directly comparable. However, we can construct a
-logical relation between the two interpretations to show the following
-property:
+$\forall$s are not directly comparable. We might expect that we could
+observe a difference between the two models when proving statements
+about terms whose types contain negatively nested foralls. However,
+Kennedy's original work does not present any results involving terms
+with such types, and we have not been able to think of any
+examples. This is in contrast with the situation with relationally
+parametric models of System F, where the proof that final coalgebras
+can be represented crucially relies on the restriction of the
+interpretation of quantified types to the parametric elements
+\cite{birkedal2005categorical}.
 
-\begin{theorem}\label{thm:closed-prog-equiv}
-  For any closed term $\vdash t : \msf{bool}$, the interpretation of
-  $t$ in Kennedy's model is equal to the interpretation of $t$ in the
-  model of Example \ref{ex:relMon}.
-\end{theorem}
-
-By the compositionality of the semantics, this means that if we can
-show that two open terms $s$ and $t$ are equal in the model of Example
-\ref{ex:relMon} (and equivalently, the $\GrpSet$ model), then they
-will be contextually equivalent for Kennedy's model.
-
-\note{This also holds between the unit-erasure semantics and the one
-  of Example \ref{ex:relMon}. Not sure how to fit this in?}
+Therefore, we are in a position where our $\GrpSet$ model, and the
+equivalent relational model in Example \ref{ex:relMon}, do not appear
+to offer any practical advantage over Kennedy's original
+model. Nevertheless, the $\GrpSet$ model does offer an alternative
+interpetation of dimension types that does not use relations, and
+directly links the semantics to symmetry.
 
 \section{Concluding remarks} \label{sec:con}
 We have studied
