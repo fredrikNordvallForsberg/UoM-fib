@@ -1,0 +1,29 @@
+branches:
+  only:
+  - master
+
+install:
+  - sudo apt-get update
+  - sudo apt-get install latexmk texlive texlive-math-extra texlive-latex-extra texlive-latex3
+
+script:
+  - latexmk -bibtex -pdf -e '$pdflatex=q/pdflatex %O %S/' fibUoM.tex 
+
+after_success:
+  - git init
+  - git config user.name "Travis Worker"
+  - git config user.email "travis@fake.org"
+  - git remote add upstream https://${GH_TOKEN}@github.com/fredriknordvallforsberg/UoM-fib.git &>/dev/null
+  - git fetch upstream && git reset upstream/gh-pages
+  - git add -f fibUoM.pdf
+  - git commit -m "Uploading snapshot $(date '+%m/%d/%y %H:%M')"
+  - git push -q upstream HEAD:gh-pages &>/dev/null
+
+notifications:
+  email: false
+
+env:
+  global:
+    secure: "BOdzktNQIrKsR7w0+YQfWt/IDAra9ezOQmyMbcHg1UW8kf4UXVayA1VBcJ7yRxz/tmkQfkztkRI1Rt99JY5N9K7DupOaX3knjv7ww4FPCNEIg+efu8mMq5Rx4RotE1puvwCAI+gxbnpEwFtWsvk6iWirc65825mSCm1obsw5z34="
+
+
