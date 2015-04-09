@@ -220,13 +220,13 @@ Applications (TLCA'15)}
 % Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Models for Polymorphism over Physical Dimensions}
 \author[1]{Robert Atkey}
-\author[2]{Neil Ghani}
-\author[2]{Fredrik Nordvall Forsberg}
-\author[2]{Timothy Revell}
-\author[3]{Sam Staton}
-\affil[1]{University of Edinburgh}
-\affil[2]{University of Strathclyde}
-\affil[3]{University of Oxford}
+\author[1]{Neil Ghani}
+\author[1]{Fredrik Nordvall Forsberg}
+\author[1]{Timothy Revell}
+\author[2]{Sam Staton}
+%\affil[1]{University of Edinburgh}
+\affil[1]{University of Strathclyde}
+\affil[2]{University of Oxford}
 \authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
 \Copyright{Robert Atkey and Neil Ghani and Fredrik Nordvall Forsberg and Timothy Revell and Sam Staton}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
@@ -485,14 +485,14 @@ In order to ascertain the value of Definition~\ref{def:lamDModel}, we now do thr
 
 
 \subsection{Modelling Dimension Types}
-To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means, that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects and morphisms in the fibres above the dimension contexts in which they are defined. Bicartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$, $\emptyTy$, $+$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions - by using right adjoints. Finally, since dimension expressions for a dimension context, are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret
+To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects and morphisms in the fibres above the dimension contexts in which they are defined. Bicartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$, $\emptyTy$, $+$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions by using right adjoints. Finally, since dimension expressions for a dimension context are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret
 such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
 \item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$. We assume that there is a given interpretation $\sem d : 1 \to G$ for every primitive dimension constant $d \in \Deltadim$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$ and $\rightarrow$ using the Cartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
