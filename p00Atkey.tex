@@ -240,13 +240,12 @@ Applications (TLCA'15)}
 
 \begin{abstract}
 We provide a categorical framework for models of a type theory that has special types for physical quantities. The types are indexed by the physical dimensions that they involve. We use fibrations to organize this index structure in the models of the type theory. We develop some informative models of this type theory: firstly, a model based on group actions, which captures invariance under scaling, and secondly, a way of constructing new models using relational parametricity.
-
 \end{abstract}
 
 \section{Introduction}
-This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. 
-%
-To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
+Humans make errors. For instance, in 1999 the Mars Climate Orbiter disintegrated in the Martian atmosphere due to a unit mismatch in the computer systems --- one part used Newton-seconds and the other pound-seconds~\cite{MarsCrash}. There has been a lot of work trying to avoid such errors by defining languages that can manipulate physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. In this paper we investigate their semantic models.
+
+Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
 
 Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity~$x$ of a given dimension $X$, and returns its double, which has the same dimension.
 \begin{equation}
@@ -264,13 +263,11 @@ f_\lengthDim\,(5\mathrm{m})=
 \noindent There are a few key points that are worth emphasising about examples \eqref{eqn:double} and \eqref{eqn:doubleapp} above:
 \begin{itemize}
 \item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. To emphasise this distinction, we use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
-\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$. 
+\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
 
-Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. Our starting point is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models.
-
-
-The main contributions of this paper are as follows.
+% Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}.
+Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models. The main contributions of this paper are as follows.
 \begin{enumerate}
 \item We provide a general notion of a model for a programming language with physical dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
@@ -318,6 +315,8 @@ $\Delta$ is a dimension context. The judgements are generated by the following r
 	\UnaryInfC{$\Delta \vdash T \rightarrow U  \; \msf{ Type}$}
 	\DisplayProof
 \\ \\
+\end{array}\]
+\[ \begin{array}{c}
 \AxiomC{  $\phantom{\vdash T \; \msf{ Type}}$ }
 		\UnaryInfC{$\Delta \vdash \unitTy \; \msf{ Type}$}
 	\DisplayProof
@@ -443,8 +442,8 @@ For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
 \ \mathrm{s}:\qnt(\timeDim),
 \\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
-%\\& 
-\ 1:\qnt(1), 
+%\\&
+\ 1:\qnt(1),
 \\&\mathsf{inv}:\forall \Dvar.\qnt(\Dvar)\to \qnt (\Dvar^{-1}),
 \\& {<}:\forall \Dvar.\qnt(\Dvar)\times \qnt(\Dvar)\to \bool)\text.
 \end{array}\]
@@ -485,7 +484,8 @@ In order to ascertain the value of Definition~\ref{def:lamDModel}, we now do thr
 
 
 \subsection{Modelling Dimension Types}
-To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects and morphisms in the fibres above the dimension contexts in which they are defined. Bicartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$, $\emptyTy$, $+$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions by using right adjoints. Finally, since dimension expressions for a dimension context are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object structure to interpret
+To show that $\lambda D$-models provide a categorical semantics for dimension types, we must show how to interpret the syntax given in Section~\ref{sec:Not} in any given $\lambda D$-model. We will use the $\lambda \forall$-fibration to separate the indexing information (the dimensions) from the indexed information (the types and terms). This means that the base category of the fibration will be used to interpret dimension contexts, and types and terms will be interpreted as objects and morphisms in the fibres above the dimension contexts in which they are defined. Bicartesian closure of the fibres will allow us to inductively interpret types built from $\unitTy$, $\times$, $\emptyTy$, $+$ and $\rightarrow$, and we will take the standard approach in categorical logic to interpret quantification of dimensions by using right adjoints. Finally, since dimension expressions for a dimension context are defined as elements of the free Abelian group on that dimension context, we will use the Abelian group object
+structure to interpret
 such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
@@ -572,7 +572,7 @@ $\lambda\forall$-fibration if $\C$ is bicartesian closed.
 
 \paragraph*{A Source of Fibrations with Simple Products}
 
-We next look at a particular class of $\lambda D$ models, where the fibres in the $\lambda \forall$-fibration are functors. We prove a general theorem for such fibrations, and instantiate it to construct several examples. We first introduce some notation. Let $\mathcal S$ be a category (typically $\mathcal S=\Set$), and consider the category $\Cat\lslice\mathcal S$. The objects are pairs $(\C,P:\C\to \mathcal S)$, where $\C$ is a small category and $P:\C\to \mathcal S$ a functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$ is the category $\mathcal S^{\mathcal C}$ of 
+We next look at a particular class of $\lambda D$ models, where the fibres in the $\lambda \forall$-fibration are functors. We prove a general theorem for such fibrations, and instantiate it to construct several examples. We first introduce some notation. Let $\mathcal S$ be a category (typically $\mathcal S=\Set$), and consider the category $\Cat\lslice\mathcal S$. The objects are pairs $(\C,P:\C\to \mathcal S)$, where $\C$ is a small category and $P:\C\to \mathcal S$ a functor.  Morphisms $(F,\phi):(\C,P)\to (\D,Q)$ are pairs of a functor $F:\C\to \D$ and a natural transformation $\phi : P \to Q \circ F$.  The obvious projection functor $(\C,P)\mapsto \C : \Cat\lslice \mathcal S\to \Cat$ is a fibration. The fibre over a small category $\C$ is the category $\mathcal S^{\mathcal C}$ of
 functors $[\mathcal C\to\mathcal S]$ and natural transformations between them. Reindexing is given by precomposition of functors.
 \begin{theorem}
 \label{thm:BC}
@@ -676,9 +676,9 @@ It follows that reindexing preserves the bicartesian closed structure.
 Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group. Hence $(p,G,Q)$ is a $\lambda D$-model.
 \end{proof}
 
-In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}. 
+In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 
-The $\GrpSet$ model cannot support dimension constants because there is only one group homomorphism $1\to G$. 
+The $\GrpSet$ model cannot support dimension constants because there is only one group homomorphism $1\to G$.
 It does support several term constants, which we discuss after Theorem~\ref{thm:allArrows}. \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
@@ -775,17 +775,17 @@ This Theorem says that in the $\GrpSet$ model a universally quantified variable 
 In other words, it is interpreted as the set of functions that are equivariant
 in the last argument.
 
-In particular, if $\Tj{X_1\dots X_n} {S,T}$ then 
+In particular, if $\Tj{X_1\dots X_n} {S,T}$ then
 the type $(\forall \vec X.\,S\to T)$ is interpreted as the set
-of all homomorphisms $\GroupSet {\mathcal G^n}(\sem S,\sem T)$. 
-We use this fact to conclude that the group actions model supports 
-several term constants. For any $q\in Q$, we can accommodate 
+of all homomorphisms $\GroupSet {\mathcal G^n}(\sem S,\sem T)$.
+We use this fact to conclude that the group actions model supports
+several term constants. For any $q\in Q$, we can accommodate
 a term constant $q:\qnt(1)$, which is interpreted by $\sem q=q$.
 When $Q=G$,
 we can also accommodate a term constant for multiplication
 \[\times :\forall X.\forall Y.\,\qnt(X)\times\qnt(Y)\to\qnt(X\cdot Y)\]
 which is interpreted as the group operation.
-When $Q=G=(\mathbb R^+,\times,1)$, the positive reals, 
+When $Q=G=(\mathbb R^+,\times,1)$, the positive reals,
 we also have addition,
 \ $+ :\forall X.\,\qnt(X)\times\qnt(X)\to\qnt(X)$\,,
 which is equivariant since $q(r+s)=qr+qs$.
@@ -818,7 +818,7 @@ If we apply Theorem~\ref{thm:quantArrowT} to the type $\forall X. \qnt(X)\righta
 \[
  |\sem{\forall X. \qnt(X)\rightarrow \qnt(X^n)}| \cong |\sem{\qnt(1^n)}| \cong |\sem{\qnt(1)}| \cong Q \text{,}
 \]
-Putting $Q=G$, we conclude that all the terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$ 
+Putting $Q=G$, we conclude that all the terms of type $\forall X. \qnt(X)\rightarrow \qnt(X^n)$
 are of the form $\Lambda X.\,\lambda q:\qnt(X).\ r\times q^n$
 for $r\in G$.
 
@@ -836,7 +836,7 @@ i.e. any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, sa
 f (g^2 \cdot x) = g \cdot (fx) \tag{$\ast$}
 \end{equation}
 If $f$ exists, then either $f(-1) = -1$ or $f(-1) = 1$, but both lead to contradictions. To this end suppose that $f(-1) = -1$, then by $(\ast)$
-we have 
+we have
 $f((-1)^2 \cdot -1) = (-1) \cdot f(-1)$,
 which is a contradiction since the left-hand side is equal to $-1$ and the right-hand side is equal to~$1$. A similar argument shows that $f(-1)=1$ is also not possible, and hence there exists no such~$f$.
 \end{proof}
@@ -844,7 +844,7 @@ which is a contradiction since the left-hand side is equal to $-1$ and the right
 This result can be extended to also include terms $t$ using primitive
 operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
 \rightarrow \qnt(X)$, as long as these operations can be interpreted
-in the model in question. 
+in the model in question.
 For example, the result holds in the presence of multiplication
 \[\times:\forall X.\forall Y.\,\qnt(X)\times\qnt (Y)\to\qnt(X\cdot Y)\text.\]
 Note however that this model does not
@@ -954,7 +954,7 @@ Then $(q \circ F^\ast p :F^{\ast} \E \rightarrow \mathcal{L}, G,(Q_0,Q_R))$  is 
 \end{theorem}
 
  \end{minipage}
-\begin{minipage}{0.25\textwidth} 
+\begin{minipage}{0.25\textwidth}
 \scalebox{0.9}{
 \begin{diagram}
  F^\ast (\E)	\SEpbk	&\rTo		&\E \\
@@ -975,7 +975,7 @@ Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in 
 Next, we look at an example that uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension-erasure model back in Example \ref{ex:UnitErasure}.
 
 \begin{example}\label{ex:relKen}
-Let $G$ be an Abelian group. Then using the notation from 
+Let $G$ be an Abelian group. Then using the notation from
 Theorem~\ref{thm:rel-model-generator}, let
 $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$, $\A$
 be the category $\LAb \times \Set$, $q: \LAb \times \Set \rightarrow
@@ -1004,7 +1004,7 @@ In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|
       \begin{array}[t]{@{}l}
         \semo{T} + \semo{U}, \\
         \{ (g, \inj_1\,t,\inj_1\,t') \mathrel| (g,t,t') \in \semr{T} \}
-        \cup 
+        \cup
         \{ (g, \inj_2\,u,\inj_2\,u') \mathrel| (g,u,u') \in \semr{U} \}
       \end{array}
       \\
@@ -1128,8 +1128,8 @@ Parametricity is most often studied using relational techniques, and in this pap
 \paragraph*{Acknowledgements}
 We are grateful to participants in a discussion on the categories mailing list
 about the $\GrpSet$ fibration.
-Research supported by 
-ERC Grant QCLS and Royal Society University Research Fellowship (SS). 
+Research supported by
+ERC Grant QCLS and Royal Society University Research Fellowship (SS).
 
 \bibliography{fibUoM}
 \end{document}
