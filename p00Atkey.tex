@@ -456,19 +456,12 @@ This is an idealized language, designed to demonstrate polymorphism over dimensi
 Next up we give a general categorical semantics for the $\lambda D$ type theory. Central to this is the notion of a $\lambda \forall$-fibration.
 
 \begin{definition}
-A \emph{$\lambda\forall$-fibration} is a bicartesian closed split fibration with simple products.
+A \emph{$\lambda\forall$-fibration} is a bicartesian closed fibration with simple products.
 \end{definition}
 
 It is well-known that $\lambda \forall$-fibrations give a categorical model of the fragment of first-order logic without existential quantifiers. Nevertheless, we briefly introduce the basic notions now, since they are central to our development. We refer to \cite{jacobs1999categorical} for the full details.
 
-A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. These conditions (along with the structure in Definition~\ref{def:lamDModel}) allow us to model the $\lambda D$ type theory. The basic idea is that dimension contexts will be interpreted as objects in a category $\B$. Then for each $B\in\B$ we consider the full subcategory $\E_B$ of $\E$, with objects $E\in\E$ for which $p(E)=B$. The objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_B$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$. In a split fibration, there is a canonical associated reindexing functor $f^\ast : \E_{B'}\to \E_B$ for each morphism $f:B\to B'$ in $\B$, which we will use to describe substitution for dimension variables in types and terms.
-
-%To ensure that the semantics we define in Section~\ref{sec:Modelling-Dimensions} is coherent, we require a \emph{functorial} assignment of reindexing functors $f^* :\E_{B'}\to \E_B$ for each morphism $f:B\to B'$ in $\B$, i.e.\ we require that all our fibrations are split.
-%This will be used to describe substitution for dimension variables in types and terms.
-
-%
-%
-% To ensure that the semantics we define in Section~\ref{sec:sem} is coherent, we require that the  to morphisms $f$ is functorial, i.e. we require that all our fibrations are \emph{split}. All of the fibrations that we consider in this paper are split.
+A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. These conditions (along with the structure in Definition~\ref{def:lamDModel}) allow us to model the $\lambda D$ type theory. The basic idea is that dimension contexts will be interpreted as objects in a category $\B$. For each $B\in\B$, we consider the fibre $\E_B$, i.e.\ the subcategory of $\E$ with objects $E \in \E$ for which $p(E)=B$. The objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_B$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$.  Since $p$ is a fibration, there is a canonical reindexing pseudofunctor $f^\ast : \E_{B'}\to \E_B$ for each morphism $f:B\to B'$ in $\B$, which we will use to describe substitution for dimension variables in types and terms. To ensure that the semantics in Section~\ref{sec:Modelling-Dimensions} is coherent, we require that each $f^\ast$ is a functor,  i.e.\ we require that our fibrations are \emph{split}. This is the case for all our examples.
 
 A fibration is said to be bicartesian closed if $\E_B$ is a Cartesian closed category with coproducts for all $B$, and each reindexing functor $f^*:\E_{B'}\to\E_B$ preserves products, exponentials and coproducts. This bicartesian closed structure is needed to interpret the product, function and coproduct types.
 
