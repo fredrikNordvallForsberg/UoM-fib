@@ -243,9 +243,9 @@ We provide a categorical framework for models of a type theory that has special 
 \end{abstract}
 
 \section{Introduction}
-Humans make errors. For instance, in 1999 the Mars Climate Orbiter disintegrated in the Martian atmosphere due to a unit mismatch in the computer systems --- one part used Newton-seconds and the other pound-seconds~\cite{MarsCrash}. There has been a lot of work trying to avoid such errors by defining languages that can manipulate physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. In this paper we investigate their semantic models.
-
-Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
+This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. 
+%
+To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
 
 Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity~$x$ of a given dimension $X$, and returns its double, which has the same dimension.
 \begin{equation}
@@ -266,7 +266,8 @@ f_\lengthDim\,(5\mathrm{m})=
 \item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
 
-% Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}.
+ Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. The type systems are often motivated as static analyses that help to prevent disasters by accommodating dimensions. For example, the Mars Climate Orbiter was lost as a result of a unit mismatch in the software~\cite{MarsCrash}.
+
 Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models. The main contributions of this paper are as follows.
 \begin{enumerate}
 \item We provide a general notion of a model for a programming language with physical dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
