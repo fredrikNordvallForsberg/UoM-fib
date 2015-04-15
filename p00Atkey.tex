@@ -195,6 +195,7 @@ Applications (TLCA'15)}
 
 \newcommand{\Deltadim}{\ensuremath{\Delta_{dim}}}
 \newcommand{\Gammaops}{\ensuremath{\Gamma_{ops}}}
+\newcommand{\Gammaunits}{\ensuremath{\Gamma_{units}}}
 \newcommand{\etaops}{\ensuremath{\eta_{ops}}}
 
 
@@ -356,6 +357,12 @@ $\cj \Delta{\Gamma,\Gamma'}\quad
 \DisplayProof
 \quad
 \AxiomC{%
+$\cj \Delta\Gamma\quad(\mathrm{op}:T) \in \mathrm{Ops}$}
+\UnaryInfC
+{$\tj \Delta\Gamma{\mathrm{op}}T$}
+\DisplayProof
+\\[5mm]
+\AxiomC{%
 $
 \tj\Delta {\Gamma,x:T} {t}{U}
 $%
@@ -434,14 +441,14 @@ In addition, we have the introduction and elimination rules for quantification o
 	\DisplayProof
 \end{array}\]
 %
-We use $\bool$ as an abbreviation for $\unitTy + \unitTy$.
-We may work with some dimension constants and term constants
-by judging terms in a context $(\Deltadim;\Gammaops)$.
-For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
-\[\begin{array}{r@{}l}\Gammaops = (
-&\mathrm{m}:\qnt(\lengthDim),
-\ \mathrm{s}:\qnt(\timeDim),
-\\&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
+We use $\bool$ as an abbreviation for $\unitTy + \unitTy$.  Our
+calculus is parameterised by a collection $\mathrm{Ops}$ of primitive
+operation typings $(\mathrm{op} : T)$ where for each primitive
+operation $\mathrm{op}$, its type $T$ is closed (\emph{i.e.},
+$\Tj{}T$). An example set of primitive operations includes
+dimension-polymorphic arithmetic and test operations on quantities:
+\[\begin{array}{r@{}l}\mathrm{Ops} = (
+&+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
 %\\&
 \ 1:\qnt(1),
@@ -451,7 +458,16 @@ For instance, we could consider $\Deltadim = (\lengthDim, \timeDim)$ and
 %
 One could also define a type of signed/zero quantities $\sreal(\Dvar)\coloneqq \qnt(\Dvar)+\unitTy+\qnt(\Dvar)$, and then extend the language with further arithmetic term constants such as signed addition $+:\forall \Dvar.\sreal(\Dvar)\times \sreal(\Dvar)\to\sreal(\Dvar)$.
 
-This is an idealized language, designed to demonstrate polymorphism over dimension types. As such it is missing many important features for a general purpose language, such as recursive types and terms.
+To write terms that make use of common sets of dimensions and units,
+we judge terms in a context $(\Deltadim, \Gammaunits)$. For example,
+$\Deltadim = (\lengthDim, \timeDim)$ and $\Gammaunits = (\mathrm{m} :
+\qnt(\lengthDim), \mathrm{ft} : \qnt(\lengthDim), s :
+\qnt(\timeDim))$.
+
+% &\mathrm{m}:\qnt(\lengthDim),
+% \ \mathrm{s}:\qnt(\timeDim),
+
+% This is an idealized language, designed to demonstrate polymorphism over dimension types. As such it is missing many important features for a general purpose language, such as recursive types and terms.
 
 \section{Categorical Semantics of Dimension Types} \label{sec:sem}
 Next up we give a general categorical semantics for the $\lambda D$ type theory. Central to this is the notion of a $\lambda \forall$-fibration.
@@ -492,13 +508,13 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
-\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$. We assume that there is a given interpretation $\sem d : 1 \to G$ for every primitive dimension constant $d \in \Deltadim$.
+\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$.
 
 \item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
-\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\etaops : 1 \to \sem{\Gammaops}$ of all the primitive operations.
+\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\sem{\mathrm{op}} : 1 \to \sem{T}$ for each primitive operation $(\mathrm{op} : T) \in \mathrm{Ops}$.
 \end{itemize}
 
 In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
@@ -680,8 +696,7 @@ Finally, an Abelian group object in $\Grp$ is the same thing as an Abelian group
 
 In the $\GrpSet$ fibration, the Abelian group $G$ can be thought of as a group of scaling factors, and the $G$-set $Q$ is a set of quantities together with a scaling action. For instance, let $Q=G=(\mathbb R^+,\times,1)$, the positive reals. We model a type with a free dimension variable $\Tj\Dvar T$ as a $G$-set. A term with a free dimension variable is interpreted as a function that is invariant under $G$. We explore this model in more detail in Section~\ref{sec:MonSet}.
 
-The $\GrpSet$ model cannot support dimension constants because there is only one group homomorphism $1\to G$.
-It does support several term constants, which we discuss after Theorem~\ref{thm:allArrows}. \end{example}
+The $\GrpSet$ model supports several primitive operations, which we discuss after Theorem~\ref{thm:allArrows}. \end{example}
 
 More generally, instead of having sets and group actions, we also have $\lambda D$-models built from actions of groupoids.
 
@@ -781,7 +796,7 @@ In particular, if $\Tj{X_1\dots X_n} {S,T}$ then
 the type $(\forall \vec X.\,S\to T)$ is interpreted as the set
 of all homomorphisms $\GroupSet {\mathcal G^n}(\sem S,\sem T)$.
 We use this fact to conclude that the group actions model supports
-several term constants. For any $q\in Q$, we can accommodate
+several primitive operations. For any $q\in Q$, we can accommodate
 a term constant $q:\qnt(1)$, which is interpreted by $\sem q=q$.
 When $Q=G$,
 we can also accommodate a term constant for multiplication
@@ -844,8 +859,7 @@ which is a contradiction since the left-hand side is equal to $-1$ and the right
 \end{proof}
 
 This result can be extended to also include terms $t$ using primitive
-operations, i.e.\ $\Gammaops \vdash t : \forall X . \qnt(X^2)
-\rightarrow \qnt(X)$, as long as these operations can be interpreted
+operations $\mathrm{Ops}$, as long as these operations can be interpreted
 in the model in question.
 For example, the result holds in the presence of multiplication
 \[\times:\forall X.\forall Y.\,\qnt(X)\times\qnt (Y)\to\qnt(X\cdot Y)\text.\]
@@ -884,12 +898,9 @@ t(\lambda q\in \bbZ_2.\,g_2\cdot (f(g_1^{-1}\cdot q))) \}
  \end{multline*}
 Hence for any $t \in  \sem{\forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)}$, instantiating $f=\id_Q$ we get that $(g_1 g_2) \cdot (t(\id_Q)) = t(\lambda q\in \bbZ_2.\,g_2\cdot (g_1^{-1}\cdot q))$ for all $g_1$ and $g_2$, but this is not possible. If $g_1 = 1$ and $g_2 = -1$, then the equation reduces to $-1\cdot t(\id_Q)=t(\id_Q)$, which is a contradiction since $t(\id_Q) \in \bbZ_2 = \{-1, 1\}$.
 \end{proof}
-Again, the result can be extended to terms
-\[
-\Gammaops \vdash t : \forall X_1. \forall X_2. (\qnt(X_1) \rightarrow \qnt(X_2)) \rightarrow \qnt(X_1 \cdot X_2)
-\]
-as long as all primitive operations in $\Gammaops$ can be interpreted
-in the model.
+Again, the result can be extended to terms that use a set of primitive
+operations $\mathrm{Ops}$, as long as all primitive operations in
+$\mathrm{Ops}$ can be interpreted in the model used in the proof.
 
 
 
@@ -902,7 +913,7 @@ in the model.
 
 \section{Relational Models}
 \label{sec:param}
-In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy~\cite{Kennedy:1997:RPU:263699.263761} proves using parametricity. It is curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One cannot help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at ones finger tips?
+In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy~\cite{Kennedy:1997:RPU:263699.263761} proves using parametricity. It is curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One cannot help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at one's finger tips?
 
 To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model. This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
 
