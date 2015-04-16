@@ -244,7 +244,7 @@ We provide a categorical framework for models of a type theory that has special 
 \end{abstract}
 
 \section{Introduction}
-This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle of dimensions is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. 
+This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. 
 %
 To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
 
@@ -269,7 +269,7 @@ f_\lengthDim\,(5\mathrm{m})=
 
  Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. The type systems are often motivated as static analyses that help to prevent disasters by accommodating dimensions. For example, the Mars Climate Orbiter was lost as a result of a unit mismatch in the software~\cite{MarsCrash}.
 
-Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach to Kennedy by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models. The main contributions of this paper are as follows.
+Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:263699.263761} who developed techniques for reasoning about these kinds of programs. However, we take a different approach by developing a general categorical notion of model for a programming language of this form, and by developing ways of building models. The main contributions of this paper are:
 \begin{enumerate}
 \item We provide a general notion of a model for a programming language with physical dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
@@ -432,7 +432,7 @@ In addition, we have the introduction and elimination rules for quantification o
 \[\begin{array}{cc}
 \hspace{5mm}
 \AxiomC{$\tj{\Delta,\Dvar}\Gamma tT$ }
-		\UnaryInfC{$\tj \Delta  \Gamma {\Lambda \Dvar.t} {\forall u.T}$}
+		\UnaryInfC{$\tj \Delta  \Gamma {\Lambda \Dvar.t} {\forall X.T}$}
 		\DisplayProof
 
 &\hspace{5mm}
@@ -510,7 +510,7 @@ such expressions. Formally, we interpret the syntax as follows.
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
 \item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $(\Delta \vdash \qnt(D))$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ Type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\qnt(D)$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctxt}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
@@ -521,7 +521,17 @@ In this paper we have only considered universal quantification of units but exis
 
 
 \subsection{First Examples of $\lambda D$-Models}
-We now give some examples of $\lambda D$-models. We begin by noting that in Kennedy's paper \cite{Kennedy:1997:RPU:263699.263761}, a simpler approach is taken to the semantics of dimensions, the dimensions are simply thrown away in a {\em dimension-erasure semantics}. From the categorical perspective, this means the calculus is stripped of its fibred structure leaving only a simply typed $\lambda$-calculus, which Kennedy models, as to be expected, within a CCC. In particular, he chooses the CCC of complete partial orders which he needs for recursion. Nevertheless, Kennedy's model can be viewed as a $\lambda D$-model.
+We now give some examples of $\lambda D$-models. We begin by noting
+that in Kennedy's paper \cite{Kennedy:1997:RPU:263699.263761}, a
+simpler approach is taken to the semantics of dimensions: the
+dimensions are simply thrown away in a {\em dimension-erasure
+  semantics}. From the categorical perspective, this means that the
+calculus is stripped of its fibred structure leaving only a simply
+typed $\lambda$-calculus which Kennedy models, as is to be expected,
+within a Cartesian closed category. In particular, he chooses the
+Cartesian closed category of complete partial orders which he needs
+for recursion. Nevertheless, Kennedy's model can be viewed as a
+$\lambda D$-model.
 
 
 \begin{example}(Dimension-Erasure Models)
@@ -758,7 +768,7 @@ result, since for all $y \in |\forall_\pi \psi |$,
 
 Many of the properties of dimension types that Kennedy proves using
 parametricity can be shown to hold in the $\GrpSet$-fibration, without
-having to define a separate relational semantics and this is the content of Theorems~\ref{thm:allArrows} - \ref{thm:UninhabInt}. Before we formally state and prove these we introduce a substitution lemma, which holds in any model.
+having to define a separate relational semantics and this is the content of Theorems~\ref{thm:allArrows}--\ref{thm:UninhabInt}. Before we formally state and prove these we introduce a substitution lemma, which holds in any model.
 
 \begin{lemma}(Substitution Lemma)
 \label{lem:subst}
@@ -868,7 +878,7 @@ support a polymorphic zero constant $0 : \forall \Dvar
 .\, \qnt(\Dvar)$, as such a primitive would of course gives rise
 to a trivial counterexample to the theorem.
 
-Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (or for a more modern introduction see Sonin~\cite{sonin2001physical}).
+Next, we can prove a theorem that relates a dimensionally invariant function to a dimensionless one. This is a simplified version of the \emph{Buckingham Pi Theorem} of dimensional analysis \cite{buckingham1914physically} (for a more modern introduction, see Sonin~\cite{sonin2001physical}).
 
 \begin{theorem}We have a bijection
  \label{thm:AppSubs}
@@ -1035,7 +1045,7 @@ In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|
       \end{array}
     \end{array}
   \end{displaymath}
-Note that, in the interpretation types $\forall X.~T$, the ``carrier'' (i.e., the second component) is exactly the carrier of the interpretation of $T$.
+Note that in the interpretation of $\forall X.~T$, the ``carrier'' (i.e., the second component) is exactly the carrier of the interpretation of $T$.
 \end{example}
 
 We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural relational model for the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:GrpAct}).
@@ -1139,10 +1149,11 @@ Parametricity is most often studied using relational techniques, and in this pap
 
 
 \paragraph*{Acknowledgements}
-We are grateful to participants in a discussion on the categories mailing list
-about the $\GrpSet$ fibration.
-Research supported by
-ERC Grant QCLS and Royal Society University Research Fellowship (SS).
+We are grateful to participants in a discussion on the categories
+mailing list about the $\GrpSet$ fibration.  Research supported by ERC
+Grant QCLS and Royal Society University Research Fellowship (SS), and
+by the Engineering and Physical Sciences Research Council [grant
+number EP/K023837/1] (NG, FNF).
 
 \bibliography{fibUoM}
 \end{document}
