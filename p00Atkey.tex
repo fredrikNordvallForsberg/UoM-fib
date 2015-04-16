@@ -1006,34 +1006,31 @@ functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X)
 
 In this model, each type $\Delta \vdash T$ is interpreted as a triple $(|\Delta|, \semo{T}, \semr{T}) \in \LAb \times \Set \times \Sub{\Set}$, where $\semr{T} \subseteq G^n \times \semo{T} \times \semo{T}$. Spelling this out explicitly, we have the following interpretations, which are equivalent to Kennedy's original relationally parametric model for dimension types:
   \begin{displaymath}
-    \begin{array}{l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
+    \begin{array}{@{}l@{\hspace{0.3em}}c@{\hspace{0.3em}}l}
       \sem{\Delta \vdash \qnt(D)} & = & (|\Delta|, G, \{ (g, g_1, g_2) \mathrel| (\sem{D}g)g_1 = g_2 \}) \\
       \sem{\Delta \vdash T \times U} & = &
-      (|\Delta|,
-      \begin{array}[t]{@{}l}
-        \semo{T} \times \semo{U}, \\
-        \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semr{T}, (g,u_1,u_2) \in \semr{U} \}
+      (\begin{array}[t]{@{}l}
+        |\Delta|, \semo{T} \times \semo{U}, \\
+        \{ (g, (t_1,u_1), (t_2,u_2)) \mathrel| (g,t_1,t_2) \in \semr{T}, (g,u_1,u_2) \in \semr{U} \})
       \end{array}
       \\
       \sem{\Delta \vdash T + U} & = &
-      (|\Delta|,
-      \begin{array}[t]{@{}l}
-        \semo{T} + \semo{U}, \\
-        \{ (g, \inj_1\,t,\inj_1\,t') \mathrel| (g,t,t') \in \semr{T} \}
-        \cup
-        \{ (g, \inj_2\,u,\inj_2\,u') \mathrel| (g,u,u') \in \semr{U} \}
+      (\begin{array}[t]{@{}l}
+        |\Delta|, \semo{T} + \semo{U}, \\
+        \{ (g, \inj_1\,t,\inj_1\,t') \mathrel| (g,t,t') \in \semr{T} \}\\
+        \quad \mathrel\cup
+        \{ (g, \inj_2\,u,\inj_2\,u') \mathrel| (g,u,u') \in \semr{U} \})
       \end{array}
       \\
       \sem{\Delta \vdash T \to U} & = &
-      (|\Delta|,
-      \begin{array}[t]{@{}l}
-        \semo{T} \to \semo{U}, \\
-        \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semr{T} \implies (g,f_1t_1, f_2t_2) \in \semr{U} \}
+      (\begin{array}[t]{@{}l}
+        |\Delta|,\semo{T} \to \semo{U}, \\
+        \{ (g, f_1, f_2) \mathrel| \forall t_1, t_2.~(g,t_1,t_2) \in \semr{T} \implies (g,f_1t_1, f_2t_2) \in \semr{U} \})
       \end{array}
       \\
-      \sem{\Delta \vdash \forall X.~T} & = & (|\Delta|,
-      \begin{array}[t]{@{}l}
-        \semo{T},
+      \sem{\Delta \vdash \forall X.~T} & = &
+      (\begin{array}[t]{@{}l}
+        |\Delta|,\semo{T},
         \{ (g, t_1, t_2) \mathrel| \forall g' \in G.~((g,g'), t_1, t_2) \in \semr{T} \} )
       \end{array}
     \end{array}
