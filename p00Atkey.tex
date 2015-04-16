@@ -264,7 +264,7 @@ f_\lengthDim\,(5\mathrm{m})=
 \noindent There are a few key points that are worth emphasising about examples \eqref{eqn:double} and \eqref{eqn:doubleapp} above:
 \begin{itemize}
 \item There are two kinds of variable, $\Dvar$ and $x$. The first variable $\Dvar$ stands for a dimension whereas $x$ stands for an inhabitant of a type. To emphasise this distinction, we use different abstraction symbols ($\lambda$ and $\Lambda$) for the two kinds of variable.
-\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e. a constant $\mathrm m:\qnt(\lengthDim)$.
+\item The type $\qnt(\Dvar)$ depends on a dimension $\Dvar$, and it is inhabited by quantities of that dimension. For example, the standard unit of measurement for length, the metre, is a quantity of that dimension, i.e.\ a constant $\mathrm m:\qnt(\lengthDim)$.
 \end{itemize}
 
  Several authors have developed programming languages with type systems that support physical quantities~\cite{house1983proposal, manner1986strong, wand1991automatic, Kennedy:1997:RPU:263699.263761, erwig2002adding}. The type systems are often motivated as static analyses that help to prevent disasters by accommodating dimensions. For example, the Mars Climate Orbiter was lost as a result of a unit mismatch in the software~\cite{MarsCrash}.
@@ -275,7 +275,7 @@ Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:2
 
 \item An important example of a $\lambda D$-model is built from group actions (Example~\ref{ex:GrpAct}).
 %This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism.
-A difficulty with set-theoretic models of dimension polymorphism is as follows: how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.~positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
+A difficulty with set-theoretic models of dimension polymorphism is as follows: how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.\ positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
 
 \item We show how the $\lambda D$-model built from group actions supports a diverse range of parametricity-like theorems, without the need to define a separate relational semantics (Section~\ref{sec:MonSet}). This results in simple proofs of theorems that would otherwise require more heavy machinery.
 
@@ -443,10 +443,11 @@ In addition, we have the introduction and elimination rules for quantification o
 %
 We use $\bool$ as an abbreviation for $\unitTy + \unitTy$.  Our
 calculus is parameterised by a collection $\mathrm{Ops}$ of primitive
-operation typings $(\mathrm{op} : T)$ where for each primitive
-operation $\mathrm{op}$, its type $T$ is closed (\emph{i.e.},
-$\Tj{}T$). An example set of primitive operations includes
-dimension-polymorphic arithmetic and test operations on quantities:
+operation typings $(\mathrm{op} : T_{\mathrm{op}})$ where for each primitive
+operation $\mathrm{op} : T_{\mathrm{op}}$, its type $T_{\mathrm{op}}$
+is closed (i.e., $\Tj{}{T_{\mathrm{op}}}$). An example set of primitive
+operations includes dimension-polymorphic arithmetic and test
+operations on quantities:
 \[\begin{array}{r@{}l}\mathrm{Ops} = (
 &+:\forall \Dvar. \qnt(\Dvar)\times  \qnt(\Dvar) \rightarrow \qnt(\Dvar),
 \\&\times :\forall \Dvar_1. \forall \Dvar_2. \qnt(\Dvar_1)\times \qnt(\Dvar_2) \rightarrow \qnt(\Dvar_1 \cdot \Dvar_2),
@@ -512,7 +513,7 @@ such expressions. Formally, we interpret the syntax as follows.
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
 \item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$.
 
-\item Well-formed types $\Delta \vdash T \; \msf{ type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\qnt(D)$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e. $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
+\item Well-formed types $\Delta \vdash T \; \msf{ type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\qnt(D)$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e.\ $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctx}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
@@ -860,7 +861,7 @@ To see this we exhibit a model where the existence of such a term is impossible.
 \begin{align*}
   |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|  &  \cong \GroupSet{\mathbb{Z}_2} (\sem{\qnt (X^2)}, \sem{\qnt(X)})
 \end{align*}
-i.e. any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, satisfies for all $g, x \in \bbZ_2$
+i.e.\ any element $f$ of $ |\sem{\forall X . \qnt(X^2) \rightarrow \qnt(X)}|$, satisfies for all $g, x \in \bbZ_2$
 \begin{equation}
 f (g^2 \cdot x) = g \cdot (fx) \tag{$\ast$}
 \end{equation}
@@ -1127,7 +1128,7 @@ model of Example \ref{ex:relMon} (and equivalently, the $\GrpSet$
 model), then they will be contextually equivalent for the dimension
 erasure model.
 
-It remains to discuss the relationship between Kennedy's original relational model (Example \ref{ex:relKen}), and the relational model in Example \ref{ex:relMon} that satisfies the identity extension property. As noted above, the difference between these interpretations lies in the semantics of the $\forall$-type. Kennedy's model does not restrict the carrier of the interpretation to just the ``parametric'' elements, \emph{i.e.}, the elements that preserve all relations. Therefore, the interpretations of types that contain nested $\forall$s are not directly comparable. We might expect that we could observe a difference between the two models when proving statements about terms whose types contain negatively nested forall types. However, Kennedy's original work does not present any results involving terms with such types, and we have not found any natural examples. This is in contrast with the situation with relationally parametric models of System F, where the proof that final coalgebras can be represented
+It remains to discuss the relationship between Kennedy's original relational model (Example \ref{ex:relKen}), and the relational model in Example \ref{ex:relMon} that satisfies the identity extension property. As noted above, the difference between these interpretations lies in the semantics of the $\forall$-type. Kennedy's model does not restrict the carrier of the interpretation to just the ``parametric'' elements, i.e., the elements that preserve all relations. Therefore, the interpretations of types that contain nested $\forall$s are not directly comparable. We might expect that we could observe a difference between the two models when proving statements about terms whose types contain negatively nested forall types. However, Kennedy's original work does not present any results involving terms with such types, and we have not found any natural examples. This is in contrast with the situation with relationally parametric models of System F, where the proof that final coalgebras can be represented
 crucially relies on the restriction of the interpretation of quantified types to the parametric elements \cite{birkedal2005categorical}.
 
 Therefore, our $\GrpSet$ model and the equivalent relational model in Example \ref{ex:relMon} practically coincides with Kennedy's original model, but offer the advantage of not requiring a separate relational semantics to prove important theorems. This in many cases makes proofs of these theorems clearer. Additionally, the $\GrpSet$ model offers an interpretation that directly links the semantics to symmetry.
