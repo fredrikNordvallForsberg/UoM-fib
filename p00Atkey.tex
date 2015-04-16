@@ -11,110 +11,34 @@ Applications (TLCA'15)}
 \DOI{10.4230/LIPIcs.TLCA.2015.999}
 \serieslogo{}
 
-%\usepackage{etex}
-%Packages
-\usepackage{authblk}
-\RequirePackage{xcolor}
-\RequirePackage{stmaryrd}
 
-\RequirePackage{amssymb,amsthm}
-\RequirePackage{xspace}
+\usepackage{stmaryrd}
 \usepackage{microtype}
 \usepackage{bussproofs}
-\usepackage{mathtools} % \coloneqq for :=
+\usepackage{mathtools}
 \usepackage{xspace}
 \usepackage{enumerate}
-\usepackage{proof}
 \usepackage{cite}
-%\usepackage[bookmarks,bookmarksopen,bookmarksdepth=2]{hyperref}
-\usepackage[capitalise]{cleveref}
 \usepackage{diagrams}
-%\RequirePackage[all]{xy}
-%\usepackage{wrapfig}
+
 \theoremstyle{plain}
 \newtheorem{proposition}[theorem]{Proposition}
 
-%Bibliography
-\bibliographystyle{plain}
 
-%%%%%%TEXT%%%%%%%%%%%
-
-%SystemF
-\newcommand{\SystemF}{System F\xspace}
-\newcommand{\STLC}{Simply Typed $\lambda$-Calculus\xspace}
-
-\newcommand{\LamOneFib}{$\lambda_1$-fibration\xspace}
-\newcommand{\LamOneFibs}{$\lambda_1$-fibrations\xspace}
-\newcommand{\LamTwoFib}{$\lambda_2$-fibration\xspace}
-\newcommand{\LamTwoFibs}{$\lambda_2$-fibrations\xspace}
-
-\newcommand{\ChangeOfBase}{change-of-base\xspace}
-\newcommand{\UoM}{Units of Measure\xspace}
+%%%%%%%% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%MATHS%%%%%
-
-%%%%%%Arrows%%%%%
-%2 Cells
-\newcommand{\lift}[2]{%
-\setlength{\unitlength}{1pt}
-\begin{picture}(0,0)(0,0)
-\put(0,{#1}){\makebox(0,0)[b]{${#2}$}}
-\end{picture}
-}
-\newcommand{\lowerarrow}[1]{%
-\setlength{\unitlength}{0.03\DiagramCellWidth}
-\begin{picture}(0,0)(0,0)
-\qbezier(-28,-4)(0,-18)(28,-4)
-\put(0,-14){\makebox(0,0)[t]{$\scriptstyle {#1}$}}
-\put(28.6,-3.7){\vector(2,1){0}}
-\end{picture}
-}
-\newcommand{\upperarrow}[1]{%
-\setlength{\unitlength}{0.03\DiagramCellWidth}
-\begin{picture}(0,0)(0,0)
-\qbezier(-28,11)(0,25)(28,11)
-\put(0,21){\makebox(0,0)[b]{$\scriptstyle {#1}$}}
-\put(28.6,10.7){\vector(2,-1){0}}
-\end{picture}
-}
-
-%Cartesian Morphisms
-\newcommand{\cart}[1]{\ensuremath{#1^{\S}}}
-\newcommand{\opcart}[1]{\ensuremath{#1_{\S}}}
-
-%Other Arrows
-\newcommand{\ra}{\rightarrow}
-\newcommand{\la}{\leftarrow}
-\newcommand{\inc}{\hookrightarrow}
-%\newarrow {Dashto} {}{dash}{}{dash}>
-%\newarrow {Embed} {>}{-}{-}{-}{>}
-\newcommand{\eqra}{\rightarrow {\hspace{-4mm} \raisebox{-1.5mm}{$\scriptstyle \msf{eq}$}} \hspace{1.5mm}} %Equality preserving right arrow
-
-\newcommand{\expra}{\Rightarrow}
-\newcommand{\morphra}{\rightarrow}
-\newcommand{\synra}{\rightarrow}
-
-
-%Categories
+%%% Categories %%%
 \newcommand{\msf}[1]{\mathsf{#1}} %Maths Font
 \newcommand{\Grp}{\msf{Grp}}
-\newcommand{\Ab}{\msf{Ab}}
 \newcommand{\Set}{\msf{Set}}
 \newcommand{\Cat}{\msf{Cat}}
 \newcommand{\Gpd}{\msf{Gpd}}
-\newcommand{\Fib}{\msf{Fib}}
 \newcommand{\Fam}[1]{\msf{Fam}(#1)}
 \newcommand{\Sub}[1]{\msf{Sub}(#1)}
 \newcommand{\LAb}{\msf{L}_{\msf{Ab}}}
-\newcommand{\Nom}{\msf{Nom}}
-\newcommand{\terminal}{\msf{1}}
-
 \newcommand{\ClLD}{\mathcal{C\ell}(\lambda{}D)} %Classifying category
-
 \newcommand{\Rel}{\msf{Rel}}
-\newcommand{\RelE}{\Rel(\E)}
-\newcommand{\RelNom}{\Rel(\Nom)}
 
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\B}{\mathcal{B}}
@@ -122,64 +46,34 @@ Applications (TLCA'15)}
 \newcommand{\D}{\mathcal{D}}
 \newcommand{\E}{\mathcal{E}}
 
-
 \newcommand{\fibre}[2]{#1_{_{#2}}}
 \newcommand{\fibreE}[1]{\E_{#1}}
-\newcommand{\fibreRelE}[1]{\RelE_{#1}}
 
-
-\newcommand{\blank}{\, \underline{\hspace{2mm}} \,}
-
-%Functors
-\newcommand{\SqFun}[1][\blank]{[\, #1 \, ]} %[_]
-\newcommand{\BracFun}[1][\blank]{(\, #1 \, )}
-\newcommand{\EqFun}{\msf{Eq} \; }
-
-
-
-%Groups
-\newcommand{\PermA}{\msf{Perm} \; \mathbb{A}}
-
-%GSets
+%%% G-Sets %%%
 \newcommand{\act}[1]{\cdot_{_{#1}}}
-\newcommand{\SetAct}[1]{(#1, \; \cdot_{_{#1}})}
 \newcommand{\GroupSet}[1]{[#1,\Set]}
 \newcommand{\Lslice}[1]{#1/\!/\Set}
 \newcommand{\GrpSet}{\Lslice{\Grp}}
 \newcommand{\CatSet}{\Lslice{\Cat}}
 \newcommand{\GpdSet}{\Lslice{\Gpd}}
 \newcommand{\lslice}{/\!/}
-\newcommand{\GSet}{\GroupSet{G}}
 
-%BB Sets
-\newcommand{\bbA}{\mathbb{A}}
-\newcommand{\bbN}{\mathbb{N}}
+%%%  BB Sets %%%
 \newcommand{\bbQ}{\mathbb{Q}}
 \newcommand{\bbZ}{\mathbb{Z}}
 
-%HomSet
-\newcommand{\Hom}[1][]{\mathrm{Hom}_{#1}}
-
-%Types
-\newcommand{\type}[1][T]{\Gamma \vdash #1 \; \msf{ type}}
-\newcommand{\term}[1][t:T]{\Gamma ; \Delta \vdash #1}
-\newcommand{\ntup}[1]{\mkern 1.5mu\overline{\mkern-2.5mu#1\mkern-1.5mu}\mkern 1.5mu} %n-tuple
-
-
 %%%%%%Brackets%%%%%
-%Regular Brackets
 \newcommand{\bracket}[1]{\left( #1 \right)}
 \newcommand{\bbracket}[1]{\bigl( #1 \bigr)}
 \newcommand{\Bbracket}[1]{\Bigl( #1 \Bigr)}
 \newcommand{\grph}[1]{\ensuremath{\langle #1 \rangle}}
 
-
-%Semantics
+%%% Semantics %%%
 \newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}}
 \newcommand{\semo}[1]{\ensuremath{\llbracket #1 \rrbracket _o}}
 \newcommand{\semr}[1]{\ensuremath{\llbracket #1 \rrbracket _r}}
 
-%%%Units of Measure%%%%
+%%% Units of Measure %%%
 \newcommand{\unitTy}{\msf{1}}
 \newcommand{\emptyTy}{\msf{0}}
 \newcommand{\qnt}{\msf{Quantity}}
@@ -188,22 +82,6 @@ Applications (TLCA'15)}
 \newcommand{\lengthDim}{\mathit{Length}}
 \newcommand{\timeDim}{\mathit{Time}}
 \newcommand{\massDim}{\mathit{Mass}}
-\newcommand{\UoMterm}{ \Delta ; \Gamma \vdash t :T }
-\newcommand{\UoMtype}{\Delta \vdash T \; \msf{ type}}
-\newcommand{\UoMFibration}{UoM-fibration\xspace}
-\newcommand{\UoMFibrations}{UoM-fibrations\xspace}
-
-\newcommand{\Deltadim}{\ensuremath{\Delta_{dim}}}
-\newcommand{\Gammaops}{\ensuremath{\Gamma_{ops}}}
-\newcommand{\Gammaunits}{\ensuremath{\Gamma_{units}}}
-\newcommand{\etaops}{\ensuremath{\eta_{ops}}}
-
-
-%%%Judgements%%%
-\newcommand{\cj}[2]{#1 \vdash #2 \; \msf{ ctx}}
-\newcommand{\Tj}[2]{#1 \vdash #2 \; \msf{ type}}
-\newcommand{\Dj}[2]{#1 \vdash #2 \; \msf{ dim}}
-\newcommand{\tj}[4]{#1;#2 \vdash #3 : #4}
 
 \newcommand{\proj}{\mathsf{pr}}
 \newcommand{\inj}{\mathsf{inj}}
@@ -211,12 +89,23 @@ Applications (TLCA'15)}
 \newcommand{\inl}{\mathsf{inl}}
 \newcommand{\inr}{\mathsf{inr}}
 \newcommand{\case}[5]{\mathsf{case}\,#1\,\mathsf{of}\,\{\inj_1\,#2 \mapsto\,#3; \inj_2\,#4\mapsto\,#5\}}
-\newcommand{\pack}[2]{\mathsf{pack}(#1,#2)}
-\newcommand{\unpack}[4]{\mathsf{unpack}\,#1\,\mathsf{as}\,(#2,#3)\,\mathsf{in}\,#4}
 \newcommand{\Dim}{D}
 \newcommand{\Dvar}{X}
 
+\newcommand{\Deltadim}{\ensuremath{\Delta_{dim}}}
+\newcommand{\Gammaops}{\ensuremath{\Gamma_{ops}}}
+\newcommand{\Gammaunits}{\ensuremath{\Gamma_{units}}}
+
+%%% Judgements %%%
+\newcommand{\cj}[2]{#1 \vdash #2 \; \msf{ ctx}}
+\newcommand{\Tj}[2]{#1 \vdash #2 \; \msf{ type}}
+\newcommand{\Dj}[2]{#1 \vdash #2 \; \msf{ dim}}
+\newcommand{\tj}[4]{#1;#2 \vdash #3 : #4}
+
+%%% Misc %%%
+\newcommand{\blank}{\, \underline{\hspace{2mm}} \,}
 \newcommand{\id}{\mathrm{id}}
+\newcommand{\terminal}{\msf{1}}
 
 % Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Models for Polymorphism over Physical Dimensions}
@@ -225,7 +114,6 @@ Applications (TLCA'15)}
 \author[1]{Fredrik Nordvall Forsberg}
 \author[1]{Timothy Revell}
 \author[2]{Sam Staton}
-%\affil[1]{University of Edinburgh}
 \affil[1]{University of Strathclyde}
 \affil[2]{University of Oxford}
 \authorrunning{Atkey, Ghani, Nordvall Forsberg, Revell, and Staton}
@@ -245,7 +133,6 @@ We provide a categorical framework for models of a type theory that has special 
 
 \section{Introduction}
 This paper is about semantic models of programs that manipulate physical quantities. Physical quantities are organized into dimensions, such as $\lengthDim$ or $\timeDim$. A fundamental principle is that it is not meaningful to add or compare quantities of different dimensions, but they can be multiplied. 
-%
 To measure a physical quantity we use units, such as metres for length and seconds for time. We understand these units as chosen constant quantities of given dimensions.
 
 Here is a simple polymorphic program that is defined for all dimensions; it takes a quantity~$x$ of a given dimension $X$, and returns its double, which has the same dimension.
@@ -274,7 +161,6 @@ Our starting point in this paper is the work of Kennedy~\cite{Kennedy:1997:RPU:2
 \item We provide a general notion of a model for a programming language with physical dimension types by introducing the concept of a \emph{$\lambda D$-model} (Section~\ref{sec:sem}). The basic idea is that for each context of dimension variables, there is a model of the simply typed $\lambda$-calculus extended with types of quantities of the dimensions definable in the context ($\qnt(D)$ etc.). Moreover these models of the simply typed $\lambda$-calculus are related by substituting for dimension variables, and this also defines a universal property for polymorphic quantification over dimension variables.
 
 \item An important example of a $\lambda D$-model is built from group actions (Example~\ref{ex:GrpAct}).
-%This is as close as we can get to a set-theoretic semantics for programs with parametric dimension polymorphism.
 A difficulty with set-theoretic models of dimension polymorphism is as follows: how does one understand $\qnt(\Dvar)$ as a set, if the dimension $\Dvar$ is not specified and we have no fixed units of measure for $\Dvar$? We resolve this by interpreting $\qnt(\Dvar)$ as the set of magnitudes, i.e.\ positive real numbers, thought of as quantities of some unspecified unit of measure, but then by equipping $\qnt(\Dvar)$ with an action of the scaling group, to explain how to change the units of measure. We can then ask that any function $\qnt(\Dvar)\to\qnt(\Dvar)$ is invariant under changing that unspecified unit of measure, more precisely, invariant under scaling.
 
 \item We show how the $\lambda D$-model built from group actions supports a diverse range of parametricity-like theorems, without the need to define a separate relational semantics (Section~\ref{sec:MonSet}). This results in simple proofs of theorems that would otherwise require more heavy machinery.
@@ -345,7 +231,7 @@ typing judgement $\Tj\Delta{ T_i}$ for every $i$. Well-formed terms
 are given by judgements $\tj \Delta \Gamma t T$ where there is a
 well-formed typing context $\cj \Delta \Gamma$ and
 a well-formed type $\Tj \Delta T $. The rules for
-the type formers $\unitTy$, $\blank\times\blank$, $\emptyTy$, $\blank+\blank$ and $\blank \! \ra \! \blank$ are the usual ones from
+the type formers $\unitTy$, $\blank\times\blank$, $\emptyTy$, $\blank+\blank$ and $\blank \! \to \! \blank$ are the usual ones from
 simply typed $\lambda$-calculus.
 
 \[\begin{array}{c}%
@@ -465,12 +351,8 @@ $\Deltadim = (\lengthDim, \timeDim)$ and $\Gammaunits = (\mathrm{m} :
 \qnt(\lengthDim), \mathrm{ft} : \qnt(\lengthDim), s :
 \qnt(\timeDim))$.
 
-% &\mathrm{m}:\qnt(\lengthDim),
-% \ \mathrm{s}:\qnt(\timeDim),
-
-% This is an idealized language, designed to demonstrate polymorphism over dimension types. As such it is missing many important features for a general purpose language, such as recursive types and terms.
-
-\section{Categorical Semantics of Dimension Types} \label{sec:sem}
+\section{Categorical Semantics of Dimension Types}
+\label{sec:sem}
 Next up we give a general categorical semantics for the $\lambda D$ type theory. Central to this is the notion of a $\lambda \forall$-fibration.
 
 \begin{definition}
@@ -495,13 +377,9 @@ Recall that an Abelian group object in a category $\B$ with products is given by
 
 An equivalent way to define Abelian group objects if $\B$ has chosen products is as follows. Recall that the Lawvere theory for Abelian groups is the category $\LAb$ whose objects are natural numbers, and where a morphism $m\to n$ is an $m\times n$ matrix of integers. Composition of morphisms is given by matrix multiplication, and categorical products are given by arithmetic addition of natural numbers. An Abelian group object in $\B$ is an object $G$ of $\B$ together with a strictly-product-preserving functor $F:\LAb\to\B$ such that $F(1)=G$.
 
-We remark that the object $Q$ in a $\lambda D$-model is analogous to the generic object in a model of \SystemF.
+We remark that the object $Q$ in a $\lambda D$-model is analogous to the generic object in a model of System F.
 
 In order to ascertain the value of Definition~\ref{def:lamDModel}, we now do three things: i) we show that a $\lambda D$-model in fact does provide categorical models of dimension types, ii) we give examples of $\lambda D$-models, and iii) we prove theorems that show the viability of reasoning at this level of abstraction.
-
-
-
-
 
 \subsection{Modelling Dimension Types}
 \label{sec:Modelling-Dimensions}
@@ -511,18 +389,19 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \begin{itemize}
 \item Dimension contexts $\Delta = X_1, \ldots, X_n$ are interpreted as the product of the Abelian group object $\sem{\Delta} = G^n$ in $\B$.
-\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \ra G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$.
+\item Dimension expressions $\Dj \Delta D$ are interpreted as morphisms $G^n \to G$ in the base $\B$, by using the structure of the Abelian group object $G$. For example, $\sem{X, Y \vdash X \cdot Y^{-1}} = G\times G\xrightarrow{\id_G\times i}G\times G\xrightarrow m G$.
 
 \item Well-formed types $\Delta \vdash T \; \msf{ type}$ are interpreted as objects $\sem{T}$ in the fibre above $\sem{\Delta}$,  defined by induction on the structure of $T$. We interpret $\unitTy$, $\times$, $+$ and $\rightarrow$ using the bicartesian closed structure of the fibres, and quantification of a dimension variable $\sem{\Delta \vdash \forall X. T}$ is defined by right adjoint to reindexing along the projection $\pi: \sem{\Delta \vdash \Gamma, X} \rightarrow \sem{\Delta \vdash \Gamma}$. Quantities $\qnt(D)$ are interpreted by reindexing the object $Q$ along the interpretation of $D$, i.e.\ $\sem{\Delta \vdash \qnt(D)} = {\sem{\Dj \Delta D}}^* (Q)$.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctx}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
-\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \ra \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\sem{\mathrm{op}} : 1 \to \sem{T}$ for each primitive operation $(\mathrm{op} : T) \in \mathrm{Ops}$.
+\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \to \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\sem{\mathrm{op}} : 1 \to \sem{T}$ for each primitive operation $(\mathrm{op} : T) \in \mathrm{Ops}$.
 \end{itemize}
 
 In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
 
 Care is needed to ensure that the denotational semantics properly respects substitution. This can be done either by requiring that the fibrations are \emph{split}, or by adding explicit coercions to the language~\cite{curien-garner-hofmann}. All the examples of fibrations in this paper are split.
+
 \subsection{First Examples of \texorpdfstring{$\lambda D$}{lambdaD}-Models}
 We now give some examples of $\lambda D$-models. We begin by noting
 that in Kennedy's paper \cite{Kennedy:1997:RPU:263699.263761}, a
@@ -539,7 +418,7 @@ $\lambda D$-model.
 
 \begin{example}(Dimension-Erasure Models)
 \label{ex:UnitErasure}
-Let $\C$ be a bicartesian closed category. Then the functor $\C \ra
+Let $\C$ be a bicartesian closed category. Then the functor $\C \to
 \terminal$ is a $\lambda\forall$-fibration. The unique object of
 $\terminal$ is a trivial Abelian group object. By taking $\C$ to be
 the category of complete partial orders and continuous functions, and
@@ -642,10 +521,10 @@ is a natural isomorphism for all functors $F:\C\to \C'$. Indeed, for any $P:\C\t
 
 \paragraph*{A Source of Models by Change of Base}
 \label{sec:change-of-base}
-In general, a useful way of building fibrations is by changing the base. If $p:\E\ra \B$ be a fibration, and $F:\A\ra \B$ is a functor, then the pullback of $p$ along $F$ in $\Cat$, denoted $F^\ast p : F^\ast \E \rightarrow \A$, is again a fibration. The same is true of $\lambda D$-models.
+In general, a useful way of building fibrations is by changing the base. If $p:\E\to \B$ be a fibration, and $F:\A\to \B$ is a functor, then the pullback of $p$ along $F$ in $\Cat$, denoted $F^\ast p : F^\ast \E \rightarrow \A$, is again a fibration. The same is true of $\lambda D$-models.
 \begin{theorem}
 \label{thm:change-of-base}
-Let $p:\E\ra \B$ be a fibration, and let $F:\A\ra \B$ be a functor.
+Let $p:\E\to \B$ be a fibration, and let $F:\A \to \B$ be a functor.
 \begin{enumerate}[(i)]
 \item If $p$ has simple products and $F$ preserves products,
 then $F^\ast p : F^\ast \E \rightarrow \A$ has simple products.
@@ -948,7 +827,7 @@ condition.\\
 \vspace{-12mm}
 \begin{diagram}
 \A     &\rTo^{p}        &\B \\
-       &\rdTo_{u}      &\dTo>{q}\\
+       &\rdTo_{u}       &\dTo>{q}\\
        &                &\mathcal{\C}\\
 \end{diagram}
  \end{minipage}
@@ -1045,7 +924,6 @@ We can also apply Theorem \ref{thm:rel-model-generator} to obtain a natural rela
 
 \begin{example}\label{ex:relMon}
 As before, let $G$ be an Abelian group and $\mathcal{L}$ be the Lawvere theory of Abelian groups $\LAb$. Let $q:\A\to\LAb$ be the pullback of the fibration $\GrpSet\to\Grp$ along the unique product-preserving functor $M:\LAb\to\Grp$ with $M(1)=G$, as in Example~\ref{ex:Lawvere}, so that the objects of $\A$ are triples $(n,X,\phi)$ with $(X,\phi)$ a $G^n$-set. Let $p:\Sub{\Set} \rightarrow \Set$ be the subset fibration. Define $F:\A\rightarrow \Set$ to be the product preserving functor defined on objects by $F(n,X, \phi) = G^{n} \times X \times X$ and on morphisms $(f, \alpha) : (n,X,\phi) \rightarrow (m, Y,\psi)$
-%, where $f: X \rightarrow Y$ and $\alpha : G^n \rightarrow G^m$ such that $\psi (\alpha, f) = f \phi$,
 by $F(f,\alpha) = (\alpha, f, f)$. Finally, we let $Q_0 = (G,\phi)$, where $\phi$ denotes group multiplication, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G \times G \times G$.
 
   Then each type $\Delta \vdash T$ is again interpreted as a triple
@@ -1146,10 +1024,6 @@ We are grateful to participants in a discussion on the categories
 mailing list about the $\GrpSet$ fibration.  Research supported by the EPSRC Grant EP/K023837/1 (NG, FNF) and ERC
 Grant QCLS and a Royal Society Fellowship (SS).
 
+\bibliographystyle{plain}
 \bibliography{fibUoM}
 \end{document}
-
-
-
-
-
