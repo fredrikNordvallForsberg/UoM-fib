@@ -33,6 +33,7 @@ Applications (TLCA'15)}
 \newcommand{\Grp}{\msf{Grp}}
 \newcommand{\Set}{\msf{Set}}
 \newcommand{\Cat}{\msf{Cat}}
+\newcommand{\Fib}{\msf{Fib}}
 \newcommand{\Gpd}{\msf{Gpd}}
 \newcommand{\Fam}[1]{\msf{Fam}(#1)}
 \newcommand{\Sub}[1]{\msf{Sub}(#1)}
@@ -93,7 +94,6 @@ Applications (TLCA'15)}
 \newcommand{\Dvar}{X}
 
 \newcommand{\Deltadim}{\ensuremath{\Delta_{dim}}}
-\newcommand{\Gammaops}{\ensuremath{\Gamma_{ops}}}
 \newcommand{\Gammaunits}{\ensuremath{\Gamma_{units}}}
 
 %%% Judgements %%%
@@ -128,7 +128,7 @@ Applications (TLCA'15)}
 \maketitle
 
 \begin{abstract}
-We provide a categorical framework for models of a type theory that has special types for physical quantities. The types are indexed by the physical dimensions that they involve. We use fibrations to organize this index structure in the models of the type theory. We develop some informative models of this type theory: firstly, a model based on group actions, which captures invariance under scaling, and secondly, a way of constructing new models using relational parametricity.
+We provide a categorical framework for models of a type theory that has special types for physical quantities. The types are indexed by the physical dimensions that they involve. Fibrations are used to organize this index structure in the models of the type theory. We develop some informative models of this type theory: firstly, a model based on group actions, which captures invariance under scaling, and secondly, a way of constructing new models using relational parametricity.
 \end{abstract}
 
 \section{Introduction}
@@ -171,7 +171,7 @@ A difficulty with set-theoretic models of dimension polymorphism is as follows: 
 
 \section{Types with Physical Dimensions}
 \label{sec:Not}
-We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variables, we have two kinds of contexts.
+We begin by recalling a simple type theory, which we call $\lambda D$, indexed by dimensions based on Kennedy's work~\cite{Kennedy:1997:RPU:263699.263761}. Within this type theory we can express programs such as~(\ref{eqn:double}) and (\ref{eqn:doubleapp}). Since there are two kinds of variable, we have two kinds of context.
 
 \subparagraph{Dimensions and Dimension Contexts}
 A dimension context $\Delta$ is a finite list of distinct
@@ -361,7 +361,7 @@ Next up we give a general categorical semantics for the $\lambda D$ type theory.
 A \emph{$\lambda\forall$-fibration} is a bicartesian closed fibration with simple products.
 \end{definition}
 
-It is well-known that $\lambda \forall$-fibrations give a categorical model of the fragment of first-order logic without existential quantifiers. Nevertheless, we briefly introduce the basic notions now, since they are central to our development. We refer to \cite{jacobs1999categorical} for the full details.
+It is well-known that $\lambda \forall$-fibrations give a categorical model of the fragment of first-order logic without existential quantifiers. Nevertheless, we briefly introduce the basic notions now, since they are central to our development. We refer to Jacobs~\cite{jacobs1999categorical} for the full details.
 
 A fibration $p:\E\to\B$ is a functor between categories satisfying certain conditions. These conditions (along with the structure in Definition~\ref{def:lamDModel}) allow us to model the $\lambda D$ type theory. The basic idea is that dimension contexts will be interpreted as objects in a category $\B$. For each $B\in\B$, we consider the fibre $\E_B$, i.e.\ the subcategory of $\E$ with objects $E \in \E$ for which $p(E)=B$. The objects of $\E_B$ will be used to interpret types in dimension context $B$, and the morphisms in $\E_B$ will be used to interpret terms. We can substitute dimension expressions for dimension variables, and this substitution will be interpreted using morphisms in $\B$.  Since $p$ is a fibration, one can form a reindexing functor $f^\ast : \E_{B'}\to \E_B$ for each morphism $f:B\to B'$ in $\B$, which describes substitution for dimension variables in types and terms. 
 
@@ -397,7 +397,7 @@ such expressions. Formally, we interpret the syntax as follows.
 
 \item Well-formed typing contexts $\Delta \vdash \Gamma \; \msf{ ctx}$ are interpreted as products in the fibre above $\sem{\Delta}$, i.e.\ $\sem{\Delta \vdash x_1 : T_1 ,\ldots, x_n:T_n} = \sem{\Delta \vdash T_1} \times \ldots \times \sem{\Delta \vdash T_n}$.
 
-\item Well-formed terms $\Delta, \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \to \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\sem{\mathrm{op}} : 1 \to \sem{T}$ for each primitive operation $(\mathrm{op} : T) \in \mathrm{Ops}$.
+\item Well-formed terms $\Delta; \Gamma \vdash t : T$ are interpreted as morphisms $\sem{t} : \sem{\Gamma} \to \sem{T}$ in the fibre above $\sem{\Delta}$. We assume that there is an interpretation $\sem{\mathrm{op}} : 1 \to \sem{T}$ for each primitive operation $(\mathrm{op} : T) \in \mathrm{Ops}$.
 \end{itemize}
 
 In this paper we have only considered universal quantification of units but existential quantification can be given just as easily. Existential quantification is interpreted as the left adjoint to reindexing along a projection. Properties of  existential quantification can be proven by dualising the relevant proofs of properties about universal quantification.
@@ -523,7 +523,7 @@ is a natural isomorphism for all functors $F:\C\to \C'$. Indeed, for any $P:\C\t
 
 \paragraph*{A Source of Models by Change of Base}
 \label{sec:change-of-base}
-In general, a useful way of building fibrations is by changing the base. If $p:\E\to \B$ be a fibration, and $F:\A\to \B$ is a functor, then the pullback of $p$ along $F$ in $\Cat$, denoted $F^\ast p : F^\ast \E \rightarrow \A$, is again a fibration. The same is true of $\lambda D$-models.
+In general, a useful way of building fibrations is by changing the base. If $p:\E\to \B$ is a fibration, and $F:\A\to \B$ is a functor, then the pullback of $p$ along $F$ in $\Cat$, denoted $F^\ast p : F^\ast \E \rightarrow \A$, is again a fibration. The same is true of $\lambda D$-models.
 \begin{theorem}
 \label{thm:change-of-base}
 Let $p:\E\to \B$ be a fibration, and let $F:\A \to \B$ be a functor.
@@ -578,10 +578,10 @@ Thus, by Theorem~\ref{thm:BC} and Theorem~\ref{thm:change-of-base}\eqref{item:si
 $\GrpSet\to\Grp$ has simple products.
 
 Each fibre is bicartesian closed.
-The products, coproducts and function spaces are inherited from $\Set$.
+Products and coproducts are inherited from $\Set$.
 For the function space, let $A$ and $B$ be $G$-sets;
 then the set of functions $(A\to B)$ is also a $G$-set,
-with the action given by $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
+with action given by $(g\cdot_{(A\to B)}f)(x)\coloneqq g\cdot_B(f(g^{-1}\cdot_A x))$.
 It follows that reindexing preserves the bicartesian closed structure.
 (This is not the case more generally for $\CatSet\to\Cat$, so Theorem~\ref{thm:change-of-base}\eqref{item:biCCC} does not apply.)
 %
@@ -596,7 +596,7 @@ More generally, instead of having sets and group actions, we also have $\lambda 
 
 \begin{example}(A Model Built from Groupoid Actions)
 \label{ex:presheaves}
-Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$. Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-model, and the proof of this is very similar to Example~\ref{ex:GrpAct}.
+Recall that a \emph{groupoid} is a small category $\C$ where every morphism is an isomorphism, and that a functor $\C\to\Set$ is called a groupoid action (or presheaf). The category $\GpdSet$ has as objects pairs $(\A,\phi)$ where $\A$ is a groupoid and $\phi:\A\to\Set$ is a functor. A morphism $(\A,\phi) \rightarrow (\B,\psi)$ in $\GpdSet$ is given by a functor $F:\A\rightarrow \B$ and a natural transformation $\eta:\phi \to \psi \circ F$ between functors $\A \to\Set$. Let $\Gpd$ be the category of groupoids and functors. Then the forgetful functor $\GpdSet\to \Gpd$, which we call the $\GpdSet$ fibration, is a $\lambda \forall$-fibration, and the proof of this is very similar to the proof in Example~\ref{ex:GrpAct}.
 
 On theme with this subsection, the $\GpdSet$ fibration is related to the other fibrations by change of base:
 \begin{itemize}
@@ -675,14 +675,14 @@ For the rest of this section, we will use semantic brackets $\sem{\, \underline{
 \label{thm:allArrows}
  Suppose that $X_1, \ldots, X_n, X \vdash S,T \; \msf{ type}$. Then
 \[
-|\sem{\forall X. S \rightarrow T}| \cong \GroupSet{\mathcal{G}} (\sem{S}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank),\sem{T}(\underbrace{\star,\ldots,\star}_{n-\text{times}}, \blank))
+|\sem{\forall X. S \rightarrow T}| \cong \GroupSet{\mathcal{G}} (\sem{S}(\underbrace{\star,\ldots,\star}_{n\text{ times}}, \blank),\sem{T}(\underbrace{\star,\ldots,\star}_{n\text{ times}}, \blank))
 \]
 \end{theorem}
 \begin{proof}
 By the Kan extension formula and Yoneda.
 \end{proof}
 
-This Theorem says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed.
+This theorem says that in the $\GrpSet$ model a universally quantified variable over an arrow type can be considered as a natural transformation between the domain and codomain of the arrow type, with the first $n$ components fixed.
 In other words, it is interpreted as the set of functions that are equivariant
 in the last argument.
 
@@ -715,7 +715,7 @@ We now prove some theorems about the $\GrpSet$ fibration that are parametricity 
 
 \begin{theorem}(Scaling Factors)
 \label{thm:ScalFact}
-Suppose $\Deltadim; \Gammaops \vdash t : \forall X. \qnt(X) \rightarrow \qnt(X^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(X)}|$,
+Suppose $\Deltadim; \Gammaunits \vdash t : \forall X. \qnt(X) \rightarrow \qnt(X^n)$, where $n\in \mathbb{N}$. Then for all $g \in G$ and $x \in |\sem{\qnt(X)}|$,
 we have $\sem{t} (g \cdot x) = g^n \cdot \sem{t} x$.
 \end{theorem}
 \begin{proof}
@@ -802,7 +802,7 @@ $\mathrm{Ops}$ can be interpreted in the model used in the proof.
 \label{sec:param}
 In Section~\ref{sec:MonSet} we pointed out that many of the results that we proved in the $\GrpSet$ $\lambda D$-model are results that  Kennedy~\cite{Kennedy:1997:RPU:263699.263761} proves using parametricity. It is curious how the parametricity-style proofs in the $\GrpSet$ $\lambda D$-model are simple and slick and do not require a separate relational semantics. One cannot help but wonder, is the $\GrpSet$ $\lambda D$-model really as good as having full-blown parametricity at one's finger tips?
 
-To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model. This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as talking about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
+To answer this question we look at a general method of attaching a (fibrational) logic to a $\lambda D$-model to give a notion of a \emph{relational} $\lambda D$-model. This allows us to reconstruct Kennedy's relational parametricity in our setting (Example~\ref{ex:relKen}), as well as to talk about a relational version of the $\GrpSet$ $\lambda D$-model (Example~\ref{ex:relMon}).
 
 To begin this section, we first recall a theorem about the composition of fibred structure.
 \\
@@ -838,7 +838,7 @@ condition.\\
 \noindent
 \begin{minipage}{\linewidth}
 \begin{proof}
-This theorem is proven by using the factorisation and lifting properties of the 2-category $Fib$ as outlined by Hermida~\cite{hermida1999some}. Though the proof is not too difficult, it does require 2-categorical technology, which we do not introduce here. Hence, we leave the proof as an exercise for the 2-category-savvy reader.
+This theorem is proven by using the factorisation and lifting properties of the 2-category $\Fib$ as outlined by Hermida~\cite{hermida1999some}. Though the proof is not too difficult, it does require 2-categorical technology, which we do not introduce here. Hence, we leave the proof as an exercise for the 2-category-savvy reader.
 \end{proof}
 \end{minipage}
 \vspace{8mm}
@@ -869,7 +869,7 @@ Then $(q \circ F^\ast p :F^{\ast} \E \rightarrow \mathcal{L}, G,(Q_0,Q_R))$  is 
 
 
 \begin{proof}
-Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{(F^\ast \E)}{G}$. To check that $F^\ast p \circ u$ is a bicartesian closed fibration is a simple exercise. Finally, since $p$ has all products, so does $F^\ast p$. Hence, $F^\ast p \circ u$ has simple products by Theorem~\ref{thm:CompOfProd}.
+Clearly $G$ is an Abelian group object in $\mathcal{L}$, and $(Q_0, Q_R)$ is in the fibre $\fibre{(F^\ast \E)}{G}$. To check that $q \circ F^\ast p$ is a bicartesian closed fibration is a simple exercise. Finally, since $p$ has all products, so does $F^\ast p$. Hence, $q \circ F^\ast p$ has simple products by Theorem~\ref{thm:CompOfProd}.
 \end{proof}
 
 Next, we look at an example that uses Theorem \ref{thm:rel-model-generator} to generate Kennedy's original relationally parametric model of dimension types \cite{Kennedy:1997:RPU:263699.263761} from essentially the dimension-erasure model back in Example \ref{ex:UnitErasure}.
@@ -884,7 +884,7 @@ $p:\Sub{\Set}\rightarrow \Set$ be the subset fibration. Define
 $F:\LAb \times \Set \rightarrow \Set$ to be the product preserving
 functor defined on objects $(n,X) \in \LAb \times \Set$ by $F(n, X)
 = G^{n} \times X \times X$, and on morphisms $(f, g) : (n,X)
-\rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally, we let $Q_0
+\rightarrow (m, Y)$ by $F(f,g) = (G^f, g, g)$. Finally, let $Q_0
 = G$, and $Q_R = \{(g,g_1,g_2) \mathrel| gg_1 = g_2 \} \subseteq G
 \times G \times G$.
 
@@ -995,7 +995,7 @@ We can also relate the relationally parametric model from Example
 \ref{ex:UnitErasure}. By constructing a logical relation between the
 two models, we can show:
 \begin{theorem}\label{thm:closed-prog-equiv}
-  For any closed term $\vdash t : \msf{bool}$, the interpretation of
+  For any closed term $\vdash t : \bool$, the interpretation of
   $t$ in the dimension-erasure model of Example \ref{ex:UnitErasure}
   is equal to the interpretation of $t$ in the relationally parametric
   model of Example \ref{ex:relMon}.
@@ -1008,7 +1008,7 @@ model of Example \ref{ex:relMon} (and equivalently, the $\GrpSet$
 model), then they will be contextually equivalent for the dimension
 erasure model.
 
-It remains to discuss the relationship between Kennedy's original relational model (Example \ref{ex:relKen}), and the relational model in Example \ref{ex:relMon} that satisfies the identity extension property. As noted above, the difference between these interpretations lies in the semantics of the $\forall$-type. Kennedy's model does not restrict the carrier of the interpretation to just the ``parametric'' elements, i.e., the elements that preserve all relations. Therefore, the interpretations of types that contain nested $\forall$s are not directly comparable. We might expect that we could observe a difference between the two models when proving statements about terms whose types contain negatively nested forall types. However, Kennedy's original work does not present any results involving terms with such types, and we have not found any natural examples. This is in contrast with the situation with relationally parametric models of System F, where the proof that final coalgebras can be represented
+It remains to discuss the relationship between Kennedy's original relational model (Example \ref{ex:relKen}), and the relational model in Example \ref{ex:relMon} that satisfies the identity extension property. As noted above, the difference between these interpretations lies in the semantics of the $\forall$-type. Kennedy's model does not restrict the carrier of the interpretation to just the ``parametric'' elements, i.e., the elements that preserve all relations. Therefore, the interpretations of types that contain nested $\forall$s are not directly comparable. We might expect that we could observe a difference between the two models when proving statements about terms whose types contain negatively nested $\forall$-types. However, Kennedy's original work does not present any results involving terms with such types, and we have not found any natural examples. This is in contrast with the situation with relationally parametric models of System F, where the proof that final coalgebras can be represented
 crucially relies on the restriction of the interpretation of quantified types to the parametric elements \cite{birkedal2005categorical}.
 
 Therefore, our $\GrpSet$ model and the equivalent relational model in Example \ref{ex:relMon} practically coincides with Kennedy's original model, but offer the advantage of not requiring a separate relational semantics to prove important theorems. This in many cases makes proofs of these theorems clearer. Additionally, the $\GrpSet$ model offers an interpretation that directly links the semantics to symmetry.
